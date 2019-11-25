@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces.Sensors;
 using FourTwenty.IoT.Connect.Models;
+using FourTwenty.IoT.Connect.Models.Data;
 
 namespace FourTwenty.IoT.Connect.Modules.Sensors
 {
@@ -19,11 +20,5 @@ namespace FourTwenty.IoT.Connect.Modules.Sensors
         {
             throw new NotImplementedException();
         }
-    }
-
-    public class DthData
-    {
-        public double Temperature { get; set; }
-        public double Humidity { get; set; }
     }
 }
