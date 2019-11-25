@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GrowIoT.Modules;
+using FourTwenty.IoT.Connect.Modules;
 
 namespace FourTwenty.IoT.Connect.Models.Config
 {

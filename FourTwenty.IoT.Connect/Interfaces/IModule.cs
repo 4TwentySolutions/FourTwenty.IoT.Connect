@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using FourTwenty.IoT.Connect.Constants;
-using GrowIoT.Modules;
+using FourTwenty.IoT.Connect.Modules;
 
 namespace FourTwenty.IoT.Connect.Interfaces.Modules
 {

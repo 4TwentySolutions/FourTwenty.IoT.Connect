@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FourTwenty.IoT.Connect.Constants;
 
-namespace GrowIoT.Modules.Fans
+namespace FourTwenty.IoT.Connect.Modules.Fans
 {
     public class FanModule : BaseModule
     {

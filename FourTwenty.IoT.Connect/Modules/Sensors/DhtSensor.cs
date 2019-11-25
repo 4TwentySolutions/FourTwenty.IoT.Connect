@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
-using GrowIoT.Interfaces.Sensors;
-using GrowIoT.Models;
+using FourTwenty.IoT.Connect.Interfaces.Sensors;
+using FourTwenty.IoT.Connect.Models;
 
-namespace GrowIoT.Modules.Sensors
+namespace FourTwenty.IoT.Connect.Modules.Sensors
 {
     public class DhtSensor : BaseModule, ISensor<ModuleResponse<DthData>>
     {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <metadata>
+    <id>FourTwenty.IoT.Connect</id>
+    <version>1.0.0</version>
+    <title>FourTwenty.IoT.Connect</title>
+    <authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</authors>
+    <owners>4Twenty Solutions</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Includes all needed classes models and libs to start developing Xamarin application.</description>
+    <releaseNotes>$notes$</releaseNotes>
+    <copyright>Copyright 2018 4Twenty Solutions</copyright>
+    <tags>iot,xamarin forms,core, net core</tags>
+	<icon>logo_small.png</icon>
+	<iconUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect/raw/$branch$/logo_small.png</iconUrl>
+    <dependencies>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />        
+      </group>
+    </dependencies>
+    <summary></summary>
+  </metadata>
+  <files>
+    <file src="FourTwenty.IoT.Connect\bin\Release\netstandard2.0\publish\FourTwenty.IoT.Connect.dll" target="lib\netstandard2.0" /> 
+	<file src="logo_small.png" target="" />    	
+  </files>
+</package>

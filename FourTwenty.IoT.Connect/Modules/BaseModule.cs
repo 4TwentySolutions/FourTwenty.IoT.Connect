@@ -2,7 +2,7 @@
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces.Modules;
 
-namespace GrowIoT.Modules
+namespace FourTwenty.IoT.Connect.Modules
 {
     public abstract class BaseModule : IModule
     {

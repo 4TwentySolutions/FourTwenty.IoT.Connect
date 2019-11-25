@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FourTwenty.IoT.Connect.Constants;
 
-namespace GrowIoT.Modules
+namespace FourTwenty.IoT.Connect.Modules
 {
     public class WaterPumpModule : BaseModule
     {

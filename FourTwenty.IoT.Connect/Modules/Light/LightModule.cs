@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FourTwenty.IoT.Connect.Constants;
 
-namespace GrowIoT.Modules.Light
+namespace FourTwenty.IoT.Connect.Modules.Light
 {
     public class LightModule : BaseModule
     {

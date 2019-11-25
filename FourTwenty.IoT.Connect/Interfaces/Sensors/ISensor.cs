@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Interfaces.Modules;
 
-namespace GrowIoT.Interfaces.Sensors
+namespace FourTwenty.IoT.Connect.Interfaces.Sensors
 {
     public interface IDefaultSensor : IModule
     {

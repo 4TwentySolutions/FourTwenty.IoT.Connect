@@ -1,5 +1,5 @@
 ﻿
-namespace GrowIoT.Models
+namespace FourTwenty.IoT.Connect.Models
 {
     public class BaseModuleResponse
     {

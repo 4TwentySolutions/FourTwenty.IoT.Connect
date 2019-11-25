@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models.Config;
-using GrowIoT.Modules;
-using GrowIoT.Modules.Fans;
-using GrowIoT.Modules.Relays;
-using GrowIoT.Modules.Sensors;
+using FourTwenty.IoT.Connect.Modules;
+using FourTwenty.IoT.Connect.Modules.Fans;
+using FourTwenty.IoT.Connect.Modules.Relays;
+using FourTwenty.IoT.Connect.Modules.Sensors;
 
 namespace FourTwenty.IoT.Connect.Services
 {
