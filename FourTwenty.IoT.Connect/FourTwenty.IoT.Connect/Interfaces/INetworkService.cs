@@ -4,7 +4,8 @@ using System.Text;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface IConfigService
+    public interface INetworkService
     {
+        void StartNetwork(string ip, int? port);
     }
 }
