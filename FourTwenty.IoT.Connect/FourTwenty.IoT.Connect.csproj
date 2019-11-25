@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Company>4Twenty Solutions</Company>
-    <Authors>Pavel Kurianov</Authors>
+    <Authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</Authors>
   </PropertyGroup>
 
   <ItemGroup>

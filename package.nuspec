@@ -9,9 +9,9 @@
     <license type="expression">MIT</license>
     <projectUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Includes all needed classes models and libs to start developing Xamarin application.</description>
+    <description>IoT Connect class library</description>
     <releaseNotes>$notes$</releaseNotes>
-    <copyright>Copyright 2018 4Twenty Solutions</copyright>
+    <copyright>Copyright 2019 4Twenty Solutions</copyright>
     <tags>iot,xamarin forms,core, net core</tags>
 	<icon>logo_small.png</icon>
 	<iconUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect/raw/$branch$/logo_small.png</iconUrl>
