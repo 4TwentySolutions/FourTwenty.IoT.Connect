@@ -11,6 +11,8 @@ namespace FourTwenty.IoT.Connect.Modules
         public ModuleType Type { get; protected set; }
         public List<ModuleRule> Rules { get; set; }
 
+        protected BaseModule() { }
+
         protected BaseModule(List<ModuleRule> rules = null, string name = null)
         {
             Rules = rules;

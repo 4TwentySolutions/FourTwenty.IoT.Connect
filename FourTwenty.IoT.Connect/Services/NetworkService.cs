@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -11,14 +9,14 @@ using Newtonsoft.Json;
 
 namespace FourTwenty.IoT.Connect.Services
 {
-    public class NetworkService : INetworkService
+    public class IoTNetworkService : INetworkService
     {
         public delegate void NetworkPack(GrowPackage package);
         public event NetworkPack PackReceive;
 
         private readonly int _port;
 
-        public NetworkService(int port)
+        public IoTNetworkService(int port)
         {
             _port = port;
 
