@@ -24,4 +24,11 @@ namespace FourTwenty.IoT.Connect.Constants
         Off = 4,
         Period = 5
     }
+
+    public enum HealthCheck
+    { 
+        Unhealthy,
+        Degraded,
+        Healthy,
+    }
 }

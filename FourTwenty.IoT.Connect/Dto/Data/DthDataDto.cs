@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FourTwenty.IoT.Connect.Models.Data
+namespace FourTwenty.IoT.Connect.Dto.Data
 {
-    public class DthData
+    public class DthDataDto
     {
         public double Temperature { get; set; }
         public double Humidity { get; set; }
