@@ -5,9 +5,10 @@ namespace FourTwenty.IoT.Connect.Models
 {
     public class GrowPackage<T> : GrowPackage
     {
+        public string Host { get; set; }
         public T Data { get; set; }
 
-        public GrowPackage(IoTCommand command, T data) : base(command)
+        public GrowPackage(T data)
         {
             Data = data;
         }
@@ -15,14 +16,10 @@ namespace FourTwenty.IoT.Connect.Models
 
     public class GrowPackage
     {
-        public DateTime CreateTime { get; set; }
-        public IoTCommand Command { get; set; }
+        public string Host { get; set; }
 
-        public GrowPackage(IoTCommand command)
+        public GrowPackage()
         {
-            CreateTime = DateTime.Now;
-            Command = command;
         }
     }
-
 }
