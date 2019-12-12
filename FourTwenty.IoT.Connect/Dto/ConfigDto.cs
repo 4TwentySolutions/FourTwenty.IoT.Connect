@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FourTwenty.IoT.Connect.Modules;
+﻿using System.Collections.Generic;
 
 namespace FourTwenty.IoT.Connect.Dto
 {
     public class ConfigDto
     {
-        public List<BaseModule> Modules { get; set; }
+        public List<GrowBoxModuleDto> Modules { get; set; }
 
         /// <summary>
         /// Port for connections (default port - 5000) 
