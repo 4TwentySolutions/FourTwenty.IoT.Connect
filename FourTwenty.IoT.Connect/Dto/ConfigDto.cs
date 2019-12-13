@@ -5,7 +5,7 @@ namespace FourTwenty.IoT.Connect.Dto
 {
     public class ConfigDto
     {
-        public List<BaseModule> Modules { get; set; }
+        public List<GrowBoxModuleDto> Modules { get; set; }
 
         /// <summary>
         /// Port for connections (default port - 5000) 
