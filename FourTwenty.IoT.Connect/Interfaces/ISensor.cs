@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface ISensor : IModule
+    public interface ISensor<T> : IModule
     {
-        Task<T> GetData<T>();
+        Task<T> GetData();
     }
 
 }
