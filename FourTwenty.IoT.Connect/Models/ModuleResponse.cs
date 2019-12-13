@@ -10,7 +10,7 @@ namespace FourTwenty.IoT.Connect.Models
         public string Message { get; set; }
     }
 
-    public class ModuleDataResponse<T>
+    public class ModuleDataResponse<T> : ModuleResponse
     {
         public T Data { get; set; }
     }
