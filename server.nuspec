@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<package>
+  <metadata>
+    <id>FourTwenty.IoT.Server</id>
+    <version>1.0.0</version>
+    <title>FourTwenty.IoT.Server</title>
+    <authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</authors>
+    <owners>4Twenty Solutions</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>IoT Server class library</description>
+    <releaseNotes>$notes$</releaseNotes>
+    <copyright>Copyright 2019 4Twenty Solutions</copyright>
+    <tags>iot, net core</tags>
+	<icon>logo_small.png</icon>
+	<iconUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect/raw/$branch$/logo_small.png</iconUrl>
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Iot.Device.Bindings" version="1.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.SignalR" version="1.1.0" exclude="Build,Analyzers" /> 
+		<dependency id="Quartz" version="3.0.7" exclude="Build,Analyzers" />        
+		<dependency id="System.Device.Gpio" version="1.0.0" exclude="Build,Analyzers" />        
+      </group>
+    </dependencies>
+    <summary></summary>
+  </metadata>
+  <files>
+    <file src="FourTwenty.IoT.Server\bin\Release\netcoreapp3.1\publish\FourTwenty.IoT.Server.dll" target="lib\netcoreapp3.1" />
+    <file src="FourTwenty.IoT.Server\bin\Release\netcoreapp3.1\publish\FourTwenty.IoT.Server.pdb" target="lib\netcoreapp3.1" /> 
+	<file src="logo_small.png" target="" />    	
+  </files>
+</package>
