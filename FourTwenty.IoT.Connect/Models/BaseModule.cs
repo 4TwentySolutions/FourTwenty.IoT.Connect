@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Dto;
 using FourTwenty.IoT.Connect.Interfaces;
 
 namespace FourTwenty.IoT.Connect.Models
@@ -9,25 +7,24 @@ namespace FourTwenty.IoT.Connect.Models
     {
         public string Name { get; set; }
         public IReadOnlyCollection<int> Pins { get; set; }
-        public ModuleType Type { get; protected set; }
-        public List<ModuleRuleDto> Rules { get; set; }
+        public IReadOnlyCollection<IRule> Rules { get; set; }
 
         protected BaseModule() { }
 
-        protected BaseModule(List<ModuleRuleDto> rules = null, string name = null)
+        protected BaseModule(string name) : this(name, null, null)
         {
-            Rules = rules;
-            Name = name;
+
         }
 
-        protected BaseModule(int? gpioPin = null, List<ModuleRuleDto> rules = null, string name = null) : this(rules, name)
+        protected BaseModule(int gpioPin, string name, IReadOnlyCollection<IRule> rules) : this(name, new[] { gpioPin }, rules)
         {
-            if (gpioPin.HasValue)
-                Pins = new List<int>
-                {
-                    gpioPin.Value
+        }
 
-                };
+        protected BaseModule(string name, IReadOnlyCollection<int> pins, IReadOnlyCollection<IRule> rules)
+        {
+            Name = name;
+            Pins = pins;
+            Rules = rules;
         }
     }
 }

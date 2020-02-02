@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using FourTwenty.IoT.Connect.Common;
+﻿using System.Threading.Tasks;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface ISensor<T> : IPinComponent
+    public interface ISensor<T>
     {
         ValueTask<T> GetData();
-        event EventHandler<SensorDataReceivedEventArgs<T>> DataReceived;
     }
 
 }
