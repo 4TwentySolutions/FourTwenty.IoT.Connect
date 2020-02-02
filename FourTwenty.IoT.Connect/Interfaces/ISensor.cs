@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface ISensor<T> : IModule
+    public interface ISensor<T>
     {
-        Task<T> GetData();
+        ValueTask<T> GetData();
     }
 
 }

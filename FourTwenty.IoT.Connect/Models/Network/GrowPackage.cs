@@ -1,7 +1,7 @@
 ﻿using System;
 using FourTwenty.IoT.Connect.Constants;
 
-namespace FourTwenty.IoT.Connect.Models
+namespace FourTwenty.IoT.Connect.Models.Network
 {
     public class GrowPackage<T> : GrowPackage
     {

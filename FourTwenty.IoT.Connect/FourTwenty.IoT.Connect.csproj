@@ -1,14 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Company>4Twenty Solutions</Company>
-    <Authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</Authors>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <Company>4Twenty Solutions</Company>
+        <Authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</Authors>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="FourTwenty.IoT.Connect\**" />
+        <EmbeddedResource Remove="FourTwenty.IoT.Connect\**" />
+        <None Remove="FourTwenty.IoT.Connect\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    </ItemGroup>
 
 </Project>
