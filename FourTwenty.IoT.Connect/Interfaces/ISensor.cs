@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Common;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface ISensor<T> : IModule
+    public interface ISensor<T> : IPinComponent
     {
-        Task<T> GetData();
+        ValueTask<T> GetData();
+        event EventHandler<SensorDataReceivedEventArgs<T>> DataReceived;
     }
 
 }

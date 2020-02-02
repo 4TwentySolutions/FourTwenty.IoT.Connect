@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FourTwenty.IoT.Connect.Constants
+﻿namespace FourTwenty.IoT.Connect.Constants
 {
     public enum ModuleType
     {
@@ -25,8 +21,14 @@ namespace FourTwenty.IoT.Connect.Constants
         Period = 5
     }
 
+    public enum RelayState : byte
+    {
+        Opened = 1,
+        Closed = 2
+    }
+
     public enum HealthCheck
-    { 
+    {
         Unhealthy,
         Degraded,
         Healthy,

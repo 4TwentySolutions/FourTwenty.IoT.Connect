@@ -8,7 +8,7 @@ namespace FourTwenty.IoT.Connect.Models
     public abstract class BaseModule : IModule
     {
         public string Name { get; set; }
-        public List<int> Pins { get; set; }
+        public IReadOnlyCollection<int> Pins { get; set; }
         public ModuleType Type { get; protected set; }
         public List<ModuleRuleDto> Rules { get; set; }
 
