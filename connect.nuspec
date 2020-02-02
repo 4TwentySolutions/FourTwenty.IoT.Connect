@@ -16,7 +16,7 @@
 	<icon>logo_small.png</icon>
 	<iconUrl>https://github.com/4TwentySolutions/FourTwenty.IoT.Connect/raw/$branch$/logo_small.png</iconUrl>
     <dependencies>
-      <group targetFramework=".NETStandard2.0">
+      <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="3.0.1" exclude="Build,Analyzers" />
         <dependency id="Newtonsoft.Json" version="12.0.3" exclude="Build,Analyzers" />        
       </group>
@@ -24,7 +24,7 @@
     <summary></summary>
   </metadata>
   <files>
-    <file src="FourTwenty.IoT.Connect\bin\Release\netstandard2.0\publish\FourTwenty.IoT.Connect.dll" target="lib\netstandard2.0" /> 
+    <file src="FourTwenty.IoT.Connect\bin\Release\netstandard2.1\publish\FourTwenty.IoT.Connect.dll" target="lib\netstandard2.1" /> 
 	<file src="logo_small.png" target="" />    	
   </files>
 </package>
