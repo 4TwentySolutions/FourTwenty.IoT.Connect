@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FourTwenty.Core.Data.Models;
 
 namespace FourTwenty.IoT.Connect.Entities
 {

@@ -1,4 +1,5 @@
-﻿using FourTwenty.IoT.Connect.Constants;
+﻿using FourTwenty.Core.Data.Models;
+using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
