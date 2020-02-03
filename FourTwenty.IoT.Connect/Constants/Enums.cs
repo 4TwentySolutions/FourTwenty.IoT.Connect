@@ -12,6 +12,11 @@
         WaterPump = 8
     }
 
+    public enum RuleType : byte
+    {
+        CronRule = 1
+    }
+
     public enum JobType
     {
         Read = 1,

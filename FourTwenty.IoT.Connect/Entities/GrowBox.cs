@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
     public class GrowBox : BaseEntity<int>
     {
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         public string Address { get; set; }

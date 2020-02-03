@@ -4,14 +4,13 @@ namespace FourTwenty.IoT.Connect.Entities
 {
     public class ModuleRule : BaseEntity<int>
     {
-        public string CronExpression { get; set; }
-        public JobType Type { get; set; }
-        public int GrowBoxModuleId { get; set; }
-
+        public JobType Job { get; set; }
+        public RuleType RuleType { get; set; }
         /// <summary>
-        /// Period in seconds
+        /// Could be complex type (json , separated string's etc)
         /// </summary>
-        public int Period { get; set; }
+        public string RuleContent { get; set; }
+        public int GrowBoxModuleId { get; set; }
         public virtual GrowBoxModule GrowBoxModule { get; set; }
     }
 }
