@@ -5,7 +5,6 @@ namespace FourTwenty.IoT.Connect.Entities
 {
     public class ModuleRule : BaseEntity<int>
     {
-        public JobType Job { get; set; }
         public RuleType RuleType { get; set; }
         /// <summary>
         /// Could be complex type (json , separated string's etc)
