@@ -9,13 +9,13 @@ using Quartz.Impl;
 
 namespace FourTwenty.IoT.Server.Rules
 {
-    public class CronRule : IRule
+    public class CronRule : IPeriodRule
     {
         private IScheduler _scheduler;
 
+        public TimeSpan Period { get; set; }
         public JobType JobType { get; set; }
         public string CronExpression { get; set; }
-
         public CronRule(JobType jobType, string cronExpression)
         {
             JobType = jobType;
