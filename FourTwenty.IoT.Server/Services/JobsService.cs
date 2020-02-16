@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FourTwenty.IoT.Server.Components;
+using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Interfaces;
 using Quartz.Impl;
 
@@ -20,7 +19,7 @@ namespace FourTwenty.IoT.Server.Services
         {
             _hubService = hubService;
         }
-        public async Task StartJobs(ICollection<IoTComponent> components)
+        public async Task StartJobs(ICollection<IModule> components)
         {
             if (components == null || !components.Any()) return;
 

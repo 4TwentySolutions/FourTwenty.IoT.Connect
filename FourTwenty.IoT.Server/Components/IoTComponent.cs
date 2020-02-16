@@ -34,12 +34,12 @@ namespace FourTwenty.IoT.Server.Components
                 Gpio.OpenPin(pin);
         }
 
-        public void SetValue(PinValue value, int pin)
+        public virtual void SetValue(PinValue value, int pin)
         {
             Gpio.SetPinMode(pin, PinMode.Output);
             Gpio.Write(pin, value);
         }
-        public PinValue ReadValue(int pin)
+        public virtual PinValue ReadValue(int pin)
         {
             Gpio.SetPinMode(pin, PinMode.Input);
             return Gpio.Read(pin);

@@ -2,7 +2,10 @@
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface ISensor<T>
+    public interface ISensor
+    {
+    }
+    public interface ISensor<T> : ISensor
     {
         ValueTask<T> GetData();
     }

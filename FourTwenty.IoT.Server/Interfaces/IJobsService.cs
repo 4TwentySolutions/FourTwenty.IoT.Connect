@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using FourTwenty.IoT.Server.Components;
+using FourTwenty.IoT.Connect.Interfaces;
 
 namespace FourTwenty.IoT.Server.Interfaces
 {
     public interface IJobsService
     {
-        Task StartJobs(ICollection<IoTComponent> components);
+        Task StartJobs(ICollection<IModule> components);
         Task StopJobs();
     }
 }

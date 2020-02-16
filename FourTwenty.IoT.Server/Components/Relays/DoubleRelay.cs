@@ -21,7 +21,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
         {
             if (!Pins.Contains(pin))
                 return new ValueTask();
-            Gpio.Write(pin, PinValue.High);
+            base.SetValue(PinValue.High, pin);
             States[pin] = RelayState.Closed;
             return new ValueTask();
         }
@@ -31,7 +31,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
         {
             if (!Pins.Contains(pin))
                 return new ValueTask();
-            Gpio.Write(pin, PinValue.Low);
+            base.SetValue(PinValue.Low, pin);
             States[pin] = RelayState.Opened;
             return new ValueTask();
         }
