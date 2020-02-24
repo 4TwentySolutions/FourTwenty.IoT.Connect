@@ -1,5 +1,6 @@
 ﻿using FourTwenty.Core.Data.Models;
 using FourTwenty.IoT.Connect.Constants;
+using System;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
@@ -10,7 +11,7 @@ namespace FourTwenty.IoT.Connect.Entities
         /// Could be complex type (json , separated string's etc)
         /// </summary>
         public string RuleContent { get; set; }
-        public int GrowBoxModuleId { get; set; }
+        public Guid GrowBoxModuleId { get; set; }
         public virtual GrowBoxModule GrowBoxModule { get; set; }
     }
 }

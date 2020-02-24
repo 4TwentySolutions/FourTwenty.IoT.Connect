@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FourTwenty.Core.Data.Models;
 using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
-    public class GrowBoxModule : BaseEntity<int>
+    public class GrowBoxModule : BaseEntity<Guid>
     {
         [Required]
         public string Name { get; set; }

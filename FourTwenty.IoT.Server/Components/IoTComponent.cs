@@ -1,4 +1,5 @@
-﻿using FourTwenty.IoT.Connect.Interfaces;
+﻿using System;
+using FourTwenty.IoT.Connect.Interfaces;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
@@ -44,6 +45,8 @@ namespace FourTwenty.IoT.Server.Components
             Gpio.SetPinMode(pin, PinMode.Input);
             return Gpio.Read(pin);
         }
+
+        public Guid Id { get; set; }
         public IReadOnlyCollection<IRule> Rules { get; set; }
         public string Name { get; set; }
     }
