@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
+using Iot.Device.GrovePiDevice.Sensors;
 using Iot.Units;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
-    public class DhtSensor : IoTComponent, ISensor<DhtData>
+    public class DhtSensor : IoTComponent, ISensor
     {
         private readonly Dht11 _sensor;
 
@@ -22,10 +23,10 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         }
 
         public int ActivePin => Pins.FirstOrDefault();
-        
-        public ValueTask<DhtData> GetData()
+
+        public ValueTask<object> GetData()
         {
-            return new ValueTask<DhtData>(new DhtData(_sensor.Temperature, _sensor.Humidity));
+            return new ValueTask<object>(new DhtData(_sensor.Temperature, _sensor.Humidity));
         }
     }
 

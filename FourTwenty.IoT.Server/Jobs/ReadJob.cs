@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Components;
 using FourTwenty.IoT.Server.Components.Sensors;
 using FourTwenty.IoT.Server.Interfaces;
@@ -14,7 +15,7 @@ namespace FourTwenty.IoT.Server.Jobs
                 return;
             if (!(context.Get(JobsKeys.HubKey) is IHubService hubService))
                 return;
-            if (component is DhtSensor sensor)
+            if (component is ISensor sensor)
             {
                 var data = await sensor.GetData();
                 //TODO Finish signalR
