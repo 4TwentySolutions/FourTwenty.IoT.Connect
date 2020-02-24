@@ -45,5 +45,6 @@ namespace FourTwenty.IoT.Server.Components
             return Gpio.Read(pin);
         }
         public IReadOnlyCollection<IRule> Rules { get; set; }
+        public string Name { get; set; }
     }
 }

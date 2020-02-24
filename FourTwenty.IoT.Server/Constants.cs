@@ -13,5 +13,6 @@ namespace FourTwenty.IoT.Server
         public const string RuleKey = nameof(RuleKey);
         public const string ComponentKey = nameof(ComponentKey);
         public const string HubKey = nameof(HubKey);
+        public const string MessagesKey = nameof(MessagesKey);
     }
 }

@@ -49,6 +49,5 @@ namespace FourTwenty.IoT.Server.Services
                 await scheduler.Shutdown();
             }
         }
-
     }
 }

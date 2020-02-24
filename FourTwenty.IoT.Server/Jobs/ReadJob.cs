@@ -13,13 +13,13 @@ namespace FourTwenty.IoT.Server.Jobs
         {
             if (!(context.Get(JobsKeys.ComponentKey) is IoTComponent component))
                 return;
-            if (!(context.Get(JobsKeys.HubKey) is IHubService hubService))
+            if (!(context.Get(JobsKeys.MessagesKey) is IMessagesService messagesService))
                 return;
             if (component is ISensor sensor)
             {
                 var data = await sensor.GetData();
-                //TODO Finish signalR
-                await hubService.SendMessage(string.Empty, data);
+
+                await messagesService.SendMessage(component, data);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using FourTwenty.IoT.Connect.Interfaces;
+﻿using System;
+using FourTwenty.IoT.Connect.Interfaces;
 using Iot.Device.DHTxx;
 using System.Collections.Generic;
 using System.Device.Gpio;
@@ -24,9 +25,15 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public int ActivePin => Pins.FirstOrDefault();
 
+        public event EventHandler<SensorEventArgs> DataReceived;
+
         public ValueTask<object> GetData()
         {
-            return new ValueTask<object>(new DhtData(_sensor.Temperature, _sensor.Humidity));
+            var data = new DhtData(_sensor.Temperature, _sensor.Humidity);
+
+            DataReceived?.Invoke(this, new SensorEventArgs(data));
+
+            return new ValueTask<object>(data);
         }
     }
 
