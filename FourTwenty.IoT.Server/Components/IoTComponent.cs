@@ -6,10 +6,17 @@ using System.Linq;
 
 namespace FourTwenty.IoT.Server.Components
 {
-    public abstract class IoTComponent : IModule
+    public class IoTComponent : IModule
     {
         protected readonly GpioController Gpio;
 
+        #region properties
+        public Guid Id { get; set; }
+        public IReadOnlyCollection<IRule> Rules { get; set; }
+        public string Name { get; set; }
+
+        #endregion
+        
         protected IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController)
         {
         }
@@ -45,9 +52,5 @@ namespace FourTwenty.IoT.Server.Components
             Gpio.SetPinMode(pin, PinMode.Input);
             return Gpio.Read(pin);
         }
-
-        public Guid Id { get; set; }
-        public IReadOnlyCollection<IRule> Rules { get; set; }
-        public string Name { get; set; }
     }
 }
