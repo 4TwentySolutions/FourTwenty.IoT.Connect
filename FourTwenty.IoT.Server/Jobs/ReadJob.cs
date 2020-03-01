@@ -13,21 +13,22 @@ namespace FourTwenty.IoT.Server.Jobs
         {
             IoTComponent component = null;
             IMessagesService messagesService = null;
-            
+
             if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
                 component = rawObj as IoTComponent;
-            
+
             if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.MessagesKey, out var rawMessagesService))
                 messagesService = rawMessagesService as IMessagesService;
-            
-            if (component == null || messagesService == null)
+
+            if (component == null)
                 return;
-            
+
             if (component is ISensor sensor)
             {
                 var data = await sensor.GetData();
 
-                await messagesService.SendMessage(component, data);
+                if (messagesService != null)
+                    await messagesService.SendMessage(component, data);
             }
         }
     }

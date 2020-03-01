@@ -11,7 +11,7 @@ namespace FourTwenty.IoT.Server.Rules
 {
     public class CronRule : IPeriodRule
     {
-        private IScheduler _scheduler;
+        private readonly IScheduler _scheduler;
 
         public TimeSpan Period { get; set; }
         public JobType JobType { get; set; }
