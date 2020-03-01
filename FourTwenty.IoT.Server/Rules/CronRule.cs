@@ -16,17 +16,19 @@ namespace FourTwenty.IoT.Server.Rules
         public TimeSpan Period { get; set; }
         public JobType JobType { get; set; }
         public string CronExpression { get; set; }
-        public CronRule(JobType jobType, string cronExpression)
+        public CronRule(JobType jobType, string cronExpression, IScheduler scheduler)
         {
             JobType = jobType;
             CronExpression = cronExpression;
+            _scheduler = scheduler;
         }
         public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
 
         public async Task Execute()
         {
-            if (_scheduler == null)
-                _scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+            if(_scheduler == null)
+                return;
+
             if (_scheduler.InStandbyMode)
                 await _scheduler.Start();
             Type jobType = null;
