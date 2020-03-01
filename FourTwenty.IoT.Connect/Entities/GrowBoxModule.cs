@@ -6,7 +6,7 @@ using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
-    public class GrowBoxModule : BaseEntity<Guid>
+    public class GrowBoxModule : BaseEntity<int>
     {
         [Required]
         public string Name { get; set; }

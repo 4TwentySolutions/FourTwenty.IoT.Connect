@@ -11,7 +11,7 @@ namespace FourTwenty.IoT.Server.Components
         protected readonly GpioController Gpio;
 
         #region properties
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public IReadOnlyCollection<IRule> Rules { get; set; }
         public string Name { get; set; }
 
