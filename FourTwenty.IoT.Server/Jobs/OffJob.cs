@@ -10,7 +10,12 @@ namespace FourTwenty.IoT.Server.Jobs
     {
         public Task Execute(IJobExecutionContext context)
         {
-            if (!(context.Get(JobsKeys.ComponentKey) is IoTComponent component))
+            IoTComponent component = null;
+            
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
+                component = rawObj as IoTComponent;
+            
+            if (component == null)
                 return Task.CompletedTask;
 
             foreach (var pin in component.Pins)

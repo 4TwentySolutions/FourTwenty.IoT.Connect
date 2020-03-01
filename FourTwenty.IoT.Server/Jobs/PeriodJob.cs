@@ -11,11 +11,18 @@ namespace FourTwenty.IoT.Server.Jobs
     {
         public Task Execute(IJobExecutionContext context)
         {
-            if (!(context.Get(JobsKeys.ComponentKey) is IoTComponent component))
-                return Task.CompletedTask;
-            if (!(context.Get(JobsKeys.RuleKey) is IPeriodRule rule))
-                return Task.CompletedTask;
+            IoTComponent component = null;
+            IPeriodRule rule = null;
+            
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
+                component = rawObj as IoTComponent;
 
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleKey, out var rawRule))
+                rule = rawRule as IPeriodRule;
+            
+            if (component == null || rule == null)
+                return Task.CompletedTask;
+            
             foreach (var pin in component.Pins)
             {
                 TriggerPeriod(component, pin, rule.Period);

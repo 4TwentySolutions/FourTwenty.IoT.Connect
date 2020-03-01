@@ -11,10 +11,18 @@ namespace FourTwenty.IoT.Server.Jobs
     {
         public async Task Execute(IJobExecutionContext context)
         {
-            if (!(context.Get(JobsKeys.ComponentKey) is IoTComponent component))
+            IoTComponent component = null;
+            IMessagesService messagesService = null;
+            
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
+                component = rawObj as IoTComponent;
+            
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.MessagesKey, out var rawMessagesService))
+                messagesService = rawMessagesService as IMessagesService;
+            
+            if (component == null || messagesService == null)
                 return;
-            if (!(context.Get(JobsKeys.MessagesKey) is IMessagesService messagesService))
-                return;
+            
             if (component is ISensor sensor)
             {
                 var data = await sensor.GetData();
