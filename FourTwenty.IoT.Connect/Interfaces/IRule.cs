@@ -6,6 +6,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
 {
     public interface IRule
     {
+        int? Pin { get; set; }
         IDictionary<string, object> Properties { get; }
         Task Execute();
     }

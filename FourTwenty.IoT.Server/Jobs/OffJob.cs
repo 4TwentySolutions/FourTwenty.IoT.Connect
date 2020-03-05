@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Device.Gpio;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Components;
 using Quartz;
 
@@ -11,16 +12,28 @@ namespace FourTwenty.IoT.Server.Jobs
         public Task Execute(IJobExecutionContext context)
         {
             IoTComponent component = null;
+            IRule rule = null;
             
             if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
                 component = rawObj as IoTComponent;
             
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleKey, out var rawRule))
+                rule = rawRule as IRule;
+
+            
             if (component == null)
                 return Task.CompletedTask;
 
-            foreach (var pin in component.Pins)
+            if (rule?.Pin != null)
             {
-                component.SetValue(PinValue.High, pin);
+                component.SetValue(PinValue.High, rule.Pin.GetValueOrDefault());
+            }
+            else
+            {
+                foreach (var pin in component.Pins)
+                {
+                    component.SetValue(PinValue.High, pin);
+                }
             }
             return Task.CompletedTask;
         }

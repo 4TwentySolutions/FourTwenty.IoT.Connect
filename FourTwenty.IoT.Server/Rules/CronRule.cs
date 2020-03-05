@@ -13,6 +13,7 @@ namespace FourTwenty.IoT.Server.Rules
     {
         private readonly IScheduler _scheduler;
 
+        public int? Pin { get; set; }
         public TimeSpan Period { get; set; }
         public JobType JobType { get; set; }
         public string CronExpression { get; set; }
@@ -22,6 +23,7 @@ namespace FourTwenty.IoT.Server.Rules
             CronExpression = cronExpression;
             _scheduler = scheduler;
         }
+        
         public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
 
         public async Task Execute()

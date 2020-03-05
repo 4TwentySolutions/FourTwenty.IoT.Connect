@@ -13,20 +13,29 @@ namespace FourTwenty.IoT.Server.Jobs
         {
             IoTComponent component = null;
             IPeriodRule rule = null;
-            
+
             if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
                 component = rawObj as IoTComponent;
 
             if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleKey, out var rawRule))
                 rule = rawRule as IPeriodRule;
-            
+
             if (component == null || rule == null)
                 return Task.CompletedTask;
-            
-            foreach (var pin in component.Pins)
+
+            if (rule.Pin != null)
             {
-                TriggerPeriod(component, pin, rule.Period);
+                TriggerPeriod(component, rule.Pin.GetValueOrDefault(), rule.Period);
             }
+            else
+            {
+                foreach (var pin in component.Pins)
+                {
+                    TriggerPeriod(component, pin, rule.Period);
+                }
+            }
+
+
             return Task.CompletedTask;
         }
 
