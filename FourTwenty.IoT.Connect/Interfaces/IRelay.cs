@@ -7,8 +7,6 @@ namespace FourTwenty.IoT.Connect.Interfaces
     public interface IRelay : IPinComponent
     {
         IDictionary<int, RelayState> States { get; }
-        ValueTask Open(int pin);
-        ValueTask Close(int pin);
 
     }
 }

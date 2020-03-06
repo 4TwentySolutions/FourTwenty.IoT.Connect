@@ -16,25 +16,15 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
         public IDictionary<int, RelayState> States { get; }
 
-        //TODO verify implementation
-        public ValueTask Close(int pin)
+        public override void SetValue(PinValue value, int pin)
         {
             if (!Pins.Contains(pin))
-                return new ValueTask();
-            base.SetValue(PinValue.High, pin);
-            States[pin] = RelayState.Closed;
-            return new ValueTask();
+                return;
+
+            base.SetValue(value, pin);
+            States[pin] = value == PinValue.Low ? RelayState.Opened : RelayState.Closed;
         }
 
-        //TODO verify implementation
-        public ValueTask Open(int pin)
-        {
-            if (!Pins.Contains(pin))
-                return new ValueTask();
-            base.SetValue(PinValue.Low, pin);
-            States[pin] = RelayState.Opened;
-            return new ValueTask();
-        }
         protected override void Initialize()
         {
             base.Initialize();

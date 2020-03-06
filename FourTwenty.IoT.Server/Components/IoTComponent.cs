@@ -16,7 +16,7 @@ namespace FourTwenty.IoT.Server.Components
         public string Name { get; set; }
 
         #endregion
-        
+
         protected IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController)
         {
         }
@@ -44,12 +44,14 @@ namespace FourTwenty.IoT.Server.Components
 
         public virtual void SetValue(PinValue value, int pin)
         {
-            Gpio.SetPinMode(pin, PinMode.Output);
+            if (!Gpio.IsPinOpen(pin))
+                Gpio.OpenPin(pin, PinMode.Output);
             Gpio.Write(pin, value);
         }
         public virtual PinValue ReadValue(int pin)
         {
-            Gpio.SetPinMode(pin, PinMode.Input);
+            if (!Gpio.IsPinOpen(pin))
+                Gpio.OpenPin(pin, PinMode.Input);
             return Gpio.Read(pin);
         }
     }
