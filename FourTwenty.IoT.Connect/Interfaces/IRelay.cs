@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 
@@ -8,5 +9,16 @@ namespace FourTwenty.IoT.Connect.Interfaces
     {
         IDictionary<int, RelayState> States { get; }
 
+        event EventHandler<RelayEventArgs> StateChanged;
+    }
+
+    public class RelayEventArgs : EventArgs
+    {
+        public RelayState State { get; }
+
+        public RelayEventArgs(RelayState state)
+        {
+            State = state;
+        }
     }
 }

@@ -48,9 +48,15 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public Temperature Temperature { get; }
         public double Humidity { get; }
 
+        /// <summary>
+        /// Return DHT sensor values:
+        ///     - Temperature (celsius)
+        ///     - Humidity
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
-            return $"{nameof(Temperature)}:{Temperature}\n{nameof(Humidity)}:{Humidity}";
+            return $"{nameof(Temperature)}: {Temperature.Celsius}\n{nameof(Humidity)}: {Humidity}";
         }
     }
 }
