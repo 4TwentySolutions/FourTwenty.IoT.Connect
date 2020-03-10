@@ -13,6 +13,7 @@ namespace FourTwenty.IoT.Connect.Entities
         public string RuleContent { get; set; }
         public int GrowBoxModuleId { get; set; }
         public int? Pin { get; set; }
+        public bool IsEnabled { get; set; }
         public virtual GrowBoxModule GrowBoxModule { get; set; }
     }
 }

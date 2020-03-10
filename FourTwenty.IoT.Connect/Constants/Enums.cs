@@ -2,14 +2,14 @@
 {
     public enum ModuleType
     {
-        Humidity = 1,
+        //Humidity = 1,
         Temperature = 2,
         HumidityAndTemperature = 3,
         Relay = 4,
-        TwoRelay = 5,
-        Fan = 6,
-        Light = 7,
-        WaterPump = 8
+        //TwoRelay = 5,
+        //Fan = 6,
+        //Light = 7,
+        //WaterPump = 8
     }
 
     public enum RuleType : byte
