@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FourTwenty.IoT.Server.Components.Relays
 {
-    public class DoubleRelay : IoTComponent, IRelay
+    public class Relay : IoTComponent, IRelay
     {
-        public DoubleRelay(int gpio1, int gpio2, GpioController gpioController) : base(new[] { gpio1, gpio2 }, gpioController)
+        public Relay(IReadOnlyCollection<int> pins, GpioController gpioController) : base(pins, gpioController)
         {
-            States = new Dictionary<int, RelayState>() { { gpio1, RelayState.Closed }, { gpio2, RelayState.Closed } };
+            States = new Dictionary<int, RelayState>(pins.Select(x => new KeyValuePair<int, RelayState>(x, RelayState.Closed)));
         }
 
         public IDictionary<int, RelayState> States { get; }
@@ -25,7 +25,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
             base.SetValue(value, pin);
             States[pin] = value == PinValue.Low ? RelayState.Opened : RelayState.Closed;
-            StateChanged?.Invoke(this, new RelayEventArgs(States[pin]));
+            StateChanged?.Invoke(this, new RelayEventArgs(States[pin], pin));
         }
 
         protected override void Initialize()

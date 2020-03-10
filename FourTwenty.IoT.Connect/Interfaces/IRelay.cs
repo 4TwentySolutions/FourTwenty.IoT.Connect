@@ -15,10 +15,12 @@ namespace FourTwenty.IoT.Connect.Interfaces
     public class RelayEventArgs : EventArgs
     {
         public RelayState State { get; }
+        public int Pin { get; }
 
-        public RelayEventArgs(RelayState state)
+        public RelayEventArgs(RelayState state, int pin)
         {
             State = state;
+            Pin = pin;
         }
     }
 }
