@@ -14,13 +14,36 @@ namespace FourTwenty.IoT.Connect.Interfaces
 
     public class RelayEventArgs : EventArgs
     {
-        public RelayState State { get; }
-        public int Pin { get; }
+        public RelayData Data { get; }
 
-        public RelayEventArgs(RelayState state, int pin)
+        public RelayEventArgs(RelayData data)
         {
-            State = state;
+            Data = data;
+        }
+    }
+
+    public class RelayData
+    {
+        public RelayData() { }
+
+        public RelayData(int pin, RelayState state)
+        {
             Pin = pin;
+            State = State;
+        }
+
+        public int Pin { get; set; }
+        public RelayState State { get; set; }
+
+        /// <summary>
+        /// Return DHT sensor values:
+        ///     - Temperature (celsius)
+        ///     - Humidity
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"{nameof(Pin)}: {State}";
         }
     }
 }
