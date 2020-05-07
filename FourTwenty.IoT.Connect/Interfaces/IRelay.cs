@@ -29,7 +29,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
         public RelayData(int pin, RelayState state)
         {
             Pin = pin;
-            State = State;
+            State = state;
         }
 
         public int Pin { get; set; }
