@@ -26,7 +26,7 @@
         Period = 5
     }
 
-    public enum RelayState : byte
+    public enum RelayState
     {
         Opened = 1,
         Closed = 2
