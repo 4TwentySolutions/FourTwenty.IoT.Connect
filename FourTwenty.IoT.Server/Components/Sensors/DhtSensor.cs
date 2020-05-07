@@ -29,7 +29,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public ValueTask<object> GetData()
         {
-            var data = new DhtData(_sensor.Temperature, _sensor.Humidity);
+            var data = new DhtData(_sensor.Temperature.Celsius, _sensor.Humidity);
 
             DataReceived?.Invoke(this, new SensorEventArgs(data));
 
@@ -39,14 +39,16 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
     public class DhtData
     {
-        public DhtData(Temperature temp, double humidity)
+        public DhtData() { }
+
+        public DhtData(double temp, double humidity)
         {
             Temperature = temp;
             Humidity = humidity;
         }
 
-        public Temperature Temperature { get; }
-        public double Humidity { get; }
+        public double Temperature { get; set; }
+        public double Humidity { get; set; }
 
         /// <summary>
         /// Return DHT sensor values:
@@ -56,7 +58,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{nameof(Temperature)}: {Temperature.Celsius}\n{nameof(Humidity)}: {Humidity}";
+            return $"{nameof(Temperature)}: {Temperature}\n{nameof(Humidity)}: {Humidity}";
         }
     }
 }
