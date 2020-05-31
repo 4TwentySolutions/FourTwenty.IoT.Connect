@@ -29,6 +29,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public ValueTask<object> GetData()
         {
+            if (!_sensor.IsLastReadSuccessful)
+                return new ValueTask<object>(null);
+
             var data = new DhtData(_sensor.Temperature.Celsius, _sensor.Humidity);
 
             DataReceived?.Invoke(this, new SensorEventArgs(data));
