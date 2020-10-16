@@ -30,7 +30,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public ValueTask<object> GetData()
         {
             if (!_sensor.IsLastReadSuccessful)
-                return new ValueTask<object>(null);
+                return new ValueTask<object>(new DhtData(_sensor.IsLastReadSuccessful));
 
             var data = new DhtData(_sensor.Temperature.Celsius, _sensor.Humidity);
 
@@ -50,8 +50,14 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             Humidity = humidity;
         }
 
+        public DhtData(bool isLastReadSuccessful)
+        {
+            IsLastReadSuccessful = isLastReadSuccessful;
+        }
+
         public double Temperature { get; set; }
         public double Humidity { get; set; }
+        public bool IsLastReadSuccessful { get; set; }
 
         /// <summary>
         /// Return DHT sensor values:
@@ -61,7 +67,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         /// <returns></returns>
         public override string ToString()
         {
-            return $"{nameof(Temperature)}: {Temperature}\n{nameof(Humidity)}: {Humidity}";
+            return IsLastReadSuccessful ? 
+                            $"{nameof(IsLastReadSuccessful)}: {IsLastReadSuccessful}" :
+                            $"{nameof(Temperature)}: {Temperature}\n{nameof(Humidity)}: {Humidity}";
         }
     }
 }
