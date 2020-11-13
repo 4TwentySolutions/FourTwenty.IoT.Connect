@@ -39,7 +39,11 @@ namespace FourTwenty.IoT.Server.Components
                 return;
 
             foreach (var pin in Pins)
-                Gpio.OpenPin(pin);
+            {
+                if (!Gpio.IsPinOpen(pin))
+                    Gpio.OpenPin(pin);
+            }
+
         }
 
         public virtual void SetValue(PinValue value, int pin)

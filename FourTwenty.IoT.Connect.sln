@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourTwenty.IoT.Connect", "FourTwenty.IoT.Connect\FourTwenty.IoT.Connect.csproj", "{2EE20419-BE69-4043-AE16-A824A542557D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FourTwenty.IoT.Server", "FourTwenty.IoT.Server\FourTwenty.IoT.Server.csproj", "{DD96FE7D-C799-43A2-9F1E-849D62D398FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FourTwenty.IoT.Server", "FourTwenty.IoT.Server\FourTwenty.IoT.Server.csproj", "{DD96FE7D-C799-43A2-9F1E-849D62D398FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

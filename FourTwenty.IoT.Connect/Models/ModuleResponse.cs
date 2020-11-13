@@ -8,8 +8,16 @@ namespace FourTwenty.IoT.Connect.Models
     public class ModuleResponse
     {
         public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-        public ModuleType Type { get; set; }
+
+        public ModuleResponse()
+        {
+
+        }
+
+        public ModuleResponse(bool isSuccess)
+        {
+            IsSuccess = isSuccess;
+        }
     }
 
     public class ModuleResponse<T> : ModuleResponse

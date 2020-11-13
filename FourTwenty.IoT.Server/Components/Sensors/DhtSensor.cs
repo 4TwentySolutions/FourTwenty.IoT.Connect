@@ -5,61 +5,51 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
-using Iot.Device.GrovePiDevice.Sensors;
-using Iot.Units;
+using FourTwenty.IoT.Server.Models;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
     public class DhtSensor : IoTComponent, ISensor
     {
-        private readonly Dht11 _sensor;
+        private readonly DhtBase _sensor;
 
         public DhtSensor(int gpioPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { gpioPin }, controller)
         {
-            _sensor = new Dht11(gpioPin);
+            _sensor = new Dht11(gpioPin, PinNumberingScheme.Logical, controller);
         }
         public DhtSensor(int gpioPin, GpioController controller) : base(new[] { gpioPin }, controller)
         {
-            _sensor = new Dht11(gpioPin);
+            _sensor = new Dht11(gpioPin, PinNumberingScheme.Logical, controller, true);
         }
 
         public int ActivePin => Pins.FirstOrDefault();
 
         public event EventHandler<SensorEventArgs> DataReceived;
 
+        protected override void Initialize()
+        {
+            var pin = Pins?.FirstOrDefault();
+            if (pin.GetValueOrDefault() > 0)
+            {
+                if (!Gpio.IsPinOpen(pin.Value))
+                    Gpio.OpenPin(pin.GetValueOrDefault(), PinMode.Input);
+            }
+        }
+
         public ValueTask<object> GetData()
         {
-            var data = new DhtData(_sensor.Temperature.Celsius, _sensor.Humidity);
+            var tmp = _sensor.Temperature.DegreesCelsius;
+            var hum = _sensor.Humidity.DecimalFractions;
+
+            var data = new DhtData(_sensor.IsLastReadSuccessful)
+            {
+                Humidity = hum,
+                Temperature = tmp
+            };
 
             DataReceived?.Invoke(this, new SensorEventArgs(data));
 
             return new ValueTask<object>(data);
-        }
-    }
-
-    public class DhtData
-    {
-        public DhtData() { }
-
-        public DhtData(double temp, double humidity)
-        {
-            Temperature = temp;
-            Humidity = humidity;
-        }
-
-        public double Temperature { get; set; }
-        public double Humidity { get; set; }
-        public bool IsSuccessful { get; set; }
-
-        /// <summary>
-        /// Return DHT sensor values:
-        ///     - Temperature (celsius)
-        ///     - Humidity
-        /// </summary>
-        /// <returns></returns>
-        public override string ToString()
-        {
-            return $"{nameof(Temperature)}: {Temperature}\n{nameof(Humidity)}: {Humidity}";
         }
     }
 }
