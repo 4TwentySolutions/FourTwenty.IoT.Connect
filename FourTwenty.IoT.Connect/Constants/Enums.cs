@@ -38,4 +38,12 @@
         Degraded,
         Healthy,
     }
+
+    public enum WorkState
+    {
+        Running,
+        Paused,
+        Stopped,
+        Mixed
+    }
 }

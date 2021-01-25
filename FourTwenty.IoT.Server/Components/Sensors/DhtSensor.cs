@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Models;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
@@ -24,12 +25,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public int ActivePin => Pins.FirstOrDefault();
 
-        public event EventHandler<SensorEventArgs> DataReceived;
+        public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
         protected override void Initialize()
         {
             var pin = Pins?.FirstOrDefault();
-            if (pin.GetValueOrDefault() > 0)
+            if (pin > 0)
             {
                 if (!Gpio.IsPinOpen(pin.Value))
                     Gpio.OpenPin(pin.GetValueOrDefault(), PinMode.Input);
@@ -39,7 +40,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public ValueTask<object> GetData()
         {
             var tmp = _sensor.Temperature.DegreesCelsius;
-            var hum = _sensor.Humidity.DecimalFractions;
+            var hum = _sensor.Humidity.Value;
 
             var data = new DhtData(_sensor.IsLastReadSuccessful)
             {
@@ -47,7 +48,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 Temperature = tmp
             };
 
-            DataReceived?.Invoke(this, new SensorEventArgs(data));
+            DataReceived?.Invoke(this, new ModuleResponseEventArgs(data));
 
             return new ValueTask<object>(data);
         }

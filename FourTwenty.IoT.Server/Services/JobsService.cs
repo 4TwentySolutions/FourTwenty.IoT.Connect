@@ -35,7 +35,9 @@ namespace FourTwenty.IoT.Server.Services
                         moduleRule.Properties.Add(JobsKeys.HubKey, _hubService);
                     if (!moduleRule.Properties.ContainsKey(JobsKeys.RuleKey))
                         moduleRule.Properties.Add(JobsKeys.RuleKey, moduleRule);
-                    await moduleRule.Execute();
+
+                    if(moduleRule.IsEnabled)
+						await moduleRule.Execute();
                 }
             }
         }

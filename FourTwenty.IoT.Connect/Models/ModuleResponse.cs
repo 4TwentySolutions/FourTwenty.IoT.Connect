@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Models
 {
@@ -9,10 +6,7 @@ namespace FourTwenty.IoT.Connect.Models
     {
         public bool IsSuccess { get; set; }
 
-        public ModuleResponse()
-        {
-
-        }
+        public ModuleResponse() { }
 
         public ModuleResponse(bool isSuccess)
         {
@@ -20,8 +14,29 @@ namespace FourTwenty.IoT.Connect.Models
         }
     }
 
-    public class ModuleResponse<T> : ModuleResponse
-    {
-        public T Data { get; set; }
-    }
+	public class ModuleResponse<T> : ModuleResponse
+	{
+		public T Data { get; set; }
+
+		public ModuleResponse(bool isSuccess, T data)
+		{
+			IsSuccess = isSuccess;
+			Data = data;
+		}
+
+		public ModuleResponse(bool isSuccess)
+		{
+			IsSuccess = isSuccess;
+		}
+	}
+
+	public class ModuleResponseEventArgs : EventArgs
+	{
+		public ModuleResponse Data { get; }
+        
+		public ModuleResponseEventArgs(ModuleResponse data)
+		{
+			Data = data;
+		}
+	}
 }

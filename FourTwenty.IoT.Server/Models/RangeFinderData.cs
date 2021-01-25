@@ -8,9 +8,9 @@ namespace FourTwenty.IoT.Server.Models
 
         public RangeFinderData(bool isSuccess) : base(isSuccess) { }
 
-        public RangeFinderData(double distance)
+        public RangeFinderData(bool isSuccess, double distance) : base(isSuccess)
         {
-            Distance = distance;
+	        Distance = distance;
         }
 
         public double Distance { get;set;}

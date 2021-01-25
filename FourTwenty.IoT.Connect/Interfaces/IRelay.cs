@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Models;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
@@ -9,38 +10,21 @@ namespace FourTwenty.IoT.Connect.Interfaces
     {
         IDictionary<int, RelayState> States { get; }
 
-        event EventHandler<RelayEventArgs> StateChanged;
-    }
-
-    public class RelayEventArgs : EventArgs
-    {
-        public RelayData Data { get; }
-
-        public RelayEventArgs(RelayData data)
-        {
-            Data = data;
-        }
+        event EventHandler<ModuleResponseEventArgs> StateChanged;
     }
 
     public class RelayData
     {
-        public RelayData() { }
-
-        public RelayData(int pin, RelayState state)
+	    public RelayData(int pin, RelayState state)
         {
             Pin = pin;
             State = state;
         }
 
         public int Pin { get; set; }
-        public RelayState State { get; set; }
 
-        /// <summary>
-        /// Return DHT sensor values:
-        ///     - Temperature (celsius)
-        ///     - Humidity
-        /// </summary>
-        /// <returns></returns>
+        public RelayState State { get; set; }
+        
         public override string ToString()
         {
             return $"{nameof(Pin)}: {State}";

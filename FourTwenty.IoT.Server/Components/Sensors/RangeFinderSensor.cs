@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Models;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -22,19 +23,19 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             _sensor = new Hcsr04(controller, triggerPin, echoPin);
         }
 
-        public event EventHandler<SensorEventArgs> DataReceived;
+        public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
         protected override void Initialize() { }
 
         public ValueTask<object> GetData()
         {
-            var ds = _sensor.Distance.Centimeters;
+	        var data = _sensor.TryGetDistance(out var ds) ? 
+		        new RangeFinderData(true,Math.Round(ds.Centimeters, 2)) :
+		        new RangeFinderData(false);
+            
+            Debug.Print("Distance:" + ds.Centimeters);
 
-            var data = new RangeFinderData(Math.Round(ds, 2));
-
-            Debug.Print("Distance:" + ds.ToString());
-
-            DataReceived?.Invoke(this, new SensorEventArgs(data));
+            DataReceived?.Invoke(this, new ModuleResponseEventArgs(data));
 
             return new ValueTask<object>(data);
         }

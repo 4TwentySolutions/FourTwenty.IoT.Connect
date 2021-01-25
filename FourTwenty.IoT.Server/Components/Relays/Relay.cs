@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Models;
 
 namespace FourTwenty.IoT.Server.Components.Relays
 {
@@ -16,7 +17,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
         }
 
         public IDictionary<int, RelayState> States { get; }
-        public event EventHandler<RelayEventArgs> StateChanged;
+        public event EventHandler<ModuleResponseEventArgs> StateChanged;
 
         public override void SetValue(PinValue value, int pin)
         {
@@ -25,7 +26,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
             base.SetValue(value, pin);
             States[pin] = value == PinValue.Low ? RelayState.Opened : RelayState.Closed;
-            StateChanged?.Invoke(this, new RelayEventArgs(new RelayData(pin, States[pin])));
+            StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse<RelayData>(true, new RelayData(pin, States[pin]))));
         }
 
         protected override void Initialize()

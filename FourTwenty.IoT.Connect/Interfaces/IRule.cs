@@ -6,9 +6,15 @@ namespace FourTwenty.IoT.Connect.Interfaces
 {
     public interface IRule
     {
-        int? Pin { get; set; }
+        int Id { get; set; }
+	    bool IsEnabled { get; set; }
+	    int? Pin { get; set; }
         IDictionary<string, object> Properties { get; }
         Task Execute();
+        Task Stop();
+        //Task PauseRulesExecution();
+        //Task StopRulesExecution();
+        //Task ResumeRulesExecution();
     }
 
     public interface IPeriodRule : IRule
