@@ -7,6 +7,7 @@
         HumidityAndTemperature = 3,
         Relay = 4,
         RangeFinder = 5,
+        WaterTank = 6
         //Fan = 6,
         //Light = 7,
         //WaterPump = 8

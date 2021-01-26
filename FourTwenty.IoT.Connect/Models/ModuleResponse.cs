@@ -23,11 +23,6 @@ namespace FourTwenty.IoT.Connect.Models
 			IsSuccess = isSuccess;
 			Data = data;
 		}
-
-		public ModuleResponse(bool isSuccess)
-		{
-			IsSuccess = isSuccess;
-		}
 	}
 
 	public class ModuleResponseEventArgs : EventArgs

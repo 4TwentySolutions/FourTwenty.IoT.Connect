@@ -12,12 +12,13 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 {
     public class RangeFinderSensor : IoTComponent, ISensor
     {
-        private Hcsr04 _sensor = null;
+        private Hcsr04 _sensor;
 
         public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
         {
             _sensor = new Hcsr04(controller, triggerPin, echoPin);
         }
+
         public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller) : base(new[] { triggerPin, echoPin }, controller)
         {
             _sensor = new Hcsr04(controller, triggerPin, echoPin);
