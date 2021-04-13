@@ -1,24 +1,14 @@
 ﻿using System;
+using FourTwenty.IoT.Connect.Interfaces;
 
 namespace FourTwenty.IoT.Connect.Models
 {
-    public class ModuleResponse
-    {
-        public bool IsSuccess { get; set; }
-
-        public ModuleResponse() { }
-
-        public ModuleResponse(bool isSuccess)
-        {
-            IsSuccess = isSuccess;
-        }
-    }
-
-	public class ModuleResponse<T> : ModuleResponse
+	public class ModuleResponse
 	{
-		public T Data { get; set; }
+		public bool IsSuccess { get; set; }
+		public IData Data { get; set; }
 
-		public ModuleResponse(bool isSuccess, T data)
+		public ModuleResponse(bool isSuccess, IData data)
 		{
 			IsSuccess = isSuccess;
 			Data = data;

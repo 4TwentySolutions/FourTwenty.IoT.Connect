@@ -26,7 +26,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
             base.SetValue(value, pin);
             States[pin] = value == PinValue.Low ? RelayState.Opened : RelayState.Closed;
-            StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse<RelayData>(true, new RelayData(pin, States[pin]))));
+            StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse(true, new RelayData(pin, States[pin]))));
         }
 
         protected override void Initialize()

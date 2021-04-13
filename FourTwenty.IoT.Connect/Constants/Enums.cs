@@ -6,16 +6,14 @@
         Temperature = 2,
         HumidityAndTemperature = 3,
         Relay = 4,
-        RangeFinder = 5,
-        WaterTank = 6
-        //Fan = 6,
-        //Light = 7,
-        //WaterPump = 8
+        RangeFinder = 5
     }
 
     public enum RuleType : byte
     {
-        CronRule = 1
+        Cron = 1,
+        Action = 2,
+        Display = 3,
     }
 
     public enum JobType
@@ -25,6 +23,12 @@
         On = 3,
         Off = 4,
         Period = 5
+    }
+
+    public enum DisplayType
+    {
+        Text = 1,
+        Percent = 2,
     }
 
     public enum RelayState

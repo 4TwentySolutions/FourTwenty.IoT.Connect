@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FourTwenty.Core.Data.Models;
 using FourTwenty.IoT.Connect.Constants;

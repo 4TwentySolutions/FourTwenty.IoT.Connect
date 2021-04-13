@@ -7,7 +7,9 @@ namespace FourTwenty.IoT.Connect.Interfaces
 	{
 		int Id { get; set; }
 		IReadOnlyCollection<IRule> Rules { get; set; }
+		IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
 		string Name { get; set; }
 		WorkState RulesWorkState { get; set; }
+		ModuleType Type { get; }
 	}
 }
