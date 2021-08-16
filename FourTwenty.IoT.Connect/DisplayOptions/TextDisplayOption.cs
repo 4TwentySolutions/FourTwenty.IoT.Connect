@@ -6,11 +6,14 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 {
 	public class TextDisplayOption : IDisplayOption
 	{
-		public DisplayType DisplayType => DisplayType.Text;
+        public bool IsEnabled { get; set; }
+        public DisplayType DisplayType => DisplayType.Text;
 		public IParams Options { get; set; }
 		public int DisplayOrder { get; set; }
+        public int? Pin { get; set; }
 
-		public string Execute(string value)
+
+        public string Execute(string value)
 		{
 			if (Options is TextParams opt)
 			{
@@ -39,6 +42,19 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 				}
 			}
 
+            if (Options is RelayTextParams relayOpt && data is RelayData relayData)
+            {
+                if (Pin.HasValue)
+                {
+                    if (Pin.GetValueOrDefault() == relayData.Pin)
+                    {
+                        data.Value = relayData.State == RelayState.Opened
+                            ? relayOpt.OpenedStateIconWrapper
+                            : relayOpt.ClosedStateIconWrapper;
+                    }
+                }
+            }
+
 			return data;
 		}
 	}
@@ -47,4 +63,10 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 	{
 		public string IconWrapper { get; set; }
 	}
+
+    public class RelayTextParams : IParams
+    {
+        public string OpenedStateIconWrapper { get; set; }
+        public string ClosedStateIconWrapper { get; set; }
+    }
 }

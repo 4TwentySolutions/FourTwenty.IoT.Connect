@@ -6,9 +6,11 @@ namespace FourTwenty.IoT.Connect.Interfaces
 {
 	public interface IDisplayOption
 	{
-		public DisplayType DisplayType { get; }
+        public bool IsEnabled { get; set; }
+        public DisplayType DisplayType { get; }
 		public IParams Options { get; set; }
 		public int DisplayOrder { get; set; }
+        public int? Pin { get; set; }
 		string Execute(string value);
 		IData Execute(ModuleType type, IData data);
 	}

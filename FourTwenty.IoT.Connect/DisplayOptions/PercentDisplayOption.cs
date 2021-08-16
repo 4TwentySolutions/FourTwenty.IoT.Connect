@@ -6,11 +6,13 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 {
 	public class PercentDisplayOption : IDisplayOption
 	{
-		public DisplayType DisplayType => DisplayType.Percent;
+        public bool IsEnabled { get; set; }
+        public DisplayType DisplayType => DisplayType.Percent;
 		public IParams Options { get; set; }
 		public int DisplayOrder { get; set; }
+        public int? Pin { get; set; }
 
-		public string Execute(string val)
+        public string Execute(string val)
 		{
 			if (double.TryParse(val, out var value) &&
 				Options is PercentParams opt &&

@@ -14,6 +14,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 	public class RangeFinderSensor : IoTComponent, ISensor
 	{
 		private readonly Hcsr04 _sensor;
+		private bool isDisposed;
 
 		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
 		{
@@ -31,8 +32,13 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 		protected override void Initialize() { }
 
 		public ValueTask<object> GetData()
-		{
-			var data = _sensor.TryGetDistance(out var ds) ? new RangeFinderData(Math.Round(ds.Centimeters, 2)) : null;
+        {
+            RangeFinderData data = null;
+
+            if (_sensor.TryGetDistance(out var ds))
+            {
+                data = new RangeFinderData(Math.Round(ds.Centimeters, 2));
+            }
 
 			var dpData =  data.ApplyDisplayOptions(DisplayOptions, Type);
 

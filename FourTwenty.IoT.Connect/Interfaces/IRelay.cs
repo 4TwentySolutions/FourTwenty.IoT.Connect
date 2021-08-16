@@ -57,7 +57,8 @@ namespace FourTwenty.IoT.Connect.Interfaces
 		{
 			Pin = pin;
 			State = state;
-		}
+            Value = $"#{pin}={state.ToString()}";
+        }
 
 		public int Pin { get; set; }
 

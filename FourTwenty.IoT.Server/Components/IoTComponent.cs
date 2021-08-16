@@ -62,5 +62,11 @@ namespace FourTwenty.IoT.Server.Components
                 Gpio.OpenPin(pin, PinMode.Input);
             return Gpio.Read(pin);
         }
+
+        public void UpdateDisplayOptions(IEnumerable<IDisplayOption> options)
+        {
+            var list = DisplayOptions as List<IDisplayOption>;
+            DisplayOptions = new List<IDisplayOption>(options);
+        }
     }
 }
