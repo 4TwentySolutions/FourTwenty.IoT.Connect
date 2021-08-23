@@ -65,7 +65,6 @@ namespace FourTwenty.IoT.Server.Components
 
         public void UpdateDisplayOptions(IEnumerable<IDisplayOption> options)
         {
-            var list = DisplayOptions as List<IDisplayOption>;
             DisplayOptions = new List<IDisplayOption>(options);
         }
     }

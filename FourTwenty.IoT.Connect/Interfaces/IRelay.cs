@@ -18,6 +18,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
 		{
 			Temperature = temp;
 			Humidity = humidity;
+			Value = ToString();
 		}
 
 		/// <summary>
@@ -45,6 +46,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
 		public RangeFinderData(double distance)
 		{
 			Distance = distance;
+			Value = distance.ToString();
 		}
 
 		public double Distance { get; set; }
@@ -71,4 +73,16 @@ namespace FourTwenty.IoT.Connect.Interfaces
 			return $"{nameof(Pin)}: {State}";
 		}
 	}
+
+    public class TempData : IData
+    {
+        public TempData(double temperature)
+        {
+            Temperature = temperature;
+            Value = temperature.ToString();
+        }
+
+        public double Temperature { get; set; }
+        public string Value { get; set; }
+    }
 }

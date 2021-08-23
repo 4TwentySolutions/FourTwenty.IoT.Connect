@@ -9,45 +9,51 @@ using FourTwenty.IoT.Connect.Models;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
-	public class DhtSensor : IoTComponent, ISensor
-	{
-		private readonly DhtBase _sensor;
+    public class DhtSensor : IoTComponent, ISensor
+    {
+        private DhtBase _sensor;
 
-		public DhtSensor(int gpioPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { gpioPin }, controller)
-		{
-			_sensor = new Dht11(gpioPin, PinNumberingScheme.Logical, controller);
-		}
-		public DhtSensor(int gpioPin, GpioController controller) : base(new[] { gpioPin }, controller)
-		{
-			_sensor = new Dht11(gpioPin, PinNumberingScheme.Logical, controller, true);
-		}
+        public event EventHandler<ModuleResponseEventArgs> DataReceived;
+        public int ActualPin => Pins.FirstOrDefault();
 
-		public int ActivePin => Pins.FirstOrDefault();
+        public DhtSensor(int gpioPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { gpioPin }, controller) { }
+        public DhtSensor(int gpioPin, GpioController controller) : base(new[] { gpioPin }, controller) { }
 
-		public event EventHandler<ModuleResponseEventArgs> DataReceived;
+        protected override void Initialize()
+        {
+            if (Gpio.IsPinOpen(ActualPin))
+            {
+                Gpio.ClosePin(ActualPin);
+            }
 
-		protected override void Initialize()
-		{
-			var pin = Pins?.FirstOrDefault();
-			if (pin > 0)
-			{
-				if (!Gpio.IsPinOpen(pin.Value))
-					Gpio.OpenPin(pin.GetValueOrDefault(), PinMode.Input);
-			}
-		}
+            _sensor = new Dht11(ActualPin, PinNumberingScheme.Logical, Gpio);
+        }
 
-		public ValueTask<object> GetData()
-		{
-			var tmp = _sensor.Temperature.DegreesCelsius;
-			var hum = _sensor.Humidity.Value;
+        public ValueTask<object> GetData()
+        {
+            ModuleResponse response = null;
 
-			var response = !_sensor.IsLastReadSuccessful ?
-				new ModuleResponse(false, null) :
-				new ModuleResponse(true, new DhtData(tmp,hum));
+            try
+            {
+                var tmp = _sensor.Temperature.DegreesCelsius;
+                var hum = _sensor.Humidity.Value;
 
-			DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
+                if (tmp > 0 && hum > 0)
+                {
+                    response = new ModuleResponse(true, new DhtData(_sensor.Temperature.DegreesCelsius, _sensor.Humidity.Value));
+                }
+            }
+            catch (Exception ex)
+            {
+                response = new ModuleResponse(false, null);
+            }
+            finally
+            {
+                DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
+            }
 
-			return new ValueTask<object>(response);
-		}
-	}
+            return new ValueTask<object>(response);
+
+        }
+    }
 }
