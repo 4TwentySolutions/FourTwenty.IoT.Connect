@@ -6,7 +6,6 @@ using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Jobs;
 using Quartz;
-using Quartz.Impl;
 using Quartz.Impl.Matchers;
 
 namespace FourTwenty.IoT.Server.Rules
@@ -40,32 +39,22 @@ namespace FourTwenty.IoT.Server.Rules
 
 			if (_scheduler.InStandbyMode)
 				await _scheduler.Start();
-			Type jobType = null;
 
-			switch (JobType)
-			{
-				case JobType.Toggle:
-					jobType = typeof(ToggleJob);
-					break;
-				case JobType.Read:
-					jobType = typeof(ReadJob);
-					break;
-				case JobType.On:
-					jobType = typeof(OnJob);
-					break;
-				case JobType.Off:
-					jobType = typeof(OffJob);
-					break;
-				case JobType.Period:
-					jobType = typeof(PeriodJob);
-					break;
-			}
+            var jobType = JobType switch
+            {
+                JobType.Toggle => typeof(ToggleJob),
+                JobType.Read => typeof(ReadJob),
+                JobType.On => typeof(OnJob),
+                JobType.Off => typeof(OffJob),
+                JobType.Period => typeof(PeriodJob),
+                JobType.Action => typeof(ActionJob),
+                _ => null
+            };
 
-			if (jobType == null)
+            if (jobType == null)
 				return;
 
-
-			JobDataMap jobData = new JobDataMap(Properties);
+            JobDataMap jobData = new JobDataMap(Properties);
 
 			JobName = $"{Guid.NewGuid()}_{JobType}";
 

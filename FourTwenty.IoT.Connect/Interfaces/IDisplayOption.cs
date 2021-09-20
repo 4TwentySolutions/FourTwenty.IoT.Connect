@@ -18,9 +18,4 @@ namespace FourTwenty.IoT.Connect.Interfaces
 	public interface IParams { }
 
 	public interface IRuleData { }
-
-	public interface IData
-	{
-		string Value { get; set; }
-	}
 }

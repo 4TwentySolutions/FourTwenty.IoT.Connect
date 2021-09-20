@@ -6,7 +6,8 @@
         Temperature = 2,
         HumidityAndTemperature = 3,
         Relay = 4,
-        RangeFinder = 5
+        RangeFinder = 5,
+        Camera = 6
     }
 
     public enum RuleType : byte
@@ -22,13 +23,19 @@
         Toggle = 2,
         On = 3,
         Off = 4,
-        Period = 5
+        Period = 5,
+        Action = 6,
     }
 
     public enum DisplayType
     {
         Text = 1,
         Percent = 2,
+    }
+
+    public enum ActionType
+    {
+        TakePhoto = 0
     }
 
     public enum RelayState

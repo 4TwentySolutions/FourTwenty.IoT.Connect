@@ -7,6 +7,13 @@ using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Server.Components
 {
+    public struct IoTComponentValues
+    {
+        public IReadOnlyCollection<IRule> Rules { get; set; }
+        public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
+        public IReadOnlyCollection<IAction> Actions { get; set; }
+    }
+
     public class IoTComponent : IModule
     {
         protected readonly GpioController Gpio;
