@@ -3,13 +3,13 @@ using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-	public interface IModule : IPinComponent
+	public interface IComponent : IPinComponent
 	{
 		int Id { get; set; }
 		IReadOnlyCollection<IRule> Rules { get; set; }
 		IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
 		string Name { get; set; }
 		WorkState RulesWorkState { get; set; }
-		ModuleType Type { get; }
+        ComponentType ComponentType { get; }
 	}
 }

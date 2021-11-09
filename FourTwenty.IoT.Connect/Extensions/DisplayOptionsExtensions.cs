@@ -20,7 +20,7 @@ namespace FourTwenty.IoT.Connect.Extensions
             };
         }
 
-        public static IDisplayOption GetDisplayOption(this DisplayRuleData data, ModuleType moduleType)
+        public static IDisplayOption GetDisplayOption(this DisplayRuleData data, ComponentType moduleType)
         {
             IDisplayOption dO = null;
 
@@ -37,7 +37,7 @@ namespace FourTwenty.IoT.Connect.Extensions
                     dO = new TextDisplayOption();
                     if (!string.IsNullOrEmpty(data.DisplayOptionParams))
                     {
-                        if (moduleType == ModuleType.Relay)
+                        if (moduleType == ComponentType.Relay)
                         {
                             dO.Options = JsonConvert.DeserializeObject<RelayTextParams>(data.DisplayOptionParams);
                         }
@@ -59,7 +59,7 @@ namespace FourTwenty.IoT.Connect.Extensions
             return dO;
         }
 
-        public static IData ApplyDisplayOptions(this IData data, IReadOnlyCollection<IDisplayOption> options, ModuleType type)
+        public static IData ApplyDisplayOptions(this IData data, IReadOnlyCollection<IDisplayOption> options, ComponentType type)
         {
             if (data != null && options?.Count > 0)
             {

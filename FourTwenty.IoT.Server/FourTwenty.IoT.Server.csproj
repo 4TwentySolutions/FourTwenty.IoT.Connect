@@ -16,4 +16,8 @@
     <ProjectReference Include="..\FourTwenty.IoT.Connect\FourTwenty.IoT.Connect.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Components\Relays\" />
+  </ItemGroup>
+
 </Project>

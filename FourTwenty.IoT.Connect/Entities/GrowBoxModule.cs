@@ -9,7 +9,7 @@ namespace FourTwenty.IoT.Connect.Entities
     {
         [Required]
         public string Name { get; set; }
-        public ModuleType Type { get; set; }
+        public ComponentType ComponentType { get; set; }
         public int[] Pins { get; set; }
         public string AdditionalData { get; set; }
         public int GrowBoxId { get; set; }

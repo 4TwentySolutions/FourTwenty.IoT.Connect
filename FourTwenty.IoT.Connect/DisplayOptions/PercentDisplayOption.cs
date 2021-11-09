@@ -27,16 +27,16 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 			return val;
 		}
 
-		public IData Execute(ModuleType type, IData data)
+		public IData Execute(ComponentType type, IData data)
 		{
 			if (Options is PercentParams opt && data != null)
 			{
 				switch (type)
 				{
-					case ModuleType.RangeFinder when data is RangeFinderData rfData:
+					case ComponentType.RangeFinder when data is RangeFinderData rfData:
 						data.Value = Execute(rfData.Distance.ToString());
 						break;
-					case ModuleType.HumidityAndTemperature when data is DhtData dhtData:
+					case ComponentType.HumidityAndTemperature when data is DhtData dhtData:
 						data.Value = $"{dhtData.Temperature}\u00B0C,{dhtData.Humidity}%";
 						break;
 				}

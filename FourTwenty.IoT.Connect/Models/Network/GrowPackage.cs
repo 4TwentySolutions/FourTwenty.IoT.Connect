@@ -25,7 +25,7 @@ namespace FourTwenty.IoT.Connect.Models.Network
 
     public class GrowPackage
     {
-        public ModuleType ModuleType { get; set; }
+        public ComponentType SensorType { get; set; }
         public Uri Host { get; set; }
 
         public GrowPackage()

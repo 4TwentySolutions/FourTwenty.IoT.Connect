@@ -7,7 +7,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
 {
     public interface IAction
     {
-        ModuleType ModuleType { get; }
+        ComponentType SensorType { get; }
         ActionType ActionType { get; }
 
         string Execute();

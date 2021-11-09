@@ -19,7 +19,8 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
 		{
 			_sensor = new Hcsr04(controller, triggerPin, echoPin);
-		}
+            ComponentType = ComponentType.RangeFinder;
+        }
 
 		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller) : base(new[] { triggerPin, echoPin }, controller)
 		{
@@ -29,7 +30,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 		public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
-		protected override void Initialize() { }
+		public override void Initialize() { }
 
 		public ValueTask<object> GetData()
         {
@@ -40,11 +41,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 data = new RangeFinderData(Math.Round(ds.Centimeters, 2));
             }
 
-			var dpData =  data.ApplyDisplayOptions(DisplayOptions, Type);
+			var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
 			DataReceived?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse(dpData != null, dpData)));
 
 			return new ValueTask<object>(dpData);
 		}
-	}
+    }
 }

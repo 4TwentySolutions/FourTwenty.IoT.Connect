@@ -13,10 +13,12 @@ namespace FourTwenty.IoT.Server.Components.Relays
 {
     public class Relay : IoTComponent, IRelay
     {
-        private readonly SemaphoreSlim _relayLocker = new SemaphoreSlim(1, 1);
+        private readonly SemaphoreSlim _relayLocker = new SemaphoreSlim(1, 1);        
 
         public IDictionary<int, RelayState> States { get; }
+        public bool CloseOnInit { get; set; }
         public event EventHandler<ModuleResponseEventArgs> StateChanged;
+
 
         public Relay(IReadOnlyCollection<int> pins, GpioController gpioController) : base(pins, gpioController)
         {
@@ -37,7 +39,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
                 var data = new RelayData(pin, States[pin]);
 
-                var dpData =  data.ApplyDisplayOptions(DisplayOptions, Type);
+                var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
                 StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse(true, dpData)));
             }
@@ -47,11 +49,20 @@ namespace FourTwenty.IoT.Server.Components.Relays
             }
         }
 
-        protected override void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
             foreach (var pin in Pins)
+            {
                 Gpio.SetPinMode(pin, PinMode.Output);
+                if (CloseOnInit) 
+                {
+                    SetValue(PinValue.High, pin);
+                }
+                
+            }                
         }
+
+
     }
 }

@@ -6,7 +6,9 @@ namespace FourTwenty.IoT.Server.Interfaces
 {
     public interface IJobsService
     {
-        Task StartJobs(ICollection<IModule> components);
+        Task StartJobs(ICollection<IComponent> components);
+        Task StartJobs(IComponent component);
         Task StopJobs();
+        Task StopJobs(IComponent component);
     }
 }

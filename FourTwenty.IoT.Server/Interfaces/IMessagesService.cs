@@ -8,6 +8,6 @@ namespace FourTwenty.IoT.Server.Interfaces
 {
     public interface IMessagesService
     {
-        Task SendMessage(IModule module, params object[] value);
+        Task SendMessage(IComponent component, params object[] value);
     }
 }

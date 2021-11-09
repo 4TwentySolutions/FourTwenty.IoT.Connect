@@ -10,7 +10,7 @@ using Iot.Device.Media;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
-    public class Camera : IoTComponent, ISensor
+    public class Camera : IoTComponent
     {
         private VideoConnectionSettings _settings = new VideoConnectionSettings(busId: 0, captureSize: (1920, 1080), pixelFormat: PixelFormat.JPEG);
 

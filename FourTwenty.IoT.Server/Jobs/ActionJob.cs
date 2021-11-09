@@ -8,7 +8,7 @@ using Quartz;
 
 namespace FourTwenty.IoT.Server.Jobs
 {
-    public class ActionJob : IJob
+    /*public class ActionJob : IJob
     {
         public async Task Execute(IJobExecutionContext context)
         {
@@ -33,5 +33,5 @@ namespace FourTwenty.IoT.Server.Jobs
 
             }
         }
-    }
+    }*/
 }

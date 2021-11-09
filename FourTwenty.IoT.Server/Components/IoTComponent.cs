@@ -7,14 +7,7 @@ using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Server.Components
 {
-    public struct IoTComponentValues
-    {
-        public IReadOnlyCollection<IRule> Rules { get; set; }
-        public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
-        public IReadOnlyCollection<IAction> Actions { get; set; }
-    }
-
-    public class IoTComponent : IModule
+    public class IoTComponent : IComponent
     {
         protected readonly GpioController Gpio;
 
@@ -24,11 +17,11 @@ namespace FourTwenty.IoT.Server.Components
         public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
         public string Name { get; set; }
         public WorkState RulesWorkState { get; set; } // => Rules.All(x => x.IsEnabled) ? WorkState.Running : Rules.All(x => !x.IsEnabled) ? WorkState.Stopped : WorkState.Mixed;
-        public ModuleType Type { get; set; }
+        public ComponentType ComponentType { get; set; }
 
         #endregion
 
-        protected IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController)
+        public IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController)
         {
         }
 
@@ -39,12 +32,11 @@ namespace FourTwenty.IoT.Server.Components
             Gpio = gpioController;
             Pins = pins;
             Rules = rules;
-            Initialize();
         }
 
         public IReadOnlyCollection<int> Pins { get; }
 
-        protected virtual void Initialize()
+        public virtual void Initialize()
         {
             if (Pins == null || !Pins.Any() || Gpio == null)
                 return;

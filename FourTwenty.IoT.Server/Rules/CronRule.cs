@@ -47,7 +47,7 @@ namespace FourTwenty.IoT.Server.Rules
                 JobType.On => typeof(OnJob),
                 JobType.Off => typeof(OffJob),
                 JobType.Period => typeof(PeriodJob),
-                JobType.Action => typeof(ActionJob),
+                //JobType.Action => typeof(ActionJob),
                 _ => null
             };
 

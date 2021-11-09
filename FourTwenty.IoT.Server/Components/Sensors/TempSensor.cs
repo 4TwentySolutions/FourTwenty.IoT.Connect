@@ -18,7 +18,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public TempSensor(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<int> pins, GpioController gpioController) : base(rules, pins, gpioController) {}
 
-        protected override void Initialize() {}
+        public override void Initialize() {}
 
         public ValueTask<object> GetData()
         {

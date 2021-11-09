@@ -1,6 +1,4 @@
-﻿using System;
-using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Models;
+﻿using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
@@ -12,7 +10,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
 		public int DisplayOrder { get; set; }
         public int? Pin { get; set; }
 		string Execute(string value);
-		IData Execute(ModuleType type, IData data);
+		IData Execute(ComponentType type, IData data);
 	}
 
 	public interface IParams { }

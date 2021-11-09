@@ -1,12 +1,12 @@
 ﻿namespace FourTwenty.IoT.Connect.Constants
 {
-    public enum ModuleType
+    public enum ComponentType
     {
-        //Humidity = 1,
-        Temperature = 2,
-        HumidityAndTemperature = 3,
-        Relay = 4,
-        RangeFinder = 5,
+        Temperature = 1,
+        HumidityAndTemperature = 2,
+        RangeFinder = 3,
+        SoilMoisture = 4,
+        Relay = 5,
         Camera = 6
     }
 
@@ -24,7 +24,7 @@
         On = 3,
         Off = 4,
         Period = 5,
-        Action = 6,
+        //Action = 6,
     }
 
     public enum DisplayType
@@ -35,7 +35,8 @@
 
     public enum ActionType
     {
-        TakePhoto = 0
+        Pre = 1,
+        Post = 2
     }
 
     public enum RelayState
@@ -57,5 +58,17 @@
         Paused,
         Stopped,
         Mixed
+    }
+    
+    public enum DhtType
+    {
+        Dht11 = 1,
+        Dht22 = 2
+    }
+
+    public enum SensorReadType 
+    {
+        Digital = 1,
+        Analog = 2 // Use only with MCP3008 converter
     }
 }

@@ -21,10 +21,10 @@ namespace FourTwenty.IoT.Server.Services
             _hubService = hubService;
         }
 
-        public async Task SendMessage(IModule module, params object[] value)
+        public async Task SendMessage(IComponent component, params object[] value)
         {
             if (_hubService != null)
-                await _hubService.SendMessage(module.Name, value);
+                await _hubService.SendMessage(component.Name, value);
 
 
         }
