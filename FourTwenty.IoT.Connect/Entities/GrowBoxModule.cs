@@ -11,6 +11,7 @@ namespace FourTwenty.IoT.Connect.Entities
         public string Name { get; set; }
         public ComponentType ComponentType { get; set; }
         public int[] Pins { get; set; }
+        public string PinsNames { get; set; }
         public string AdditionalData { get; set; }
         public int GrowBoxId { get; set; }
         public virtual GrowBox GrowBox { get; set; }

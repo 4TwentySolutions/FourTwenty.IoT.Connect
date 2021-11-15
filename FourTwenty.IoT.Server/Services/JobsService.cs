@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Server;
 using FourTwenty.IoT.Server.Interfaces;
 using Quartz;
 using Quartz.Impl;

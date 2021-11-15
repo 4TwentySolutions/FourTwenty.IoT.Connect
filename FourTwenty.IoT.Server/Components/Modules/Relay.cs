@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Extensions;
 using FourTwenty.IoT.Connect.Models;
+using FourTwenty.IoT.Server.Extensions;
 
 namespace FourTwenty.IoT.Server.Components.Relays
 {
@@ -32,20 +33,24 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
             try
             {
-                _relayLocker.Wait();
+                //_relayLocker.Wait();
 
                 base.SetValue(value, pin);
-                States[pin] = value == PinValue.Low ? RelayState.Opened : RelayState.Closed;
+                States[pin] = value.GetState();
 
                 var data = new RelayData(pin, States[pin]);
 
-                var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
+                var dpData = data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
                 StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse(true, dpData)));
             }
+            catch (Exception ex)
+            {
+
+            }
             finally
             {
-                _relayLocker.Release();
+               // _relayLocker.Release();
             }
         }
 

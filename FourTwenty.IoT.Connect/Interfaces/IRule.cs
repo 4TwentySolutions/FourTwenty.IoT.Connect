@@ -12,9 +12,6 @@ namespace FourTwenty.IoT.Connect.Interfaces
         IDictionary<string, object> Properties { get; }
         Task Execute();
         Task Stop();
-        //Task PauseRulesExecution();
-        //Task StopRulesExecution();
-        //Task ResumeRulesExecution();
     }
 
     public interface IPeriodRule : IRule

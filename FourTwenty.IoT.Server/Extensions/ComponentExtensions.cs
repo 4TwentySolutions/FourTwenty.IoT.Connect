@@ -2,9 +2,9 @@
 using FourTwenty.IoT.Server.Components.Relays;
 using FourTwenty.IoT.Server.Components.Sensors;
 
-namespace FourTwenty.IoT.Server.Extentions
+namespace FourTwenty.IoT.Server.Extensions
 {
-    public static class ComponentExtentions
+    public static class ComponentExtensions
     {
         public static DhtSensor SetDhtType(this DhtSensor sensor, DhtType dhtType)
         {

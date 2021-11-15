@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Interfaces
@@ -9,7 +10,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
     {
         ComponentType SensorType { get; }
         ActionType ActionType { get; }
-
-        string Execute();
+        IRuleData Data { get; }
+        Task Execute();
     }
 }

@@ -15,6 +15,8 @@ namespace FourTwenty.IoT.Server.Components
         public int Id { get; set; }
         public IReadOnlyCollection<IRule> Rules { get; set; }
         public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
+        public IReadOnlyCollection<IAction> Actions { get; set; }
+
         public string Name { get; set; }
         public WorkState RulesWorkState { get; set; } // => Rules.All(x => x.IsEnabled) ? WorkState.Running : Rules.All(x => !x.IsEnabled) ? WorkState.Stopped : WorkState.Mixed;
         public ComponentType ComponentType { get; set; }

@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Extensions;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Components;
 using FourTwenty.IoT.Server.Components.Sensors;
@@ -23,6 +26,8 @@ namespace FourTwenty.IoT.Server.Jobs
             if (component == null)
                 return;
 
+            await component.Actions.ExecuteActions(ActionType.Pre);
+
             if (component is ISensor sensor)
             {
                 var data = await sensor.GetData();
@@ -30,6 +35,8 @@ namespace FourTwenty.IoT.Server.Jobs
                 if (messagesService != null)
                     await messagesService.SendMessage(component, data);
             }
+
+            await component.Actions.ExecuteActions(ActionType.Post);
         }
     }
 }

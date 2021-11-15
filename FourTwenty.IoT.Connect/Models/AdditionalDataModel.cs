@@ -11,4 +11,10 @@ namespace FourTwenty.IoT.Connect.Models
         public bool? CloseOnInit { get; set; }
         public SensorReadType? SensorReadType { get; set; }
     }
+
+    public class PinNameItem
+    {
+        public int Pin { get; set; }
+        public string Name { get; set; }
+    }
 }

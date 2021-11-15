@@ -89,4 +89,10 @@ namespace FourTwenty.IoT.Connect.Interfaces
         }
         public string Value { get; set; }
     }
+
+    public class SoilMoistureData : IData
+    {
+        public RelayState State { get; set; }
+        public string Value { get; set; }
+    }
 }
