@@ -1,4 +1,5 @@
-﻿using FourTwenty.IoT.Connect.Constants;
+﻿using System.Collections.Generic;
+using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
@@ -92,7 +93,8 @@ namespace FourTwenty.IoT.Connect.Interfaces
 
     public class SoilMoistureData : IData
     {
-        public RelayState State { get; set; }
+        public RelayState? State { get; set; }
         public string Value { get; set; }
+        public Dictionary<int, RelayState> Values { get; set; }
     }
 }

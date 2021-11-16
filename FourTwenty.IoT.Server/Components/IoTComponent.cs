@@ -17,15 +17,14 @@ namespace FourTwenty.IoT.Server.Components
         public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
         public IReadOnlyCollection<IAction> Actions { get; set; }
 
+        public bool GroupedModule { get; set; }
         public string Name { get; set; }
         public WorkState RulesWorkState { get; set; } // => Rules.All(x => x.IsEnabled) ? WorkState.Running : Rules.All(x => !x.IsEnabled) ? WorkState.Stopped : WorkState.Mixed;
         public ComponentType ComponentType { get; set; }
 
         #endregion
 
-        public IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController)
-        {
-        }
+        public IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController) { }
 
         protected IoTComponent(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<int> pins,
             GpioController gpioController)

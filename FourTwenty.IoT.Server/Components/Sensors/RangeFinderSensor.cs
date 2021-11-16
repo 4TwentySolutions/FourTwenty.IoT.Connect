@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Extensions;
@@ -13,24 +14,37 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 {
 	public class RangeFinderSensor : IoTComponent, ISensor
 	{
-		private readonly Hcsr04 _sensor;
+		private Hcsr04 _sensor;
 		private bool isDisposed;
 
 		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
 		{
-			_sensor = new Hcsr04(controller, triggerPin, echoPin);
             ComponentType = ComponentType.RangeFinder;
         }
 
 		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller) : base(new[] { triggerPin, echoPin }, controller)
 		{
-			
-			_sensor = new Hcsr04(controller, triggerPin, echoPin);
-		}
+            ComponentType = ComponentType.RangeFinder;
+        }
 
 		public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
-		public override void Initialize() { }
+        public override void Initialize()
+        {
+            try
+            {
+                foreach (var pin in Pins)
+                {
+                    Gpio.ClosePin(pin);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            _sensor = new Hcsr04(Gpio, Pins.FirstOrDefault(), Pins.LastOrDefault());
+        }
 
 		public ValueTask<object> GetData()
         {

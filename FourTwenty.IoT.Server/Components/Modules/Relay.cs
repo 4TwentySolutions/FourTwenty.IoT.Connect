@@ -14,7 +14,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 {
     public class Relay : IoTComponent, IRelay
     {
-        private readonly SemaphoreSlim _relayLocker = new SemaphoreSlim(1, 1);        
+        private readonly SemaphoreSlim _relayLocker = new SemaphoreSlim(1, 1);
 
         public IDictionary<int, RelayState> States { get; }
         public bool CloseOnInit { get; set; }
@@ -33,7 +33,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
             try
             {
-                //_relayLocker.Wait();
+                _relayLocker.Wait();
 
                 base.SetValue(value, pin);
                 States[pin] = value.GetState();
@@ -50,7 +50,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
             }
             finally
             {
-               // _relayLocker.Release();
+                _relayLocker.Release();
             }
         }
 
@@ -60,12 +60,12 @@ namespace FourTwenty.IoT.Server.Components.Relays
             foreach (var pin in Pins)
             {
                 Gpio.SetPinMode(pin, PinMode.Output);
-                if (CloseOnInit) 
+                if (CloseOnInit)
                 {
                     SetValue(PinValue.High, pin);
                 }
-                
-            }                
+
+            }
         }
 
 

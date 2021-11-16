@@ -1,4 +1,5 @@
 ﻿using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Server.Components;
 using FourTwenty.IoT.Server.Components.Relays;
 using FourTwenty.IoT.Server.Components.Sensors;
 
@@ -18,6 +19,10 @@ namespace FourTwenty.IoT.Server.Extensions
             return relay;
         }
 
-
+        public static IoTComponent SetGroupedModule(this IoTComponent component, bool groupedModule)
+        {
+            component.GroupedModule = groupedModule;
+            return component;
+        }
     }
 }

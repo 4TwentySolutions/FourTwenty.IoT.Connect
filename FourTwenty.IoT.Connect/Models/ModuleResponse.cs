@@ -7,8 +7,9 @@ namespace FourTwenty.IoT.Connect.Models
 	{
 		public bool IsSuccess { get; set; }
 		public IData Data { get; set; }
+        public Exception Exception { get; set; }
 
-		public ModuleResponse(bool isSuccess, IData data)
+        public ModuleResponse(bool isSuccess, IData data, Exception exception = null)
 		{
 			IsSuccess = isSuccess;
 			Data = data;

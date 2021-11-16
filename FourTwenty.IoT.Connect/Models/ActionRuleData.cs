@@ -9,5 +9,6 @@ namespace FourTwenty.IoT.Connect.Models
         public int ModuleId { get; set; }
         public JobType JobType { get; set; }
         public int? Pin { get; set; }
+        public int Delay { get; set; }
     }
 }
