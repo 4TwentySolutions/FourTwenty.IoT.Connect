@@ -57,7 +57,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 			var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
-			DataReceived?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse(dpData != null, dpData)));
+			DataReceived?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse<IData>(dpData != null, dpData)));
 
 			return new ValueTask<object>(dpData);
 		}

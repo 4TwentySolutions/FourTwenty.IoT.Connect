@@ -41,25 +41,25 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public ValueTask<object> GetData()
         {
-            ModuleResponse response = null;            
+            ModuleResponse<IData> response = null;            
 
             try
             {
                 if (_sensor == null)
                 {
-                    response = new ModuleResponse(false, null);
+                    response = new ModuleResponse<IData>(false, null);
                 }
                 else
                 {
                     var tmp = _sensor.Temperature.DegreesCelsius;
                     var hum = _sensor.Humidity.Value;
 
-                    response = new ModuleResponse(_sensor.Temperature.DegreesCelsius < -150 ? false : true, new DhtData(Math.Round(_sensor.Temperature.DegreesCelsius, 2), Math.Round(_sensor.Humidity.Value, 2)));                    
+                    response = new ModuleResponse<IData>(_sensor.Temperature.DegreesCelsius < -150 ? false : true, new DhtData(Math.Round(_sensor.Temperature.DegreesCelsius, 2), Math.Round(_sensor.Humidity.Value, 2)));                    
                 }                
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(false, null);
+                response = new ModuleResponse<IData>(false, null);
             }
             finally
             {

@@ -34,6 +34,8 @@ namespace FourTwenty.IoT.Server.Jobs
 
                 if (messagesService != null)
                     await messagesService.SendMessage(component, data);
+
+                await component.Actions.ExecuteActions(ActionType.Comparison, data);
             }
 
             await component.Actions.ExecuteActions(ActionType.Post);

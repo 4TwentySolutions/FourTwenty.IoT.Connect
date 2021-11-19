@@ -3,13 +3,13 @@ using FourTwenty.IoT.Connect.Interfaces;
 
 namespace FourTwenty.IoT.Connect.Models
 {
-	public class ModuleResponse
+	public class ModuleResponse<T> where T : IData
 	{
 		public bool IsSuccess { get; set; }
-		public IData Data { get; set; }
+		public T Data { get; set; }
         public Exception Exception { get; set; }
 
-        public ModuleResponse(bool isSuccess, IData data, Exception exception = null)
+        public ModuleResponse(bool isSuccess, T data, Exception exception = null)
 		{
 			IsSuccess = isSuccess;
 			Data = data;
@@ -18,9 +18,9 @@ namespace FourTwenty.IoT.Connect.Models
 
 	public class ModuleResponseEventArgs : EventArgs
 	{
-		public ModuleResponse Data { get; }
+		public ModuleResponse<IData> Data { get; }
         
-		public ModuleResponseEventArgs(ModuleResponse data)
+		public ModuleResponseEventArgs(ModuleResponse<IData> data)
 		{
 			Data = data;
 		}

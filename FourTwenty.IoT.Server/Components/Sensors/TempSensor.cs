@@ -23,7 +23,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public ValueTask<object> GetData()
         {
             var value = string.Empty;
-            ModuleResponse response = new ModuleResponse(false, null);
+            ModuleResponse<IData> response = new ModuleResponse<IData>(false, null);
 
             var rawValue = GetSensorData();
 
@@ -35,7 +35,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                     var val = rawValue.Remove(0, index + 2);
                     if (!string.IsNullOrEmpty(val) && int.TryParse(val, out var intValue))
                     {
-                        response = new ModuleResponse(true, new TempData(intValue / 1000d));
+                        response = new ModuleResponse<IData>(true, new TempData(intValue / 1000d));
                     }
                 }
             }

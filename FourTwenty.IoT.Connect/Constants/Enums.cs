@@ -36,7 +36,8 @@
     public enum ActionType
     {
         Pre = 1,
-        Post = 2
+        Post = 2,
+        Comparison = 3
     }
 
     public enum RelayState
@@ -70,5 +71,11 @@
     {
         Digital = 1,
         Analog = 2 // Use only with MCP3008 converter
+    }
+
+    public enum ComparisonDirection
+    {
+        Less = 1,
+        More = 2
     }
 }

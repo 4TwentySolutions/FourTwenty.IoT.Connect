@@ -88,6 +88,10 @@ namespace FourTwenty.IoT.Connect.Interfaces
         {
             Value = path;
         }
+        
+        /// <summary>
+        /// Path to the file 
+        /// </summary>
         public string Value { get; set; }
     }
 

@@ -23,7 +23,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public ValueTask<object> GetData()
         {
-            ModuleResponse response = null;
+            ModuleResponse<IData> response = null;
 
             try
             {
@@ -48,11 +48,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
                 Debug.Write($"\n{nameof(SoilMoistureSensor)}:\n {data.Value}");
 
-                response = new ModuleResponse(true, data);
+                response = new ModuleResponse<IData>(true, data);
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(false, null, ex);
+                response = new ModuleResponse<IData>(false, null, ex);
             }
             finally
             {

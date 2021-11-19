@@ -42,7 +42,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
                 var dpData = data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
-                StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse(true, dpData)));
+                StateChanged?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse<IData>(true, dpData)));
             }
             catch (Exception ex)
             {

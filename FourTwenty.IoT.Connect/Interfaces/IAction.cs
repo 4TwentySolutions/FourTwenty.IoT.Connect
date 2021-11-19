@@ -11,6 +11,6 @@ namespace FourTwenty.IoT.Connect.Interfaces
         ComponentType SensorType { get; }
         ActionType ActionType { get; }
         IRuleData Data { get; }
-        Task Execute();
+        Task Execute(object value = null);
     }
 }

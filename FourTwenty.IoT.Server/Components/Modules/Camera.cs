@@ -10,7 +10,7 @@ using Iot.Device.Media;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
-    public class Camera : IoTComponent
+    public class Camera : IoTComponent, ISensor
     {
         private VideoConnectionSettings _settings = new VideoConnectionSettings(busId: 0, captureSize: (1920, 1080), pixelFormat: PixelFormat.JPEG);
 
@@ -26,28 +26,28 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
         public ValueTask<object> GetData()
         {
-            ModuleResponse response = null;
+            ModuleResponse<IData> response = null;
             try
             {
                 using VideoDevice device = VideoDevice.Create(_settings);
-                var path = Directory.GetCurrentDirectory();
-                var dirPath = $"{path}/CameraPhotos/";
-                var id = Guid.NewGuid();
+                var solPath = Directory.GetCurrentDirectory();
+                var dirPath = "wwwroot/CameraPhotos/";
+                var id = DateTime.Now.Ticks.ToString();
 
                 if (!Directory.Exists(dirPath))
                 {
                     Directory.CreateDirectory(dirPath);
                 }
+                
+                var fullPath = $"CameraPhotos/{id}.jpg";
 
-                var fullPath = $"{path}/CameraPhotos/{id}.jpg";
+                device.Capture($"{solPath}/wwwroot/{fullPath}");
 
-                device.Capture(fullPath);
-
-                response = new ModuleResponse(true, new CameraData(fullPath));
+                response = new ModuleResponse<IData>(true, new CameraData(fullPath));
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(false, null);
+                response = new ModuleResponse<IData>(false, null, ex);
             }
             finally
             {

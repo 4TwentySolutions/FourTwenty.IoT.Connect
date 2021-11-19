@@ -15,11 +15,11 @@ namespace FourTwenty.IoT.Connect.Extensions
             return actions.Where(x => x.ActionType == type).ToList();
         }
 
-        public static async Task ExecuteActions(this IReadOnlyCollection<IAction> actions, ActionType type)
+        public static async Task ExecuteActions(this IReadOnlyCollection<IAction> actions, ActionType type, object value = null)
         {
             foreach (var action in actions.Where(x => x.ActionType == type))
             {
-                await action.Execute();
+                await action.Execute(value);
             }
         }
     }
