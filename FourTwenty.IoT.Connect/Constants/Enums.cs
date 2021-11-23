@@ -78,4 +78,12 @@
         Less = 1,
         More = 2
     }
+
+    public enum ChartHistoryType
+    {
+        Hour = 1,
+        Day = 2,
+        Week = 3,
+        Month = 4
+    }
 }

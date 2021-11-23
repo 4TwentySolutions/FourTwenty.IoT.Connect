@@ -39,5 +39,22 @@ namespace FourTwenty.IoT.Connect.Helpers
             return Math.Floor(seconds) + " seconds";
         }
 
+        public static DateTime ChangeTime(this DateTime dateTime, int hours, int minutes, int seconds, int milliseconds)
+        {
+            return new DateTime(
+                dateTime.Year,
+                dateTime.Month,
+                dateTime.Day,
+                hours,
+                minutes,
+                seconds,
+                milliseconds,
+                dateTime.Kind);
+        }
+
+        public static DateTime ResetTime(this DateTime dateTime)
+        {
+            return ChangeTime(dateTime, 0, 0, 0, 0);
+        }
     }
 }
