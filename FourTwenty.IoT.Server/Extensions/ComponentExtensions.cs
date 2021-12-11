@@ -1,5 +1,4 @@
 ﻿using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Server.Components;
 using FourTwenty.IoT.Server.Components.Relays;
 using FourTwenty.IoT.Server.Components.Sensors;
 
@@ -19,10 +18,17 @@ namespace FourTwenty.IoT.Server.Extensions
             return relay;
         }
 
-        public static IoTComponent SetGroupedModule(this IoTComponent component, bool groupedModule)
+        public static SoilMoistureSensor SetSensorReadType(this SoilMoistureSensor sensor, SensorReadType readType)
         {
-            component.GroupedModule = groupedModule;
-            return component;
+            sensor.ReadType = readType;
+            return sensor;
         }
+
+        public static SoilMoistureSensor SetAnalogSensorReadChannel(this SoilMoistureSensor sensor, int analogSensorReadChannel)
+        {
+            sensor.AnalogSensorReadChannel = analogSensorReadChannel;
+            return sensor;
+        }
+        
     }
 }

@@ -7,7 +7,8 @@
         RangeFinder = 3,
         SoilMoisture = 4,
         Relay = 5,
-        Camera = 6
+        Camera = 6,
+        Mcp3008 = 7
     }
 
     public enum RuleType : byte

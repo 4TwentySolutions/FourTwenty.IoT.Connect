@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Interfaces;
 
@@ -14,9 +15,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
     {
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
-        public TempSensor(IReadOnlyCollection<int> pins, GpioController gpioController) : base(pins, gpioController) {}
-
-        public TempSensor(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<int> pins, GpioController gpioController) : base(rules, pins, gpioController) {}
+        public TempSensor(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController) {}
 
         public override void Initialize() {}
 
@@ -44,6 +43,8 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
             return new ValueTask<object>(response);
         }
+
+        public SensorReadType ReadType => SensorReadType.Digital;
 
 
         private string GetSensorData()

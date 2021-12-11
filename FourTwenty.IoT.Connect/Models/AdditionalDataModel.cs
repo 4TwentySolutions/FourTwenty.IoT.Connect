@@ -10,6 +10,7 @@ namespace FourTwenty.IoT.Connect.Models
         public DhtType? DhtType { get; set; }
         public bool? CloseOnInit { get; set; }
         public SensorReadType? SensorReadType { get; set; }
+        public int? AnalogSensorReadChannel { get; set; }
     }
 
     public class PinNameItem

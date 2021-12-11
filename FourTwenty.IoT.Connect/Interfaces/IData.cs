@@ -97,8 +97,17 @@ namespace FourTwenty.IoT.Connect.Interfaces
 
     public class SoilMoistureData : IData
     {
-        public RelayState? State { get; set; }
         public string Value { get; set; }
-        public Dictionary<int, RelayState> Values { get; set; }
+    }
+
+
+    /// <summary>
+    /// Model for reading data from MCP3008 by python
+    /// </summary>
+    public class ADCData
+    {
+        public int Channel { get; set; }
+        public double Value { get; set; }
+        public double Voltage { get; set; }
     }
 }

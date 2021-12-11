@@ -10,5 +10,6 @@ namespace FourTwenty.IoT.Server.Interfaces
         Task StartJobs(IComponent component);
         Task StopJobs();
         Task StopJobs(IComponent component);
+        Task StopJobs(int componentId);
     }
 }

@@ -17,12 +17,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 		private Hcsr04 _sensor;
 		private bool isDisposed;
 
-		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
+		public RangeFinderSensor(PinNameItem triggerPin, PinNameItem echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
 		{
             ComponentType = ComponentType.RangeFinder;
         }
 
-		public RangeFinderSensor(int triggerPin, int echoPin, GpioController controller) : base(new[] { triggerPin, echoPin }, controller)
+		public RangeFinderSensor(PinNameItem triggerPin, PinNameItem echoPin, GpioController controller) : base(new[] { triggerPin, echoPin }, controller)
 		{
             ComponentType = ComponentType.RangeFinder;
         }
@@ -31,16 +31,10 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public override void Initialize()
         {
-            try
+            foreach (var pin in Pins)
             {
-                foreach (var pin in Pins)
-                {
+                if (Gpio.IsPinOpen(pin))
                     Gpio.ClosePin(pin);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
             }
 
             _sensor = new Hcsr04(Gpio, Pins.FirstOrDefault(), Pins.LastOrDefault());
@@ -49,6 +43,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 		public ValueTask<object> GetData()
         {
             RangeFinderData data = null;
+
+            foreach (var pin in Pins)
+            {
+                if (!Gpio.IsPinOpen(pin))
+                    Gpio.OpenPin(pin);
+            }
 
             if (_sensor.TryGetDistance(out var ds))
             {
@@ -61,5 +61,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 			return new ValueTask<object>(dpData);
 		}
+
+        public SensorReadType ReadType { get; set; }
     }
 }

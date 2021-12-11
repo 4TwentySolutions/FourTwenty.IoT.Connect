@@ -66,10 +66,18 @@ namespace FourTwenty.IoT.Server.Services
             if (component == null)
                 return;
 
+            await StopJobs(component.Id);
+        }
+
+        public async Task StopJobs(int componentId)
+        {
+            if (componentId <= 0)
+                return;
+
             var scheduler = await StdSchedulerFactory.GetDefaultScheduler();
             if (scheduler != null && scheduler.IsStarted)
             {
-                var jobKeys = await scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(component.Id.ToString()));
+                var jobKeys = await scheduler.GetJobKeys(GroupMatcher<JobKey>.GroupEquals(componentId.ToString()));
                 await scheduler.DeleteJobs(jobKeys);
             }
         }

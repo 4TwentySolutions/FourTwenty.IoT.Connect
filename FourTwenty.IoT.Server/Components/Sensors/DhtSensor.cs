@@ -1,7 +1,6 @@
 ﻿using System;
 using FourTwenty.IoT.Connect.Interfaces;
 using Iot.Device.DHTxx;
-using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,11 +15,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
         public int ActualPin => Pins.FirstOrDefault();
+        public SensorReadType ReadType { get; set; }
 
         public DhtType DhtType { get; set; }
-
-        public DhtSensor(int gpioPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { gpioPin }, controller) { }
-        public DhtSensor(int gpioPin, GpioController controller) : base(new[] { gpioPin }, controller) { }
+        
+        public DhtSensor(PinNameItem gpioPin, GpioController controller) : base(new[] { gpioPin }, controller) { }
 
         public override void Initialize()
         {
@@ -45,6 +44,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
             try
             {
+                var tmp = _sensor.Temperature.DegreesCelsius;
+                var hmd = _sensor.Humidity.Value;
+
                 response = _sensor == null ?
                     new ModuleResponse<IData>(false, null) :
                     new ModuleResponse<IData>(_sensor.Temperature.DegreesCelsius > -150, new DhtData(Math.Round(_sensor.Temperature.DegreesCelsius, 2), Math.Round(_sensor.Humidity.Value, 2)));
@@ -59,7 +61,6 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
 
             return new ValueTask<object>(response);
-
         }
     }
 }

@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Models;
+using FourTwenty.IoT.Server.Interfaces;
 
 namespace FourTwenty.IoT.Server.Components
 {
     public class IoTComponent : IComponent
     {
         protected readonly GpioController Gpio;
+        public IIoTRuntimeService IoTRuntimeService { get; set; }
 
         #region properties
         public int Id { get; set; }
@@ -17,24 +20,24 @@ namespace FourTwenty.IoT.Server.Components
         public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
         public IReadOnlyCollection<IAction> Actions { get; set; }
 
-        public bool GroupedModule { get; set; }
         public string Name { get; set; }
         public WorkState RulesWorkState { get; set; } // => Rules.All(x => x.IsEnabled) ? WorkState.Running : Rules.All(x => !x.IsEnabled) ? WorkState.Stopped : WorkState.Mixed;
         public ComponentType ComponentType { get; set; }
 
         #endregion
 
-        public IoTComponent(IReadOnlyCollection<int> pins, GpioController gpioController) : this(null, pins, gpioController) { }
+        public IoTComponent(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : this(null, pins, gpioController) { }
 
-        protected IoTComponent(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<int> pins,
-            GpioController gpioController)
+        protected IoTComponent(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<PinNameItem> pins, GpioController gpioController)
         {
 
             Gpio = gpioController;
-            Pins = pins;
+            Pins = pins.Select(x => x.Pin).ToList();
             Rules = rules;
+            PinsNames = pins;
         }
 
+        public IReadOnlyCollection<PinNameItem> PinsNames { get; }
         public IReadOnlyCollection<int> Pins { get; }
 
         public virtual void Initialize()

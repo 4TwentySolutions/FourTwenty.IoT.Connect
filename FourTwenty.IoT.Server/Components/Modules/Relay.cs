@@ -19,11 +19,23 @@ namespace FourTwenty.IoT.Server.Components.Relays
         public IDictionary<int, RelayState> States { get; }
         public bool CloseOnInit { get; set; }
         public event EventHandler<ModuleResponseEventArgs> StateChanged;
-
-
-        public Relay(IReadOnlyCollection<int> pins, GpioController gpioController) : base(pins, gpioController)
+        
+        public Relay(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController)
         {
-            States = new Dictionary<int, RelayState>(pins.Select(x => new KeyValuePair<int, RelayState>(x, RelayState.Closed)));
+            States = new Dictionary<int, RelayState>(pins.Select(x => new KeyValuePair<int, RelayState>(x.Pin, RelayState.Closed)));
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            foreach (var pin in Pins)
+            {
+                Gpio.SetPinMode(pin, PinMode.Output);
+                if (CloseOnInit)
+                {
+                    SetValue(PinValue.High, pin);
+                }
+            }
         }
 
         public override void SetValue(PinValue value, int pin)
@@ -53,21 +65,5 @@ namespace FourTwenty.IoT.Server.Components.Relays
                 _relayLocker.Release();
             }
         }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-            foreach (var pin in Pins)
-            {
-                Gpio.SetPinMode(pin, PinMode.Output);
-                if (CloseOnInit)
-                {
-                    SetValue(PinValue.High, pin);
-                }
-
-            }
-        }
-
-
     }
 }

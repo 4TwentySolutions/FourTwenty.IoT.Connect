@@ -4,6 +4,7 @@ using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Extensions;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Components;
+using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Components.Sensors;
 using FourTwenty.IoT.Server.Interfaces;
 using Quartz;
@@ -28,14 +29,31 @@ namespace FourTwenty.IoT.Server.Jobs
 
             await component.Actions.ExecuteActions(ActionType.Pre);
 
-            if (component is ISensor sensor)
+            switch (component)
             {
-                var data = await sensor.GetData();
+                case ISensor sensor:
+                {
+                    var data = await sensor.GetData();
 
-                if (messagesService != null)
-                    await messagesService.SendMessage(component, data);
+                    if (messagesService != null)
+                        await messagesService.SendMessage(component, data);
 
-                await component.Actions.ExecuteActions(ActionType.Comparison, data);
+                    await component.Actions.ExecuteActions(ActionType.Comparison, data);
+                    break;
+                }
+                case Camera camera:
+                {
+                    var data = await camera.GetPhoto();
+
+                    if (messagesService != null)
+                        await messagesService.SendMessage(component, data);
+                    break;
+                }
+                case Mcp3008IoT mcp3008:
+                {
+
+                    break;
+                }
             }
 
             await component.Actions.ExecuteActions(ActionType.Post);

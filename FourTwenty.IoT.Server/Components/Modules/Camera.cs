@@ -10,21 +10,16 @@ using Iot.Device.Media;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
-    public class Camera : IoTComponent, ISensor
+    public class Camera : IoTComponent
     {
         private VideoConnectionSettings _settings = new VideoConnectionSettings(busId: 0, captureSize: (1920, 1080), pixelFormat: PixelFormat.JPEG);
 
-
-        public Camera(IReadOnlyCollection<int> pins, GpioController gpioController) : base(pins, gpioController)
-        {
-        }
-
-        public Camera(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<int> pins, GpioController gpioController) : base(rules, pins, gpioController)
-        {
-        }
-
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
-        public ValueTask<object> GetData()
+
+        public Camera(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController) { }
+        
+        
+        public ValueTask<ModuleResponse<IData>> GetPhoto()
         {
             ModuleResponse<IData> response = null;
             try
@@ -54,7 +49,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
             }
 
-            return new ValueTask<object>(response);
+            return new ValueTask<ModuleResponse<IData>>(response);
         }
     }
 }

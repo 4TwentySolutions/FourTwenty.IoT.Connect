@@ -14,17 +14,17 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 
         public string Execute(string val)
 		{
-			if (double.TryParse(val, out var value) &&
-				Options is PercentParams opt &&
-				opt.Max != -1 && opt.Min != -1)
-			{
-				var v = (opt.Max - value) / (opt.Max / opt.Min);
-				v = v > 0 ? 100 - v : 100 + v;
+            if (!double.TryParse(val, out var value) 
+                || Options is not PercentParams opt 
+                || opt.Max == -1 
+                || opt.Min == -1) 
+                return val;
+            var v = (opt.Max - value) / (opt.Max / opt.Min);
+            v = v > 0 ? 100 - v : 100 + v;
 
-				val = Math.Round(v, 2) + "%";
-			}
+            val = Math.Round(v, 2) + "%";
 
-			return val;
+            return val;
 		}
 
 		public IData Execute(ComponentType type, IData data)

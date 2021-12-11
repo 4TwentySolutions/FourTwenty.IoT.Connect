@@ -1,0 +1,23 @@
+﻿using System.Collections.Generic;
+using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Entities;
+using FourTwenty.IoT.Connect.Interfaces;
+
+namespace FourTwenty.IoT.Server.ViewModels
+{
+	public class ModuleRuleVm : EntityViewModel<ModuleRule>
+	{
+		public int Id { get; set; }
+        public string RuleName { get; set; }
+		public JobType Job { get; set; }
+		public RuleType RuleType { get; set; }
+		public string RuleContent { get; set; }
+		public int GrowBoxModuleId { get; set; }
+		public List<int> Pins { get; set; }
+		public int? Pin { get; set; }
+		public bool IsEnabled { get; set; }
+		public IDisplayOption DisplayOption { get; set; }
+		public int DisplayOrder { get; set; }
+		public IRuleData RuleData { get;set; }
+	}
+}

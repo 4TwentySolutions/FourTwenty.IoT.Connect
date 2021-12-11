@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using FourTwenty.Core.Data.Models;
 using FourTwenty.IoT.Connect.Constants;
+using Newtonsoft.Json;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
@@ -15,6 +16,8 @@ namespace FourTwenty.IoT.Connect.Entities
         public string AdditionalData { get; set; }
         public int GrowBoxId { get; set; }
         public bool GroupedModule { get; set; }
+        
+        [JsonIgnore]
         public virtual GrowBox GrowBox { get; set; }
         public virtual ICollection<ModuleRule> Rules { get; set; }
     }

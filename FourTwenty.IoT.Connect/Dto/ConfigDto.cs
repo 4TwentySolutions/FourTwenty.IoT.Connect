@@ -5,16 +5,15 @@ namespace FourTwenty.IoT.Connect.Dto
 {
     public class ConfigDto
     {
-        public List<GrowBoxModuleDto> Modules { get; set; }
-
-        /// <summary>
-        /// Port for connections (default port - 5000) 
-        /// </summary>
-        public int ListeningPort { get; set; } = 5000;
-
         /// <summary>
         /// Config version - DateTime.Now.Ticks
         /// </summary>
         public long CurrentVersion { get; set; }
+
+
+        /// <summary>
+        /// Json model of GrowBoxViewModel
+        /// </summary>
+        public string Config { get; set; }
     }
 }
