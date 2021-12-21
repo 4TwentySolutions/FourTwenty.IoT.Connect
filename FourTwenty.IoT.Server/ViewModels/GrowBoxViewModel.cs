@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FourTwenty.IoT.Connect.Entities;
+﻿using FourTwenty.IoT.Connect.Entities;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
@@ -14,9 +11,23 @@ namespace FourTwenty.IoT.Server.ViewModels
             {
                 if (string.IsNullOrEmpty(value))
                     Port = null;
-                if (int.TryParse(value, out int port))
+                if (int.TryParse(value, out var port))
                     Port = port;
             }
         }
+
+        public string TelegramBotChatIdSrt
+        {
+            get => TelegramBotChatId.ToString();
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                    TelegramBotChatId = 0;
+                if (long.TryParse(value, out var chatId))
+                    TelegramBotChatId = chatId;
+            }
+        }
+
+        
     }
 }

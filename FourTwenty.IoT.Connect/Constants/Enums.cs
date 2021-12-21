@@ -25,7 +25,14 @@
         On = 3,
         Off = 4,
         Period = 5,
-        //Action = 6,
+    }
+
+    public enum ActionJobType
+    {
+        Read = 1,
+        On = 2,
+        Off = 3,
+        SendTelegramBot = 4
     }
 
     public enum DisplayType

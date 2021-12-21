@@ -11,6 +11,7 @@ namespace FourTwenty.IoT.Connect.Entities
         public string Description { get; set; }
         public string Address { get; set; }
         public int? Port { get; set; }
+        public long TelegramBotChatId { get; set; }
         public long ConfigVersion { get; set; }
         public virtual ICollection<GrowBoxModule> Modules { get; set; }
     }
