@@ -8,7 +8,9 @@ using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Server.Components.Sensors;
 using FourTwenty.IoT.Server.Extensions;
+using SixLabors.ImageSharp.Formats;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
@@ -27,13 +29,15 @@ namespace FourTwenty.IoT.Server.ViewModels
         public GrowBoxViewModel GrowBox { get; set; }
         public ICollection<ModuleRuleVm> Rules { get; set; }
         public IComponent IotComponent { get; set; }
-        public ISensor Sensor => IotComponent as ISensor;
-        public IRelay Relay => IotComponent as IRelay;
+        // public ISensor Sensor => IotComponent as ISensor;
+        // public IRelay Relay => IotComponent as IRelay;
 
         public Dictionary<int, string> RelayValues { get; set; }
 
         private readonly SemaphoreSlim _relayLocker = new SemaphoreSlim(1, 1);
 
+
+        public ModuleResponse<BaseData> CurrentValue { get; set; }
         public string CurrentValueString { get; set; }
         public string LastValueTime { get; set; }
 
@@ -54,19 +58,34 @@ namespace FourTwenty.IoT.Server.ViewModels
 
         public void Subscribe()
         {
-
-            if (Sensor != null)
-                Sensor.DataReceived += OnDataReceived;
-            if (Relay != null)
-                Relay.StateChanged += OnDataReceived;
+            switch (IotComponent)
+            {
+                case ISensor sensor:
+                    sensor.DataReceived += OnDataReceived;
+                    break;
+                case IRelay relay:
+                    relay.StateChanged += OnDataReceived;
+                    break;
+                case Camera camera:
+                    camera.DataReceived += OnDataReceived;
+                    break;
+            }
         }
 
         public void Unsubscribe()
         {
-            if (Sensor != null)
-                Sensor.DataReceived -= OnDataReceived;
-            if (Relay != null)
-                Relay.StateChanged -= OnDataReceived;
+            switch (IotComponent)
+            {
+                case ISensor sensor:
+                    sensor.DataReceived -= OnDataReceived;
+                    break;
+                case IRelay relay:
+                    relay.StateChanged -= OnDataReceived;
+                    break;
+                case Camera camera:
+                    camera.DataReceived -= OnDataReceived;
+                    break;
+            }
         }
 
 
@@ -74,20 +93,22 @@ namespace FourTwenty.IoT.Server.ViewModels
 
         private async void OnDataReceived(object? sender, ModuleResponseEventArgs e)
         {
-            if (e.Data?.IsSuccess == false)
+            CurrentValue = e.Data;
+
+            if (!e.Data.IsSuccess)
                 return;
 
-            await UpdateCurrentValue(e.Data?.Data);
+            await UpdateCurrentValue(e.Data.Data);
             LastValueTime = DateTime.Now.ToString("dd MMM, HH:mm");
 
-            VisualStateChanged?.Invoke(this, new VisualStateEventArgs());
+            VisualStateChanged?.Invoke(this, new VisualStateEventArgs(Id));
         }
 
-        public async Task UpdateCurrentValue(IData dataItem)
+        public async Task UpdateCurrentValue(BaseData baseDataItem)
         {
-            CurrentValueString = dataItem?.Value ?? string.Empty;
+            CurrentValueString = baseDataItem?.Value ?? string.Empty;
 
-            switch (dataItem)
+            switch (baseDataItem)
             {
                 case RelayData relayData:
                     {
@@ -117,7 +138,7 @@ namespace FourTwenty.IoT.Server.ViewModels
                     }
                 case SoilMoistureData soilMoistureData:
                     {
-                        CurrentValueString = soilMoistureData.Value.ToString();
+                        CurrentValueString = soilMoistureData.Value;
                         break;
                     }
                 case CameraData cameraData:

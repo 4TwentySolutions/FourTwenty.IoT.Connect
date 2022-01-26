@@ -1,19 +1,13 @@
-﻿using System;
-using FourTwenty.IoT.Connect.Constants;
+﻿using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Interfaces.Rules;
+using FourTwenty.IoT.Connect.Rules;
 
-namespace FourTwenty.IoT.Connect.DisplayOptions
+namespace FourTwenty.IoT.Server.DisplayOptions
 {
-	public class TextDisplayOption : IDisplayOption
+	public class TextDisplayRule : DisplayRule
 	{
-        public bool IsEnabled { get; set; }
-        public DisplayType DisplayType => DisplayType.Text;
-		public IParams Options { get; set; }
-		public int DisplayOrder { get; set; }
-        public int? Pin { get; set; }
-
-
-        public string Execute(string value)
+        public override string Execute(string value)
 		{
 			if (Options is TextParams opt)
 			{
@@ -23,7 +17,7 @@ namespace FourTwenty.IoT.Connect.DisplayOptions
 			return value;
 		}
 
-		public IData Execute(ComponentType type, IData data)
+		public override BaseData Execute(ComponentType type, BaseData data)
 		{
 			if (Options is TextParams opt && data != null)
 			{

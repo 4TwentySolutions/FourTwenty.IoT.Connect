@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 
-namespace FourTwenty.IoT.Connect.Interfaces
+namespace FourTwenty.IoT.Connect.Interfaces.Rules
 {
     public interface IAction
     {

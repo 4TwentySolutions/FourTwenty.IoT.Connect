@@ -1,5 +1,5 @@
 ﻿using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Interfaces.Rules;
 
 namespace FourTwenty.IoT.Connect.Models
 {
@@ -12,5 +12,6 @@ namespace FourTwenty.IoT.Connect.Models
         public int Delay { get; set; }
         public int CompareValue { get; set; }
         public ComparisonDirection ComparisonDirection { get; set; }
+        public string Message { get; set; }
     }
 }

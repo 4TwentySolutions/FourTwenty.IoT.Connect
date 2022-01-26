@@ -38,9 +38,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }            
         }
 
-        public ValueTask<object> GetData()
+        public ValueTask<ModuleResponse<BaseData>> GetData()
         {
-            ModuleResponse<IData> response = null;            
+            ModuleResponse<BaseData> response = null;            
 
             try
             {
@@ -48,19 +48,19 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 var hmd = _sensor.Humidity.Value;
 
                 response = _sensor == null ?
-                    new ModuleResponse<IData>(false, null) :
-                    new ModuleResponse<IData>(_sensor.Temperature.DegreesCelsius > -150, new DhtData(Math.Round(_sensor.Temperature.DegreesCelsius, 2), Math.Round(_sensor.Humidity.Value, 2)));
+                    new ModuleResponse<BaseData>(false, null) :
+                    new ModuleResponse<BaseData>(_sensor.Temperature.DegreesCelsius > -150, new DhtData(Math.Round(_sensor.Temperature.DegreesCelsius, 2), Math.Round(_sensor.Humidity.Value, 2)));
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse<IData>(false, null, ex);
+                response = new ModuleResponse<BaseData>(false, null, ex);
             }
             finally
             {
                 DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
             }
 
-            return new ValueTask<object>(response);
+            return new ValueTask<ModuleResponse<BaseData>>(response);
         }
     }
 }

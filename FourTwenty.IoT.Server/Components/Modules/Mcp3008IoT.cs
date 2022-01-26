@@ -44,7 +44,7 @@ namespace FourTwenty.IoT.Server.Components.Modules
                     StartInfo = new ProcessStartInfo
                     {
                         FileName = "python3",  //my linux command i want to execute
-                        Arguments = $"Scripts/mcp3008-read.py --channel {channel}",  //the argument
+                        Arguments = $"RuntimeScripts/mcp3008-read.py --channel {channel}",  //the argument
                         UseShellExecute = false,
                         RedirectStandardOutput = true,  //redirect output to my code here
                         RedirectStandardError = true,
@@ -56,7 +56,7 @@ namespace FourTwenty.IoT.Server.Components.Modules
                 proc.OutputDataReceived += ProcOnOutputDataReceived;
                 proc.Start();
                 proc.BeginOutputReadLine();
-                proc.WaitForExit(6000);
+                proc.WaitForExit(10000);
                 proc.OutputDataReceived -= ProcOnOutputDataReceived;
                 var result = new List<ADCData>();
                 var lines = new List<string>(_readLines);

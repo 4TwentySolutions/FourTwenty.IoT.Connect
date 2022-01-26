@@ -2,6 +2,8 @@
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Entities;
 using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Interfaces.Rules;
+using FourTwenty.IoT.Connect.Rules;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
@@ -16,8 +18,8 @@ namespace FourTwenty.IoT.Server.ViewModels
 		public List<int> Pins { get; set; }
 		public int? Pin { get; set; }
 		public bool IsEnabled { get; set; }
-		public IDisplayOption DisplayOption { get; set; }
-		public int DisplayOrder { get; set; }
+		public DisplayRule DisplayRule { get; set; }
+		public int SortOrder { get; set; }
 		public IRuleData RuleData { get;set; }
 	}
 }

@@ -15,7 +15,6 @@ namespace FourTwenty.IoT.Connect.Entities
         public string PinsNames { get; set; }
         public string AdditionalData { get; set; }
         public int GrowBoxId { get; set; }
-        public bool GroupedModule { get; set; }
         
         [JsonIgnore]
         public virtual GrowBox GrowBox { get; set; }

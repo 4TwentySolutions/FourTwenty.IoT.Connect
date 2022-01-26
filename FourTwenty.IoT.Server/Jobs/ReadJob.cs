@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Extensions;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Server.Components;
 using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Components.Sensors;
+using FourTwenty.IoT.Server.Extensions;
 using FourTwenty.IoT.Server.Interfaces;
 using Quartz;
 

@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Interfaces.Rules;
 using FourTwenty.IoT.Connect.Models;
+using FourTwenty.IoT.Connect.Rules;
 using FourTwenty.IoT.Server.Interfaces;
+using GrowIoT.Rules;
 
 namespace FourTwenty.IoT.Server.Components
 {
@@ -16,8 +19,8 @@ namespace FourTwenty.IoT.Server.Components
 
         #region properties
         public int Id { get; set; }
-        public IReadOnlyCollection<IRule> Rules { get; set; }
-        public IReadOnlyCollection<IDisplayOption> DisplayOptions { get; set; }
+        public IReadOnlyCollection<CronRule> Rules { get; set; }
+        public IReadOnlyCollection<DisplayRule> DisplayOptions { get; set; }
         public IReadOnlyCollection<IAction> Actions { get; set; }
 
         public string Name { get; set; }
@@ -28,7 +31,7 @@ namespace FourTwenty.IoT.Server.Components
 
         public IoTComponent(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : this(null, pins, gpioController) { }
 
-        protected IoTComponent(IReadOnlyCollection<IRule> rules, IReadOnlyCollection<PinNameItem> pins, GpioController gpioController)
+        protected IoTComponent(IReadOnlyCollection<CronRule> rules, IReadOnlyCollection<PinNameItem> pins, GpioController gpioController)
         {
 
             Gpio = gpioController;
@@ -66,9 +69,9 @@ namespace FourTwenty.IoT.Server.Components
             return Gpio.Read(pin);
         }
 
-        public void UpdateDisplayOptions(IEnumerable<IDisplayOption> options)
+        public void UpdateDisplayOptions(IEnumerable<DisplayRule> options)
         {
-            DisplayOptions = new List<IDisplayOption>(options);
+            DisplayOptions = new List<DisplayRule>(options);
         }
     }
 }

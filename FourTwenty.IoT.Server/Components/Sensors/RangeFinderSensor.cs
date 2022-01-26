@@ -7,8 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Extensions;
 using FourTwenty.IoT.Connect.Models;
+using FourTwenty.IoT.Server.Extensions;
+using GrowIoT.Rules;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -17,7 +18,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 		private Hcsr04 _sensor;
 		private bool isDisposed;
 
-		public RangeFinderSensor(PinNameItem triggerPin, PinNameItem echoPin, GpioController controller, IReadOnlyCollection<IRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
+		public RangeFinderSensor(PinNameItem triggerPin, PinNameItem echoPin, GpioController controller, IReadOnlyCollection<CronRule> rules) : base(rules, new[] { triggerPin, echoPin }, controller)
 		{
             ComponentType = ComponentType.RangeFinder;
         }
@@ -40,7 +41,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             _sensor = new Hcsr04(Gpio, Pins.FirstOrDefault(), Pins.LastOrDefault());
         }
 
-		public ValueTask<object> GetData()
+		public ValueTask<ModuleResponse<BaseData>> GetData()
         {
             RangeFinderData data = null;
 
@@ -57,10 +58,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 			var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
-			DataReceived?.Invoke(this, new ModuleResponseEventArgs(new ModuleResponse<IData>(dpData != null, dpData)));
+            var response = new ModuleResponse<BaseData>(dpData != null, dpData);
 
-			return new ValueTask<object>(dpData);
-		}
+			DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
+
+            return new ValueTask<ModuleResponse<BaseData>>(response);
+        }
 
         public SensorReadType ReadType { get; set; }
     }

@@ -3,24 +3,20 @@ using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-    public interface IData
+    public abstract class BaseData
     {
-        string Value { get; set; }
+       public string Value { get; set; }
     }
 
-    public class DhtData : IData
+    public class DhtData : TempData
     {
-        public DhtData(double temp, double humidity)
+        public DhtData(double temp, double humidity) : base(temp)
         {
             Temperature = temp;
             Humidity = humidity;
             Value = ToString();
         }
 
-        /// <summary>
-        /// Temperature in celsius
-        /// </summary>
-        public double Temperature { get; set; }
         public double Humidity { get; set; }
 
         /// <summary>
@@ -29,15 +25,13 @@ namespace FourTwenty.IoT.Connect.Interfaces
         ///     - Humidity
         /// </summary>
         /// <returns></returns>
-        public sealed override string ToString()
+        public override string ToString()
         {
             return $"{nameof(Temperature)}: {Temperature}\n{nameof(Humidity)}: {Humidity}";
         }
-
-        public string Value { get; set; }
     }
 
-    public class RangeFinderData : IData
+    public class RangeFinderData : BaseData
     {
         public RangeFinderData(double distance)
         {
@@ -46,10 +40,9 @@ namespace FourTwenty.IoT.Connect.Interfaces
         }
 
         public double Distance { get; set; }
-        public string Value { get; set; }
     }
 
-    public class RelayData : IData
+    public class RelayData : BaseData
     {
         public RelayData(int pin, RelayState state)
         {
@@ -62,15 +55,13 @@ namespace FourTwenty.IoT.Connect.Interfaces
 
         public RelayState State { get; set; }
 
-        public string Value { get; set; }
-
         public override string ToString()
         {
             return $"{nameof(Pin)}: {State}";
         }
     }
 
-    public class TempData : IData
+    public class TempData : BaseData
     {
         public TempData(double temperature)
         {
@@ -78,31 +69,31 @@ namespace FourTwenty.IoT.Connect.Interfaces
             Value = temperature.ToString();
         }
 
+        /// <summary>
+        /// Temperature in celsius
+        /// </summary>
         public double Temperature { get; set; }
-        public string Value { get; set; }
     }
 
-    public class CameraData : IData
+    public class CameraData : BaseData
     {
+        /// <summary>
+        /// Path to the file 
+        /// </summary>
         public CameraData(string path)
         {
             Value = path;
         }
-        
-        /// <summary>
-        /// Path to the file 
-        /// </summary>
-        public string Value { get; set; }
     }
 
-    public class SoilMoistureData : IData
+    public class SoilMoistureData : BaseData
     {
-        public string Value { get; set; }
+        public double Moisture { get; set; }
     }
 
 
     /// <summary>
-    /// Model for reading data from MCP3008 by python
+    /// Model for reading baseData from MCP3008 by python
     /// </summary>
     public class ADCData
     {

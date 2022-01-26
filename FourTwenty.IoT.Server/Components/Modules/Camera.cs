@@ -19,9 +19,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public Camera(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController) { }
         
         
-        public ValueTask<ModuleResponse<IData>> GetPhoto()
+        public ValueTask<ModuleResponse<BaseData>> GetPhoto()
         {
-            ModuleResponse<IData> response = null;
+            ModuleResponse<BaseData> response = null;
             try
             {
                 using VideoDevice device = VideoDevice.Create(_settings);
@@ -38,18 +38,18 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
                 device.Capture($"{solPath}/wwwroot/{fullPath}");
 
-                response = new ModuleResponse<IData>(true, new CameraData(fullPath));
+                response = new ModuleResponse<BaseData>(true, new CameraData(fullPath));
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse<IData>(false, null, ex);
+                response = new ModuleResponse<BaseData>(false, null, ex);
             }
             finally
             {
                 DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
             }
 
-            return new ValueTask<ModuleResponse<IData>>(response);
+            return new ValueTask<ModuleResponse<BaseData>>(response);
         }
     }
 }

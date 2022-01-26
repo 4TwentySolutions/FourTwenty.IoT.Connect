@@ -21,7 +21,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         public int AnalogSensorReadChannel { get; set; }
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
-        
+
         public SoilMoistureSensor(IReadOnlyCollection<PinNameItem> pins, GpioController controller) : base(pins, controller) { }
 
         public override void Initialize()
@@ -33,28 +33,28 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
         }
 
-        public async ValueTask<object> GetData()
+        public async ValueTask<ModuleResponse<BaseData>> GetData()
         {
-            ModuleResponse<IData> response = null;
+            ModuleResponse<BaseData> response = null;
 
             try
             {
-                SoilMoistureData data = null;
+                SoilMoistureData baseData = null;
 
                 switch (ReadType)
                 {
                     case SensorReadType.Digital:
-                    {
-                        RelayState? value = ReadValue(Pins.FirstOrDefault()).GetState();
-
-                        data = new SoilMoistureData
                         {
-                            Value = value.ToString()
-                        };
-                        break;
-                    }
-                    case SensorReadType.Analog:
+                            RelayState? value = ReadValue(Pins.FirstOrDefault()).GetState();
 
+                            baseData = new SoilMoistureData
+                            {
+                                Value = value.ToString(),
+                                Moisture = value == RelayState.Opened ? 1 : 0
+                            };
+                            break;
+                        }
+                    case SensorReadType.Analog:
 
                         var reader = IoTRuntimeService.GetModuleByType(ComponentType.Mcp3008);
 
@@ -67,37 +67,40 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                                 var val = value.Average(x => x.Voltage);
                                 val = Math.Round(val, 2);
 
-                                var percentage = 1 - ((val - Min) / (Max - Min));
-
-                                var res = Math.Round(percentage * 100, 2) + "%";
-
-                                data = new SoilMoistureData
+                                if (val > Min && val < Max)
                                 {
-                                    Value = res
-                                };
+                                    var percentage = 1 - ((val - Min) / (Max - Min));
+
+                                    var res = Math.Round(percentage * 100, 2);
+
+                                    baseData = new SoilMoistureData
+                                    {
+                                        Value = res + "%",
+                                        Moisture = res
+                                    };
+                                }
                             }
                         }
 
                         break;
                 }
-                
-                Debug.Write($"\n{nameof(SoilMoistureSensor)}:\n {data?.Value}");
 
-                response = new ModuleResponse<IData>(data != null, data);
+                Debug.Write($"\n{nameof(SoilMoistureSensor)}:\n {baseData?.Value}");
+
+                response = new ModuleResponse<BaseData>(baseData != null, baseData);
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse<IData>(false, null, ex);
+                response = new ModuleResponse<BaseData>(false, null, ex);
             }
             finally
             {
                 DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
             }
 
-
-            return new ValueTask<object>(response);
+            return response;
         }
 
-        
+
     }
 }
