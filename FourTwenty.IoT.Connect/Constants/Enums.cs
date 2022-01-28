@@ -87,6 +87,13 @@
         More = 2
     }
 
+    public enum ComparisonItem
+    {
+        None = 0,
+        Temperature = 1,
+        Humidity = 2
+    }
+
     public enum ChartHistoryType
     {
         Hour = 1,

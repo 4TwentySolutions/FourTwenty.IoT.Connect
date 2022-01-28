@@ -12,6 +12,7 @@ namespace FourTwenty.IoT.Connect.Models
         public int Delay { get; set; }
         public int CompareValue { get; set; }
         public ComparisonDirection ComparisonDirection { get; set; }
+        public ComparisonItem ComparisonItem { get; set; }
         public string Message { get; set; }
     }
 }

@@ -27,6 +27,11 @@ namespace FourTwenty.IoT.Server.Jobs
             if (component == null)
                 return;
 
+            if (component.ComponentType == ComponentType.SoilMoisture)
+            {
+
+            }
+
             await component.Actions.ExecuteActions(ActionType.Pre);
 
             switch (component)

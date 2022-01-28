@@ -50,52 +50,46 @@ namespace GrowIoT.Rules
                 {
                     if (moduleResponse?.IsSuccess ?? false)
                     {
-                        switch (data.ComparisonDirection)
+                        switch (moduleResponse.Data)
                         {
-                            case ComparisonDirection.Less:
+                            case DhtData dhtValue:
+                                switch (data.ComparisonItem)
                                 {
-                                    if (moduleResponse?.Data is DhtData dhtValue)
-                                    {
-                                        if (dhtValue.Temperature < data.CompareValue)
+                                    case ComparisonItem.Temperature:
+                                        switch (data.ComparisonDirection)
                                         {
-                                            await ExecuteRuleBuJobType(data, $"{dhtValue.Temperature}°C");
+                                            case ComparisonDirection.Less when dhtValue.Temperature < data.CompareValue:
+                                            case ComparisonDirection.More when dhtValue.Temperature > data.CompareValue:
+                                                await ExecuteRuleBuJobType(data, $"{dhtValue.Temperature}°C");
+                                                break;
                                         }
-                                    }
 
-                                    if (moduleResponse?.Data is SoilMoistureData soilValue)
-                                    {
-                                        if (soilValue.Moisture < data.CompareValue)
+                                        break;
+                                    case ComparisonItem.Humidity:
+                                        switch (data.ComparisonDirection)
                                         {
-                                            await ExecuteRuleBuJobType(data, $"{soilValue.Moisture}%");
+                                            case ComparisonDirection.Less when dhtValue.Humidity < data.CompareValue:
+                                            case ComparisonDirection.More when dhtValue.Humidity > data.CompareValue:
+                                                await ExecuteRuleBuJobType(data, $"{dhtValue.Humidity}%");
+                                                break;
                                         }
-                                    }
 
-
-                                    break;
+                                        break;
                                 }
-                            case ComparisonDirection.More:
+
+                                break;
+                            case SoilMoistureData soilValue:
+                                switch (data.ComparisonDirection)
                                 {
-                                    if (moduleResponse?.Data is DhtData dhtValue)
-                                    {
-                                        if (dhtValue.Temperature > data.CompareValue)
-                                        {
-                                            await ExecuteRuleBuJobType(data, $"{dhtValue.Temperature}°C");
-                                        }
-                                    }
-
-                                    if (moduleResponse?.Data is SoilMoistureData soilValue)
-                                    {
-                                        if (soilValue.Moisture > data.CompareValue)
-                                        {
-                                            await ExecuteRuleBuJobType(data, $"{soilValue.Moisture}%");
-                                        }
-                                    }
-
-                                    break;
+                                    case ComparisonDirection.Less when soilValue.Moisture < data.CompareValue:
+                                    case ComparisonDirection.More when soilValue.Moisture > data.CompareValue:
+                                        await ExecuteRuleBuJobType(data, $"{soilValue.Moisture}%");
+                                        break;
                                 }
+
+                                break;
                         }
-                    }                   
-
+                    }
                 }
                 else
                 {
