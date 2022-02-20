@@ -1,11 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FourTwenty.IoT.Connect.Constants;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
     public abstract class BaseData
     {
-       public string Value { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string Value { get; set; }
+
+        protected BaseData()
+        {
+            DateCreated = DateTime.Now;
+        }
     }
 
     public class DhtData : TempData

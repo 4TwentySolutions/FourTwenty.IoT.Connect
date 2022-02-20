@@ -101,4 +101,9 @@
         Week = 3,
         Month = 4
     }
+
+    public enum СommunicationСhannel
+    {
+        Telegram = 1
+    }
 }

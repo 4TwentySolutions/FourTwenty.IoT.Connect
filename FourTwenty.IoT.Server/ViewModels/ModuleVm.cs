@@ -27,7 +27,7 @@ namespace FourTwenty.IoT.Server.ViewModels
         public int GrowBoxId { get; set; }
         public string AdditionalData { get; set; }
         public GrowBoxViewModel GrowBox { get; set; }
-        public ICollection<ModuleRuleVm> Rules { get; set; }
+        public IList<ModuleRuleVm> Rules { get; set; }
         public IComponent IotComponent { get; set; }
         // public ISensor Sensor => IotComponent as ISensor;
         // public IRelay Relay => IotComponent as IRelay;

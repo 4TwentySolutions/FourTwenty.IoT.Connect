@@ -1,4 +1,5 @@
-﻿using FourTwenty.IoT.Connect.Entities;
+﻿using System.Collections.Generic;
+using FourTwenty.IoT.Connect.Entities;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
@@ -27,7 +28,5 @@ namespace FourTwenty.IoT.Server.ViewModels
                     TelegramBotChatId = chatId;
             }
         }
-
-        
     }
 }
