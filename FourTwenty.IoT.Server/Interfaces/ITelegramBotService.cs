@@ -5,6 +5,6 @@ namespace FourTwenty.IoT.Server.Interfaces
     public interface ITelegramBotService
     {
         Task InitBot(long chatId);
-        Task SendMessage(string message);
+        Task<bool> SendMessage(string message);
     }
 }
