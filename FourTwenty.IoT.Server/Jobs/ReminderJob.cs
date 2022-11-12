@@ -31,7 +31,7 @@ namespace FourTwenty.IoT.Server.Jobs
             {
                 if (!reminder.IsExecuted)
                 {
-                    if (reminder.Source == СommunicationСhannel.Telegram)
+                    if (reminder.Source == CommunicationСhannel.Telegram)
                     {
                        var sendResult = await telegramBotService.SendMessage(reminder.Description);
 

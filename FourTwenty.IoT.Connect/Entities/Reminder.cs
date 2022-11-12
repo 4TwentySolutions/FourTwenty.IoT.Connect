@@ -13,7 +13,7 @@ namespace FourTwenty.IoT.Connect.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime ExecuteTime { get; set; }
-        public СommunicationСhannel Source { get; set; }
+        public CommunicationСhannel Source { get; set; }
         public bool IsExecuted { get; set; }
     }
 }

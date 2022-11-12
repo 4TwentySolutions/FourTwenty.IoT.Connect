@@ -39,6 +39,7 @@
     {
         Text = 1,
         Percent = 2,
+        Widget = 3
     }
 
     public enum ActionType
@@ -68,14 +69,14 @@
         Stopped,
         Mixed
     }
-    
+
     public enum DhtType
     {
         Dht11 = 1,
         Dht22 = 2
     }
 
-    public enum SensorReadType 
+    public enum SensorReadType
     {
         Digital = 1,
         Analog = 2 // Use only with MCP3008 converter
@@ -102,8 +103,14 @@
         Month = 4
     }
 
-    public enum СommunicationСhannel
+    public enum CommunicationСhannel
     {
         Telegram = 1
+    }
+
+    public enum WidgetType
+    {
+        View = 0,
+        Chart = 1,
     }
 }

@@ -11,11 +11,13 @@ namespace FourTwenty.IoT.Server.Interfaces
 {
     public interface IIoTRuntimeService : IInitializeService<GrowBoxViewModel>
     {
-        IList<IComponent> GetModules();
+        IList<IComponent> GetComponents();
         GpioController Gpio { get; }
         IComponent GetModule(int id);
+        IReadOnlyList<ModuleVm> GetModules();
         //Task ControlModuleJobs(int moduleId, WorkState WorkState);
         Task<IoTComponent> ConfigureModule(ModuleVm module);
         IComponent GetModuleByType(ComponentType componentType);
+        Task FillModulesHistory(IReadOnlyList<ModuleVm> modules);
     }
 }
