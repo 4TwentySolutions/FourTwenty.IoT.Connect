@@ -88,6 +88,14 @@ namespace GrowIoT.Rules
                                 }
 
                                 break;
+                            case PinValueData pinValue:
+
+                                if (data.CompareValue == pinValue.PinValue)
+                                {
+                                    await ExecuteRuleBuJobType(data, pinValue.Value);
+                                }
+
+                                break;
                         }
                     }
                 }

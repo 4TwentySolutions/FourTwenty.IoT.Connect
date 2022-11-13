@@ -93,7 +93,8 @@
     {
         None = 0,
         Temperature = 1,
-        Humidity = 2
+        Humidity = 2,
+        PinValue = 3
     }
 
     public enum ChartHistoryType

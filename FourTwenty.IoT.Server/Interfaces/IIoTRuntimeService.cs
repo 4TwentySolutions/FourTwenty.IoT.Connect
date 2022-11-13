@@ -14,10 +14,10 @@ namespace FourTwenty.IoT.Server.Interfaces
         IList<IComponent> GetComponents();
         GpioController Gpio { get; }
         IComponent GetModule(int id);
-        IReadOnlyList<ModuleVm> GetModules();
+        IList<ModuleVm> GetModules();
         //Task ControlModuleJobs(int moduleId, WorkState WorkState);
         Task<IoTComponent> ConfigureModule(ModuleVm module);
         IComponent GetModuleByType(ComponentType componentType);
-        Task FillModulesHistory(List<ModuleVm> modules);
+        Task FillModulesHistory(IList<ModuleVm> modules);
     }
 }
