@@ -18,6 +18,6 @@ namespace FourTwenty.IoT.Server.Interfaces
         //Task ControlModuleJobs(int moduleId, WorkState WorkState);
         Task<IoTComponent> ConfigureModule(ModuleVm module);
         IComponent GetModuleByType(ComponentType componentType);
-        Task FillModulesHistory(IReadOnlyList<ModuleVm> modules);
+        Task FillModulesHistory(List<ModuleVm> modules);
     }
 }

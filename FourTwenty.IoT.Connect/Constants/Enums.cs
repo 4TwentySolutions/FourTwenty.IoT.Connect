@@ -8,7 +8,8 @@
         SoilMoisture = 4,
         Relay = 5,
         Camera = 6,
-        Mcp3008 = 7
+        Mcp3008 = 7,
+        NonContactLiquid = 8
     }
 
     public enum RuleType : byte

@@ -98,6 +98,17 @@ namespace FourTwenty.IoT.Connect.Interfaces
         public double Moisture { get; set; }
     }
 
+    public class PinValueData : BaseData
+    {
+        public int PinValue { get; set; }
+
+        public PinValueData(int pinValue)
+        {
+            PinValue = pinValue;
+            Value = pinValue.ToString();
+        }
+    }
+
 
     /// <summary>
     /// Model for reading baseData from MCP3008 by python
