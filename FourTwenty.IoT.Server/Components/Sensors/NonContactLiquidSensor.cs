@@ -33,7 +33,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             {
                 var value = ReadValue(Pins.FirstOrDefault());
 
-                Debug.Write($"\n{nameof(NonContactLiquidSensor)}:\n {value}");
+                Debug.Write($"\n{nameof(NonContactLiquidSensor)}:{Pins.FirstOrDefault()}:{Name}:{value}\n");
 
                 response = new ModuleResponse<BaseData>(true, new PinValueData(value == PinValue.High ? 1 : 0));
             }

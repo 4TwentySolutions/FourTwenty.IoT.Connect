@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
+		<TargetFramework>net6.0</TargetFramework>
         <Company>4Twenty Solutions</Company>
         <Authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</Authors>
         <LangVersion>latest</LangVersion>
