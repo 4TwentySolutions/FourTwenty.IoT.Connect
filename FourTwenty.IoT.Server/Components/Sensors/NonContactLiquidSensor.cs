@@ -11,16 +11,13 @@ using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Extensions;
 using GrowIoT.Rules;
+using Microsoft.Extensions.Logging;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
     public class NonContactLiquidSensor : IoTComponent, ISensor
     {
         public NonContactLiquidSensor(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController)
-        {
-        }
-
-        protected NonContactLiquidSensor(IReadOnlyCollection<CronRule> rules, IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(rules, pins, gpioController)
         {
         }
 
@@ -33,7 +30,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             {
                 var value = ReadValue(Pins.FirstOrDefault());
 
-                Debug.Write($"\n{nameof(NonContactLiquidSensor)}:{Pins.FirstOrDefault()}:{Name}:{value}\n");
+                _logger?.LogInformation($"\n{nameof(NonContactLiquidSensor)}:{Pins.FirstOrDefault()}:{Name}:{value}\n");
 
                 response = new ModuleResponse<BaseData>(true, new PinValueData(value == PinValue.High ? 1 : 0));
             }

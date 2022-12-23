@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
         <Company>4Twenty Solutions</Company>
         <Authors>Anton Yaroshenko, Pavel Kurianov, 4Twenty Solutions</Authors>
         <LangVersion>latest</LangVersion>
@@ -15,7 +15,7 @@
 
     <ItemGroup>
         <PackageReference Include="FourTwenty.Core.Data" Version="1.0.14" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     </ItemGroup>
 

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Extensions;
+using Microsoft.Extensions.Logging;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -85,7 +86,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                         break;
                 }
 
-                Debug.Write($"\n{nameof(SoilMoistureSensor)}:\n {baseData?.Value}");
+                _logger?.LogInformation($"\n{nameof(SoilMoistureSensor)}:\n {baseData?.Value}");
 
                 response = new ModuleResponse<BaseData>(baseData != null, baseData);
             }

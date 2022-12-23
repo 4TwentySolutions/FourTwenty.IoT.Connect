@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Extensions;
+using FourTwenty.IoT.Server.Components.Sensors;
+using Microsoft.Extensions.Logging;
 
 namespace FourTwenty.IoT.Server.Components.Relays
 {
@@ -48,6 +50,7 @@ namespace FourTwenty.IoT.Server.Components.Relays
 
                 base.SetValue(value, pin);
                 States[pin] = value.GetState();
+                _logger?.LogInformation($"\n{nameof(Relay)}:\n Pin: {pin} -> {value.GetState()}");
 
                 var data = new RelayData(pin, States[pin]);
 

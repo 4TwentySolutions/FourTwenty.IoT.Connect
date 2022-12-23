@@ -9,6 +9,7 @@ using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Rules;
 using FourTwenty.IoT.Server.Interfaces;
 using GrowIoT.Rules;
+using Microsoft.Extensions.Logging;
 
 namespace FourTwenty.IoT.Server.Components
 {
@@ -16,6 +17,8 @@ namespace FourTwenty.IoT.Server.Components
     {
         protected readonly GpioController Gpio;
         public IIoTRuntimeService IoTRuntimeService { get; set; }
+
+        protected ILogger _logger;
 
         #region properties
         public int Id { get; set; }
@@ -29,15 +32,16 @@ namespace FourTwenty.IoT.Server.Components
 
         #endregion
 
-        public IoTComponent(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : this(null, pins, gpioController) { }
+        public IoTComponent(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController, ILogger logger = null) : this(null, pins, gpioController, logger) { }
 
-        protected IoTComponent(IReadOnlyCollection<CronRule> rules, IReadOnlyCollection<PinNameItem> pins, GpioController gpioController)
+        protected IoTComponent(IReadOnlyCollection<CronRule> rules, IReadOnlyCollection<PinNameItem> pins, GpioController gpioController, ILogger logger = null)
         {
 
             Gpio = gpioController;
             Pins = pins.Select(x => x.Pin).ToList();
             Rules = rules;
             PinsNames = pins;
+            _logger = logger;
         }
 
         public IReadOnlyCollection<PinNameItem> PinsNames { get; }
@@ -72,6 +76,11 @@ namespace FourTwenty.IoT.Server.Components
         public void UpdateDisplayOptions(IEnumerable<DisplayRule> options)
         {
             DisplayOptions = new List<DisplayRule>(options);
+        }
+
+        public void SetLogger(ILogger logger)
+        {
+            _logger = logger;
         }
     }
 }
