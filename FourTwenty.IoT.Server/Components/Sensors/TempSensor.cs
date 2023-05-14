@@ -19,10 +19,10 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public override void Initialize() {}
 
-        public ValueTask<ModuleResponse<BaseData>> GetData()
+        public ValueTask<ModuleResponse> GetData()
         {
             var value = string.Empty;
-            ModuleResponse<BaseData> response = new ModuleResponse<BaseData>(false, null);
+           ModuleResponse response = new ModuleResponse(Id, false, null);
 
             var rawValue = GetSensorData();
 
@@ -34,14 +34,14 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                     var val = rawValue.Remove(0, index + 2);
                     if (!string.IsNullOrEmpty(val) && int.TryParse(val, out var intValue))
                     {
-                        response = new ModuleResponse<BaseData>(true, new TempData(intValue / 1000d));
+                        response = new ModuleResponse(Id, true, new TempData(intValue / 1000d));
                     }
                 }
             }
 
             DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
 
-            return new ValueTask<ModuleResponse<BaseData>>(response);
+            return new ValueTask<ModuleResponse>(response);
         }
 
         public SensorReadType ReadType => SensorReadType.Digital;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
@@ -9,7 +8,7 @@ using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Relays;
 using FourTwenty.IoT.Server.Interfaces;
 
-namespace GrowIoT.Rules
+namespace FourTwenty.IoT.Server.Rules
 {
     public class ActionRule : BaseRule, IAction
     {
@@ -41,68 +40,68 @@ namespace GrowIoT.Rules
 
             if (Data is ActionRuleData data)
             {
-                var moduleResponse = value as ModuleResponse<BaseData>;
+                var moduleResponse = value as ModuleResponse;
 
-                var responseData = moduleResponse?.Data;
+                var responseData = moduleResponse?.RawData;
 
                 //TODO Needs to rewrite this module. Maybe dynamic code execution flow can help us (but maybe it's too much complicated for this)
-                if (data.ActionType == ActionType.Comparison)
-                {
-                    if (moduleResponse?.IsSuccess ?? false)
-                    {
-                        switch (moduleResponse.Data)
-                        {
-                            case DhtData dhtValue:
-                                switch (data.ComparisonItem)
-                                {
-                                    case ComparisonItem.Temperature:
-                                        switch (data.ComparisonDirection)
-                                        {
-                                            case ComparisonDirection.Less when dhtValue.Temperature < data.CompareValue:
-                                            case ComparisonDirection.More when dhtValue.Temperature > data.CompareValue:
-                                                await ExecuteRuleBuJobType(data, $"{dhtValue.Temperature}°C");
-                                                break;
-                                        }
+                //if (data.ActionType == ActionType.Comparison)
+                //{
+                //    if (moduleResponse?.IsSuccess ?? false)
+                //    {
+                //        switch (moduleResponse.DataType)
+                //        {
+                //            case :
+                //                switch (data.ComparisonItem)
+                //                {
+                //                    case ComparisonItem.Temperature:
+                //                        switch (data.ComparisonDirection)
+                //                        {
+                //                            case ComparisonDirection.Less when dhtValue.Temperature < data.CompareValue:
+                //                            case ComparisonDirection.More when dhtValue.Temperature > data.CompareValue:
+                //                                await ExecuteRuleBuJobType(data, $"{dhtValue.Temperature}°C");
+                //                                break;
+                //                        }
 
-                                        break;
-                                    case ComparisonItem.Humidity:
-                                        switch (data.ComparisonDirection)
-                                        {
-                                            case ComparisonDirection.Less when dhtValue.Humidity < data.CompareValue:
-                                            case ComparisonDirection.More when dhtValue.Humidity > data.CompareValue:
-                                                await ExecuteRuleBuJobType(data, $"{dhtValue.Humidity}%");
-                                                break;
-                                        }
+                //                        break;
+                //                    case ComparisonItem.Humidity:
+                //                        switch (data.ComparisonDirection)
+                //                        {
+                //                            case ComparisonDirection.Less when dhtValue.Humidity < data.CompareValue:
+                //                            case ComparisonDirection.More when dhtValue.Humidity > data.CompareValue:
+                //                                await ExecuteRuleBuJobType(data, $"{dhtValue.Humidity}%");
+                //                                break;
+                //                        }
 
-                                        break;
-                                }
+                //                        break;
+                //                }
 
-                                break;
-                            case SoilMoistureData soilValue:
-                                switch (data.ComparisonDirection)
-                                {
-                                    case ComparisonDirection.Less when soilValue.Moisture < data.CompareValue:
-                                    case ComparisonDirection.More when soilValue.Moisture > data.CompareValue:
-                                        await ExecuteRuleBuJobType(data, $"{soilValue.Moisture}%");
-                                        break;
-                                }
+                //                break;
+                //            case SoilMoistureData soilValue:
+                //                switch (data.ComparisonDirection)
+                //                {
+                //                    case ComparisonDirection.Less when soilValue.Moisture < data.CompareValue:
+                //                    case ComparisonDirection.More when soilValue.Moisture > data.CompareValue:
+                //                        await ExecuteRuleBuJobType(data, $"{soilValue.Moisture}%");
+                //                        break;
+                //                }
 
-                                break;
-                            case PinValueData pinValue:
+                //                break;
+                //            case PinValueData pinValue:
 
-                                if (data.CompareValue == pinValue.PinValue)
-                                {
-                                    await ExecuteRuleBuJobType(data, pinValue.Value);
-                                }
+                //                if (data.CompareValue == pinValue.PinValue)
+                //                {
+                //                    await ExecuteRuleBuJobType(data, pinValue.Value);
+                //                }
 
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    await ExecuteRuleBuJobType(data, responseData?.Value);
-                }
+                //                break;
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    await ExecuteRuleBuJobType(data, responseData?.Value);
+                //}
             }
         }
 

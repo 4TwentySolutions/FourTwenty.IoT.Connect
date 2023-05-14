@@ -41,7 +41,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             _sensor = new Hcsr04(Gpio, Pins.FirstOrDefault(), Pins.LastOrDefault());
         }
 
-		public ValueTask<ModuleResponse<BaseData>> GetData()
+		public ValueTask<ModuleResponse> GetData()
         {
             RangeFinderData data = null;
 
@@ -58,11 +58,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 			var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
-            var response = new ModuleResponse<BaseData>(dpData != null, dpData);
+            var response = new ModuleResponse(Id, dpData != null, dpData);
 
 			DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
 
-            return new ValueTask<ModuleResponse<BaseData>>(response);
+            return new ValueTask<ModuleResponse>(response);
         }
 
         public SensorReadType ReadType { get; set; }

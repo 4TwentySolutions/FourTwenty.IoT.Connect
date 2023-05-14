@@ -8,6 +8,7 @@ using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using System.Threading;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Components.Sensors;
 using FourTwenty.IoT.Server.Extensions;
 using SixLabors.ImageSharp.Formats;
@@ -37,7 +38,7 @@ namespace FourTwenty.IoT.Server.ViewModels
         private readonly SemaphoreSlim _relayLocker = new SemaphoreSlim(1, 1);
 
 
-        public ModuleResponse<BaseData> CurrentValue { get; set; }
+        public ModuleResponse CurrentValue { get; set; }
         public string CurrentValueString { get; set; }
         public string LastValueTime { get; set; }
 
@@ -94,11 +95,9 @@ namespace FourTwenty.IoT.Server.ViewModels
         private async void OnDataReceived(object? sender, ModuleResponseEventArgs e)
         {
             CurrentValue = e.Data;
+            
+            //await UpdateCurrentValue(e.Data.Data);
 
-            if (!e.Data.IsSuccess)
-                return;
-
-            await UpdateCurrentValue(e.Data.Data);
             LastValueTime = DateTime.Now.ToString("dd MMM, HH:mm");
 
             VisualStateChanged?.Invoke(this, new VisualStateEventArgs(Id));
