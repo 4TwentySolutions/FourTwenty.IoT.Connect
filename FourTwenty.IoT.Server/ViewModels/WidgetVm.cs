@@ -3,7 +3,7 @@ using FourTwenty.IoT.Connect.Entities;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
-    public class WidgetVm : EntityViewModel<Widget>
+    public class WidgetVm : EntityVm<Widget>
     {
         public int Id { get; set; }
         public WidgetType WidgetType { get; set; }

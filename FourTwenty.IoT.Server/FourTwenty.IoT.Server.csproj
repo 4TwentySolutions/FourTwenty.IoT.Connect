@@ -6,8 +6,11 @@
 
   <ItemGroup>
     <Compile Remove="Components\Relays\**" />
+    <Compile Remove="ViewModels\Services\**" />
     <EmbeddedResource Remove="Components\Relays\**" />
+    <EmbeddedResource Remove="ViewModels\Services\**" />
     <None Remove="Components\Relays\**" />
+    <None Remove="ViewModels\Services\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,10 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FourTwenty.IoT.Connect\FourTwenty.IoT.Connect.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Services\" />
   </ItemGroup>
 
 </Project>

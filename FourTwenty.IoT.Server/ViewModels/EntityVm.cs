@@ -1,6 +1,6 @@
 ﻿namespace FourTwenty.IoT.Server.ViewModels
 {
-    public class EntityViewModel<T> where T : new()
+    public class EntityVm<T> where T : new()
     {
 
         public T DbEntity { get; private set; } = new T();

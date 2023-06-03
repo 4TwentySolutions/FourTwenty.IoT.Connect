@@ -6,7 +6,7 @@ namespace FourTwenty.IoT.Server.Models.Services
 {
     public class IoTRuntimeServiceModel
     {
-        public GrowBoxViewModel GrowBoxViewModel { get; set; }
+        public GrowBoxVm GrowBoxViewModel { get; set; }
         public Dictionary<int, ModuleHistoryItemVm> ModulesHistory { get; set; }
     }
 }

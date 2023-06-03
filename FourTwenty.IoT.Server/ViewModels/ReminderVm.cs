@@ -5,7 +5,7 @@ using FourTwenty.IoT.Connect.Entities;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
-    public class ReminderVm : EntityViewModel<Reminder>
+    public class ReminderVm : EntityVm<Reminder>
     {
         public int Id { get; set; }
         [Required]

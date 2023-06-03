@@ -15,7 +15,7 @@ using SixLabors.ImageSharp.Formats;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
-    public class ModuleVm : EntityViewModel<GrowBoxModule>, IDisposable
+    public class ModuleVm : EntityVm<GrowBoxModule>, IDisposable
     {
         public int Id { get; set; }
         [Required]
@@ -27,11 +27,9 @@ namespace FourTwenty.IoT.Server.ViewModels
         public List<PinNameItem> PinsNames { get; set; }
         public int GrowBoxId { get; set; }
         public string AdditionalData { get; set; }
-        public GrowBoxViewModel GrowBox { get; set; }
+        public GrowBoxVm GrowBox { get; set; }
         public IList<ModuleRuleVm> Rules { get; set; }
         public IComponent IotComponent { get; set; }
-        // public ISensor Sensor => IotComponent as ISensor;
-        // public IRelay Relay => IotComponent as IRelay;
 
         public Dictionary<int, string> RelayValues { get; set; }
 
