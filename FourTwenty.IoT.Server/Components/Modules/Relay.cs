@@ -10,6 +10,7 @@ using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Extensions;
 using FourTwenty.IoT.Server.Components.Sensors;
 using Microsoft.Extensions.Logging;
+using FourTwenty.IoT.Connect.Data;
 
 namespace FourTwenty.IoT.Server.Components.Relays
 {
@@ -20,23 +21,34 @@ namespace FourTwenty.IoT.Server.Components.Relays
         public IDictionary<int, RelayState> States { get; }
         public bool CloseOnInit { get; set; }
         public event EventHandler<ModuleResponseEventArgs> StateChanged;
-        
+
         public Relay(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController)
         {
             States = new Dictionary<int, RelayState>(pins.Select(x => new KeyValuePair<int, RelayState>(x.Pin, RelayState.Closed)));
         }
 
-        public override void Initialize()
+        public override ValueTask Initialize()
         {
-            base.Initialize();
+            if (Pins == null || !Pins.Any() || Gpio == null)
+                return ValueTask.CompletedTask;
+
             foreach (var pin in Pins)
             {
-                Gpio.SetPinMode(pin, PinMode.Output);
+                if (Gpio.IsPinOpen(pin))
+                {
+                    Gpio.ClosePin(pin);
+                }
+
+                Gpio.OpenPin(pin);
+                Gpio.SetPinMode(pin, PinMode.Output);               
+
                 if (CloseOnInit)
                 {
                     SetValue(PinValue.High, pin);
                 }
             }
+
+            return ValueTask.CompletedTask;
         }
 
         public override void SetValue(PinValue value, int pin)

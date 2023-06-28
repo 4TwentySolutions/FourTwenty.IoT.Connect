@@ -10,13 +10,17 @@ using FourTwenty.IoT.Connect.Rules;
 using FourTwenty.IoT.Server.Interfaces;
 using GrowIoT.Rules;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace FourTwenty.IoT.Server.Components
 {
     public class IoTComponent : IComponent
     {
         protected readonly GpioController Gpio;
-        public IIoTRuntimeService IoTRuntimeService { get; set; }
+
+        private IServiceScopeFactory _serviceScopeFactory;
+        public IIoTRuntimeService IoTRuntimeService { get; private set; }
 
         protected ILogger _logger;
 
@@ -47,7 +51,9 @@ namespace FourTwenty.IoT.Server.Components
         public IReadOnlyCollection<PinNameItem> PinsNames { get; }
         public IReadOnlyCollection<int> Pins { get; }
 
-        public virtual void Initialize()
+        public bool IsInitialized { get; private set; } = false;
+
+        public virtual async ValueTask Initialize()
         {
             if (Pins == null || !Pins.Any() || Gpio == null)
                 return;
@@ -58,6 +64,7 @@ namespace FourTwenty.IoT.Server.Components
                     Gpio.OpenPin(pin);
             }
 
+            IsInitialized = true;
         }
 
         public virtual void SetValue(PinValue value, int pin)
@@ -81,6 +88,11 @@ namespace FourTwenty.IoT.Server.Components
         public void SetLogger(ILogger logger)
         {
             _logger = logger;
+        }
+
+        public void SetServiceScopeFactory(IServiceScopeFactory serviceScopeFactory)
+        {
+            _serviceScopeFactory = serviceScopeFactory;
         }
     }
 }

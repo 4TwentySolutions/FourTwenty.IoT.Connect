@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;

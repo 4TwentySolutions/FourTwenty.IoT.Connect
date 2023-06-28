@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Data;
 
 namespace FourTwenty.IoT.Connect.Models
 {

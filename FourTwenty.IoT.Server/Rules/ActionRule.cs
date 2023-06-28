@@ -7,30 +7,27 @@ using FourTwenty.IoT.Connect.Interfaces.Rules;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Relays;
 using FourTwenty.IoT.Server.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FourTwenty.IoT.Server.Rules
 {
     public class ActionRule : BaseRule, IAction
     {
-        private readonly IIoTRuntimeService _runtimeService;
-        private ITelegramBotService _telegramBotService;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
+        //private readonly IIoTRuntimeService _runtimeService;
+        //private ITelegramBotService _telegramBotService;
         public IRuleData Data { get; set; }
         public ComponentType SensorType { get; }
         public ActionType ActionType { get; }
 
 
-        public ActionRule(ActionRuleData data, IIoTRuntimeService runtimeService, bool isEnabled)
+        public ActionRule(ActionRuleData data, IServiceScopeFactory serviceScopeFactory, bool isEnabled)
         {
-            _runtimeService = runtimeService;
+            _serviceScopeFactory = serviceScopeFactory;
             Data = data;
             ActionType = data.ActionType;
             IsEnabled = isEnabled;
             RuleType = RuleType.Action;
-        }
-
-        public void SetBotService(ITelegramBotService botService)
-        {
-            _telegramBotService = botService;
         }
 
         public async Task Execute(object value)
@@ -107,61 +104,62 @@ namespace FourTwenty.IoT.Server.Rules
 
         private async Task ExecuteRuleBuJobType(ActionRuleData data, string value = "")
         {
-            var module = _runtimeService.GetModule(data.ModuleId);
 
-            switch (data.ActionJobType)
-            {
-                case ActionJobType.Read:
-                    if (module is ISensor sensor)
-                    {
-                        if (data.Delay > 0)
-                        {
-                            await Task.Delay(TimeSpan.FromSeconds(data.Delay));
-                        }
+            //var module = _runtimeService.GetModule(data.ModuleId);
 
-                        var valueData = await sensor.GetData();
-                    }
+            //switch (data.ActionJobType)
+            //{
+            //    case ActionJobType.Read:
+            //        if (module is ISensor sensor)
+            //        {
+            //            if (data.Delay > 0)
+            //            {
+            //                await Task.Delay(TimeSpan.FromSeconds(data.Delay));
+            //            }
 
-                    break;
-                case ActionJobType.On:
-                    if (module.ComponentType == ComponentType.Relay
-                        && data.Pin.HasValue
-                        && module is Relay relay)
-                    {
-                        relay.SetValue(PinValue.Low, data.Pin.GetValueOrDefault());
+            //            var valueData = await sensor.GetData();
+            //        }
 
-                        if (data.Delay > 0)
-                        {
-                            await Task.Delay(TimeSpan.FromSeconds(data.Delay));
-                        }
-                    }
+            //        break;
+            //    case ActionJobType.On:
+            //        if (module.ComponentType == ComponentType.Relay
+            //            && data.Pin.HasValue
+            //            && module is Relay relay)
+            //        {
+            //            relay.SetValue(PinValue.Low, data.Pin.GetValueOrDefault());
 
-                    break;
-                case ActionJobType.Off:
+            //            if (data.Delay > 0)
+            //            {
+            //                await Task.Delay(TimeSpan.FromSeconds(data.Delay));
+            //            }
+            //        }
 
-                    if (module.ComponentType == ComponentType.Relay
-                        && data.Pin.HasValue
-                        && module is Relay relay2)
-                    {
-                        if (data.Delay > 0)
-                        {
-                            await Task.Delay(TimeSpan.FromSeconds(data.Delay));
-                        }
+            //        break;
+            //    case ActionJobType.Off:
 
-                        relay2.SetValue(PinValue.High, data.Pin.GetValueOrDefault());
-                    }
+            //        if (module.ComponentType == ComponentType.Relay
+            //            && data.Pin.HasValue
+            //            && module is Relay relay2)
+            //        {
+            //            if (data.Delay > 0)
+            //            {
+            //                await Task.Delay(TimeSpan.FromSeconds(data.Delay));
+            //            }
 
-                    break;
+            //            relay2.SetValue(PinValue.High, data.Pin.GetValueOrDefault());
+            //        }
 
-                case ActionJobType.SendTelegramBot:
+            //        break;
+
+               /* case ActionJobType.SendTelegramBot:
                     if (_telegramBotService != null && value != null)
                     {
                         var message = !string.IsNullOrEmpty(data.Message) ? data.Message.Replace("%value%", value) : value;
 
                         await _telegramBotService.SendMessage(message);
                     }
-                    break;
-            }
+                    break;*/
+           // }
         }
     }
 }

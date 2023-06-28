@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Data;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -17,7 +18,10 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public TempSensor(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController) {}
 
-        public override void Initialize() {}
+        public override ValueTask Initialize() 
+        {
+            return ValueTask.CompletedTask;
+        }
 
         public ValueTask<ModuleResponse> GetData()
         {

@@ -5,7 +5,7 @@ using GrowIoT.Rules;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
-	public interface IComponent : IPinComponent
+	public interface IComponent : IPinComponent, IInitializable
 	{
 		int Id { get; set; }
 		IReadOnlyCollection<CronRule> Rules { get; set; }

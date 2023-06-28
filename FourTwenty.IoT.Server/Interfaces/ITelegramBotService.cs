@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using FourTwenty.IoT.Connect.Interfaces;
+using System.Threading.Tasks;
 
 namespace FourTwenty.IoT.Server.Interfaces
 {
-    public interface ITelegramBotService
+    public interface ITelegramBotService : IInitializable
     {
-        Task InitBot(long chatId);
         Task<bool> SendMessage(string message);
     }
 }

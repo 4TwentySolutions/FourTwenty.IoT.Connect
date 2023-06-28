@@ -35,6 +35,6 @@ namespace FourTwenty.IoT.Server.ViewModels
             }
         }
 
-        public ICollection<ModuleVm> Modules { get; set; }
+        public ICollection<ComponentVm> Modules { get; set; }
     }
 }

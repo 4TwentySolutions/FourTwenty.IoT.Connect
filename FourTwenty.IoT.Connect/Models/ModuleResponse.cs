@@ -1,4 +1,5 @@
 ﻿using System;
+using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
 using Newtonsoft.Json;
 
@@ -14,9 +15,9 @@ namespace FourTwenty.IoT.Connect.Models
 
         public ModuleResponse(int moduleId, bool isSuccess, BaseData data, Exception exception = null)
 		{
-			IsSuccess = isSuccess;
+            IsSuccess = isSuccess;
 			RawData = JsonConvert.SerializeObject(data);
-            DataType = data?.GetType().Name;
+            DataType = data?.GetType().FullName;
             RawError = exception?.Message;
             ModuleId = moduleId;
 		}

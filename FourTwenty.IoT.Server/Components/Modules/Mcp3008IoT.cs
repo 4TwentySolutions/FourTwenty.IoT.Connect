@@ -22,7 +22,7 @@ namespace FourTwenty.IoT.Server.Components.Modules
         public Mcp3008IoT(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController) { }
 
 
-        public override void Initialize()
+        public override ValueTask Initialize()
         {
             // var clk = PinsNames.FirstOrDefault(x => x.Name.ToLower().Contains("clk"));
             // var sdi = PinsNames.FirstOrDefault(x => x.Name.ToLower().Contains("mosi"));
@@ -31,6 +31,7 @@ namespace FourTwenty.IoT.Server.Components.Modules
             //
             // if (clk == null || sdi == null || sdo == null || cs == null)
             //     return;
+            return ValueTask.CompletedTask;
         }
 
         public async Task<List<ADCData>> ReadChannel(int channel)

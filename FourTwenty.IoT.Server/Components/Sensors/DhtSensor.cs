@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Data;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -21,7 +22,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         
         public DhtSensor(PinNameItem gpioPin, GpioController controller) : base(new[] { gpioPin }, controller) { }
 
-        public override void Initialize()
+        public override ValueTask Initialize()
         {
             try
             {
@@ -38,6 +39,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 {
                     _sensor = new Dht22(ActualPin, PinNumberingScheme.Logical, Gpio);
                 }
+
+                return ValueTask.CompletedTask;
+
             }
             catch (Exception e)
             {
@@ -52,12 +56,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
             try
             {
-                var tmp = _sensor.Temperature.DegreesCelsius;
-                var hmd = _sensor.Humidity.Value;
+                var tryReadTemp = _sensor.TryReadTemperature(out var tmp);
+                var tryReadHmd = _sensor.TryReadHumidity(out var hmd);
 
-                response = _sensor == null ?
-                    new ModuleResponse(Id, false, null) :
-                    new ModuleResponse(Id, _sensor.Temperature.DegreesCelsius > -150, new DhtData(Math.Round(_sensor.Temperature.DegreesCelsius, 2), Math.Round(_sensor.Humidity.Value, 2)));
+                response = new ModuleResponse(Id, tryReadTemp && tryReadHmd, new DhtData(Math.Round(tmp.DegreesCelsius, 2), Math.Round(hmd.Value, 2)));
+
             }
             catch (Exception ex)
             {

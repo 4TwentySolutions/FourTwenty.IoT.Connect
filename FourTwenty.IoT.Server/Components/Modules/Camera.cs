@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Device.Gpio;
 using System.IO;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using Iot.Device.Media;
