@@ -1,10 +1,13 @@
-﻿using FourTwenty.IoT.Connect.Interfaces;
+﻿using FourTwenty.IoT.Connect.Dto.Data;
+using FourTwenty.IoT.Connect.Interfaces;
 using Newtonsoft.Json.Linq;
 
 namespace FourTwenty.IoT.Connect.Data
 {
     public class DhtData : TempData
     {
+        public DhtData() : base() {}
+
         public DhtData(double temp, double humidity) : base(temp)
         {
             Temperature = temp;

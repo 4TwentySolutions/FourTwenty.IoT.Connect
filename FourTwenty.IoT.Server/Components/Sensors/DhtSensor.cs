@@ -64,7 +64,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(Id, false, null, ex);
+                response = new ModuleResponse(Id, false, new DhtData(), ex);
             }
             finally
             {
