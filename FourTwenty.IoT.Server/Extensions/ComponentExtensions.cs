@@ -34,6 +34,12 @@ namespace FourTwenty.IoT.Server.Extensions
             return sensor;
         }
 
+        public static PhSensor SetAnalogSensorReadChannel(this PhSensor sensor, int analogSensorReadChannel)
+        {
+            sensor.AnalogSensorReadChannel = analogSensorReadChannel;
+            return sensor;
+        }
+
 
         public static bool Subscribe(this IComponent component, EventHandler<ModuleResponseEventArgs> receivedEvent)
         {

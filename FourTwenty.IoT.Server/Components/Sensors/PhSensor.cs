@@ -3,15 +3,11 @@ using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;
-using FourTwenty.IoT.Server.Extensions;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
