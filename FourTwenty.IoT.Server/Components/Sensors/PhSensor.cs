@@ -23,7 +23,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
-        public PhSensor(PinNameItem gpioPin, GpioController controller) : base(new[] { gpioPin }, controller) { }
+        public PhSensor(GpioController controller) : base(controller) { }
+
+        public override async ValueTask Initialize()
+        {
+            IsInitialized = true;
+        }
 
         public async ValueTask<ModuleResponse> GetData()
         {
@@ -42,10 +47,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                     if (value != null && value.Any())
                     {
                         var val = value.Average(x => x.Voltage);
+                        val = val * 1000;
+                        var isSuccess = IsInRange(val);
+
                         baseData = new PhData(ConvertVoltage(val));
                     }
                 }
-
 
                 _logger?.LogInformation($"\n{nameof(PhSensor)}:\n {baseData?.Value}");
 
@@ -53,7 +60,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(Id, false, new PhData(), ex);
+                response = new ModuleResponse(Id, false, null, ex);
             }
             finally
             {
@@ -77,6 +84,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 _acidVoltage = voltage;
             }
 
+        }
+
+        private bool IsInRange(double voltage)
+        {
+            return voltage > _neutralVoltage && voltage < _acidVoltage;
         }
 
 
