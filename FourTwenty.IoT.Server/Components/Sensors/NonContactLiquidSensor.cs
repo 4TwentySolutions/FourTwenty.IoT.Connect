@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;
@@ -22,9 +23,9 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         }
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
-        public async ValueTask<ModuleResponse<BaseData>> GetData()
+        public async ValueTask<ModuleResponse> GetData()
         {
-            ModuleResponse<BaseData> response = null;
+           ModuleResponse response = null;
 
             try
             {
@@ -32,11 +33,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
                 _logger?.LogInformation($"\n{nameof(NonContactLiquidSensor)}:{Pins.FirstOrDefault()}:{Name}:{value}\n");
 
-                response = new ModuleResponse<BaseData>(true, new PinValueData(value == PinValue.High ? 1 : 0));
+                response = new ModuleResponse(Id, true, new PinValueData(value == PinValue.High ? 1 : 0));
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse<BaseData>(false, null, ex);
+                response = new ModuleResponse(Id, false, null, ex);
             }
             finally
             {

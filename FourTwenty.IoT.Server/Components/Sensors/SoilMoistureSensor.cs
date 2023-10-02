@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Extensions;
 using Microsoft.Extensions.Logging;
+using FourTwenty.IoT.Connect.Data;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -25,18 +26,20 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public SoilMoistureSensor(IReadOnlyCollection<PinNameItem> pins, GpioController controller) : base(pins, controller) { }
 
-        public override void Initialize()
+        public override ValueTask Initialize()
         {
             foreach (var pin in Pins)
             {
                 if (Gpio.IsPinOpen(pin))
                     Gpio.ClosePin(pin);
             }
+
+            return ValueTask.CompletedTask;
         }
 
-        public async ValueTask<ModuleResponse<BaseData>> GetData()
+        public async ValueTask<ModuleResponse> GetData()
         {
-            ModuleResponse<BaseData> response = null;
+            ModuleResponse response = null;
 
             try
             {
@@ -88,11 +91,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
                 _logger?.LogInformation($"\n{nameof(SoilMoistureSensor)}:\n {baseData?.Value}");
 
-                response = new ModuleResponse<BaseData>(baseData != null, baseData);
+                response = new ModuleResponse(Id, baseData != null, baseData);
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse<BaseData>(false, null, ex);
+                response = new ModuleResponse(Id, false, null, ex);
             }
             finally
             {

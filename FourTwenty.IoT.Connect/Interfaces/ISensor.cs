@@ -8,7 +8,7 @@ namespace FourTwenty.IoT.Connect.Interfaces
     public interface ISensor
     {
         event EventHandler<ModuleResponseEventArgs> DataReceived;
-        ValueTask<ModuleResponse<BaseData>> GetData();
+        ValueTask<ModuleResponse> GetData();
         SensorReadType ReadType { get; }
     }
 }

@@ -2,26 +2,26 @@
 using System.Collections.Generic;
 using System.Device.Gpio;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using Iot.Device.Media;
 
-namespace FourTwenty.IoT.Server.Components.Sensors
+namespace FourTwenty.IoT.Server.Components.Modules
 {
     public class Camera : IoTComponent
     {
-        private VideoConnectionSettings _settings = new VideoConnectionSettings(busId: 0, captureSize: (1920, 1080), pixelFormat: PixelFormat.JPEG);
+        private readonly VideoConnectionSettings _settings = new(busId: 0, captureSize: (1920, 1080), pixelFormat: PixelFormat.JPEG);
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
         public Camera(IReadOnlyCollection<PinNameItem> pins, GpioController gpioController) : base(pins, gpioController) { }
         
         
-        public ValueTask<ModuleResponse<BaseData>> GetPhoto()
+        public ValueTask<ModuleResponse> GetPhoto()
         {
-            ModuleResponse<BaseData> response = null;
+           ModuleResponse response = null;
             try
             {
                 using VideoDevice device = VideoDevice.Create(_settings);
@@ -38,18 +38,18 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
                 device.Capture($"{solPath}/wwwroot/{fullPath}");
 
-                response = new ModuleResponse<BaseData>(true, new CameraData(fullPath));
+                response = new ModuleResponse(Id, true, new CameraData(fullPath));
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse<BaseData>(false, null, ex);
+                response = new ModuleResponse(Id, false, null, ex);
             }
             finally
             {
                 DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
             }
 
-            return new ValueTask<ModuleResponse<BaseData>>(response);
+            return new ValueTask<ModuleResponse>(response);
         }
     }
 }

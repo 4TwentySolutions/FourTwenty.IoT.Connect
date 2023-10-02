@@ -8,8 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Remove="Common\**" />
         <Compile Remove="FourTwenty.IoT.Connect\**" />
+        <EmbeddedResource Remove="Common\**" />
         <EmbeddedResource Remove="FourTwenty.IoT.Connect\**" />
+        <None Remove="Common\**" />
         <None Remove="FourTwenty.IoT.Connect\**" />
     </ItemGroup>
 
@@ -17,10 +20,6 @@
         <PackageReference Include="FourTwenty.Core.Data" Version="1.0.14" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Common\" />
     </ItemGroup>
 
 </Project>

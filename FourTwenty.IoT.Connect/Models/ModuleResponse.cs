@@ -1,26 +1,35 @@
 ﻿using System;
+using FourTwenty.IoT.Connect.Data;
 using FourTwenty.IoT.Connect.Interfaces;
+using Newtonsoft.Json;
 
 namespace FourTwenty.IoT.Connect.Models
 {
-	public class ModuleResponse<T> where T : BaseData
+	public class ModuleResponse
 	{
+		public int ModuleId { get; set; }
 		public bool IsSuccess { get; set; }
-		public T Data { get; set; }
-        public Exception Exception { get; set; }
+		public string DataType { get; set; }
+		public string RawData { get; set; }
+        public string RawError { get; set; }
 
-        public ModuleResponse(bool isSuccess, T data, Exception exception = null)
+        public ModuleResponse(int moduleId, bool isSuccess, BaseData data, Exception exception = null)
 		{
-			IsSuccess = isSuccess;
-			Data = data;
+            IsSuccess = isSuccess;
+			RawData = JsonConvert.SerializeObject(data);
+            DataType = data?.GetType().FullName;
+            RawError = exception?.Message;
+            ModuleId = moduleId;
 		}
+
+        public ModuleResponse() { }
 	}
 
 	public class ModuleResponseEventArgs : EventArgs
 	{
-		public ModuleResponse<BaseData> Data { get; }
+		public ModuleResponse Data { get; }
         
-		public ModuleResponseEventArgs(ModuleResponse<BaseData> data)
+		public ModuleResponseEventArgs(ModuleResponse data)
 		{
 			Data = data;
 		}

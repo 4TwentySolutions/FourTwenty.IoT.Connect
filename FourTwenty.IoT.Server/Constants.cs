@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FourTwenty.IoT.Server
+﻿namespace FourTwenty.IoT.Server
 {
     public static class Constants
     {

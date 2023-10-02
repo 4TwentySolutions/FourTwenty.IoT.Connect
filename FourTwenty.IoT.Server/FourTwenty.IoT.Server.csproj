@@ -6,24 +6,23 @@
 
   <ItemGroup>
     <Compile Remove="Components\Relays\**" />
+    <Compile Remove="ViewModels\Services\**" />
     <EmbeddedResource Remove="Components\Relays\**" />
+    <EmbeddedResource Remove="ViewModels\Services\**" />
     <None Remove="Components\Relays\**" />
+    <None Remove="ViewModels\Services\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Iot.Device.Bindings" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.1.0" />
-    <PackageReference Include="Quartz" Version="3.5.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Quartz" Version="3.6.0" />
     <PackageReference Include="System.Device.Gpio" Version="2.2.0" />
-    <PackageReference Include="UnitsNet" Version="4.149.0" />
+    <PackageReference Include="UnitsNet" Version="5.30.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FourTwenty.IoT.Connect\FourTwenty.IoT.Connect.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ViewModels\Services\" />
   </ItemGroup>
 
 </Project>

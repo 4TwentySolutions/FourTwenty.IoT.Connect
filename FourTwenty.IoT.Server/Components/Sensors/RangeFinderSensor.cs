@@ -10,6 +10,7 @@ using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Extensions;
 using GrowIoT.Rules;
+using FourTwenty.IoT.Connect.Data;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -30,7 +31,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 		public event EventHandler<ModuleResponseEventArgs> DataReceived;
 
-        public override void Initialize()
+        public override ValueTask Initialize()
         {
             foreach (var pin in Pins)
             {
@@ -39,9 +40,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
 
             _sensor = new Hcsr04(Gpio, Pins.FirstOrDefault(), Pins.LastOrDefault());
+
+            return ValueTask.CompletedTask;
         }
 
-		public ValueTask<ModuleResponse<BaseData>> GetData()
+		public ValueTask<ModuleResponse> GetData()
         {
             RangeFinderData data = null;
 
@@ -58,11 +61,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
 			var dpData =  data.ApplyDisplayOptions(DisplayOptions, ComponentType);
 
-            var response = new ModuleResponse<BaseData>(dpData != null, dpData);
+            var response = new ModuleResponse(Id, dpData != null, dpData);
 
 			DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
 
-            return new ValueTask<ModuleResponse<BaseData>>(response);
+            return new ValueTask<ModuleResponse>(response);
         }
 
         public SensorReadType ReadType { get; set; }

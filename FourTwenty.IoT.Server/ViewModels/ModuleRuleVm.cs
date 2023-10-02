@@ -7,7 +7,7 @@ using FourTwenty.IoT.Connect.Rules;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
-	public class ModuleRuleVm : EntityViewModel<ModuleRule>
+	public class ModuleRuleVm : EntityVm<ModuleRule>
 	{
 		public int Id { get; set; }
         public string RuleName { get; set; }

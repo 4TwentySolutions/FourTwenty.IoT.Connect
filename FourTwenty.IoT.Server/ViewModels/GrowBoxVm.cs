@@ -3,7 +3,7 @@ using FourTwenty.IoT.Connect.Entities;
 
 namespace FourTwenty.IoT.Server.ViewModels
 {
-    public class GrowBoxViewModel : EntityViewModel<GrowBox>
+    public class GrowBoxVm : EntityVm<GrowBox>
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -35,6 +35,6 @@ namespace FourTwenty.IoT.Server.ViewModels
             }
         }
 
-        public ICollection<ModuleVm> Modules { get; set; }
+        public ICollection<ComponentVm> Modules { get; set; }
     }
 }

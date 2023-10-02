@@ -9,7 +9,8 @@
         Relay = 5,
         Camera = 6,
         Mcp3008 = 7,
-        NonContactLiquid = 8
+        NonContactLiquid = 8,
+        PhSensor = 9
     }
 
     public enum RuleType : byte
