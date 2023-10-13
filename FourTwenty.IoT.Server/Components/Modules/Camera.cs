@@ -12,7 +12,7 @@ namespace FourTwenty.IoT.Server.Components.Modules
 {
     public class Camera : IoTComponent
     {
-        private readonly VideoConnectionSettings _settings = new(busId: 0, captureSize: (1920, 1080), pixelFormat: PixelFormat.JPEG);
+        private readonly VideoConnectionSettings _settings = new(busId: 0, captureSize: (1920, 1080), pixelFormat: VideoPixelFormat.JPEG);
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
 

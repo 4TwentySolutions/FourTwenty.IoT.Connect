@@ -14,11 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Iot.Device.Bindings" Version="2.2.0" />
+    <PackageReference Include="Iot.Device.Bindings" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-    <PackageReference Include="Quartz" Version="3.6.0" />
-    <PackageReference Include="System.Device.Gpio" Version="2.2.0" />
-    <PackageReference Include="UnitsNet" Version="5.30.0" />
+    <PackageReference Include="Quartz" Version="3.7.0" />
+    <PackageReference Include="System.Device.Gpio" Version="3.0.0" />
+    <PackageReference Include="UnitsNet" Version="5.35.0" />
   </ItemGroup>
 
   <ItemGroup>
