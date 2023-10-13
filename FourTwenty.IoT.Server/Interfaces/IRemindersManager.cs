@@ -10,5 +10,6 @@ namespace FourTwenty.IoT.Server.Interfaces
         Task<List<ReminderVm>> GetReminders(DateTime? dateFrom = null);
         Task SaveReminder(ReminderVm reminder);
         Task DeleteReminder(ReminderVm reminder);
+        Task<ReminderVm> GetById(int Id);
     }
 }
