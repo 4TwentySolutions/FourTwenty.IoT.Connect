@@ -9,9 +9,10 @@ namespace FourTwenty.IoT.Server.ViewModels
     public class ComponentVm : EntityVm<GrowBoxModule>
     {
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
-        public ComponentType? ComponentType { get; set; }
+        public ComponentType ComponentType { get; set; }
         public int[] Pins { get; set; }
         //public bool GroupedModule { get; set; }
 

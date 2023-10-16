@@ -2,6 +2,7 @@
 {
     public enum ComponentType
     {
+        None = 0,
         Temperature = 1,
         HumidityAndTemperature = 2,
         RangeFinder = 3,
@@ -88,6 +89,12 @@
     {
         Less = 1,
         More = 2
+    }
+
+    public enum CompareValue
+    {
+        Low = 0,
+        High = 1,
     }
 
     public enum ComparisonItem
