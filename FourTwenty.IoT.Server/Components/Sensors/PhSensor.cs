@@ -25,9 +25,11 @@ namespace FourTwenty.IoT.Server.Components.Sensors
 
         public PhSensor(GpioController controller) : base(controller) { }
 
-        public override async ValueTask Initialize()
+        public override ValueTask Initialize()
         {
             IsInitialized = true;
+
+            return ValueTask.CompletedTask;
         }
 
         public async ValueTask<ModuleResponse> GetData()

@@ -3,6 +3,7 @@ using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Entities;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Interfaces.Rules;
+using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Rules;
 
 namespace FourTwenty.IoT.Server.ViewModels
@@ -21,5 +22,8 @@ namespace FourTwenty.IoT.Server.ViewModels
 		public DisplayRule DisplayRule { get; set; }
 		public int SortOrder { get; set; }
 		public IRuleData RuleData { get;set; }
-	}
+
+        public string TextName => $"{RuleType} " + (RuleType == RuleType.Cron && RuleData is CronRuleData cronData ? $"{Job} ({cronData.CronExpression})" : RuleType == RuleType.Display ? $"{DisplayRule.DisplayType}" : RuleType == RuleType.Action && RuleData is ActionRuleData ruleData ? $"{ruleData.ActionType} ({ruleData.ActionJobType})" : "");
+
+    }
 }
