@@ -13,5 +13,8 @@ namespace FourTwenty.IoT.Server.ViewModels
         /// </summary>
         public DateTime Date { get; set; }
         public string Data { get; set; }
+        public bool IsSuccess { get; set; }
+        public string DataType { get; set; }
+        public string Error { get; set; }
     }
 }

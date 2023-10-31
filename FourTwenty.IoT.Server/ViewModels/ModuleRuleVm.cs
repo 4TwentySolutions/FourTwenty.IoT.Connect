@@ -23,7 +23,7 @@ namespace FourTwenty.IoT.Server.ViewModels
 		public int SortOrder { get; set; }
 		public IRuleData RuleData { get;set; }
 
-        public string TextName => $"{RuleType} " + (RuleType == RuleType.Cron && RuleData is CronRuleData cronData ? $"{Job} ({cronData.CronExpression})" : RuleType == RuleType.Display ? $"{DisplayRule.DisplayType}" : RuleType == RuleType.Action && RuleData is ActionRuleData ruleData ? $"{ruleData.ActionType} ({ruleData.ActionJobType})" : "");
+        public string TextName => $"{RuleType} ({RuleData.ToString()})";
 
     }
 }

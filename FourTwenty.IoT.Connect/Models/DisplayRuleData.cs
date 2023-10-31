@@ -10,5 +10,10 @@ namespace FourTwenty.IoT.Connect.Models
 		public string DisplayOptionParams { get; set; }
         public bool IsEnabled { get; set; }
         public int? Pin { get; set; }
+
+        public override string ToString()
+        {
+            return $"{DisplayType}; DisplayOrder={DisplayOrder}; Pin={(Pin.HasValue ? Pin.GetValueOrDefault() : "")};";
+        }
     }
 }

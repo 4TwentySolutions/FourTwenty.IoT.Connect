@@ -1,6 +1,11 @@
-﻿namespace FourTwenty.IoT.Connect.Interfaces.Rules
+﻿using System;
+
+namespace FourTwenty.IoT.Connect.Interfaces.Rules
 {
-    public interface IRuleData { }
+    public interface IRuleData
+    {
+        public virtual string ToString() => string.Empty;
+    }
 
     public interface IParams { }
 }

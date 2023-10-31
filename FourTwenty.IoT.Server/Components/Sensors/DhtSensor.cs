@@ -59,7 +59,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 var tryReadTemp = _sensor.TryReadTemperature(out var tmp);
                 var tryReadHmd = _sensor.TryReadHumidity(out var hmd);
 
-                response = new ModuleResponse(Id, tryReadTemp && tryReadHmd, new DhtData(Math.Round(tmp.DegreesCelsius, 2), Math.Round(hmd.Value, 2)));
+                var success = tryReadTemp && tryReadHmd;
+                var result = new DhtData(Math.Round(tmp.DegreesCelsius, 2), Math.Round(hmd.Value, 2));
+                if (success && result.Temperature < -100)
+                    success = false;
+
+                response = new ModuleResponse(Id, success, result);
 
             }
             catch (Exception ex)

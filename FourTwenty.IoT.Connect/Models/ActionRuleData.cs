@@ -14,5 +14,10 @@ namespace FourTwenty.IoT.Connect.Models
         public ComparisonDirection ComparisonDirection { get; set; }
         public ComparisonItem ComparisonItem { get; set; }
         public string Message { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ActionType} ({ActionJobType}); Delay={Delay}; Pin={(Pin.HasValue ? Pin.GetValueOrDefault() : "")}; Compare={CompareValue}";
+        }
     }
 }

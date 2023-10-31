@@ -1,7 +1,5 @@
 ﻿using FourTwenty.Core.Data.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FourTwenty.IoT.Connect.Entities
 {
@@ -14,5 +12,8 @@ namespace FourTwenty.IoT.Connect.Entities
         /// </summary>
         public DateTime Date { get; set; }
         public string Data { get; set; }
+        public bool IsSuccess { get; set; }
+        public string DataType { get; set; }
+        public string Error { get; set; }
     }
 }

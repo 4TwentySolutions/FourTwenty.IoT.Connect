@@ -2,7 +2,7 @@
 {
     public class TempData : BaseData
     {
-        public TempData() : base() { }
+        public TempData() { }
         public TempData(double temperature)
         {
             Temperature = temperature;

@@ -11,6 +11,7 @@ namespace FourTwenty.IoT.Connect.Models
 		public bool IsSuccess { get; set; }
 		public string DataType { get; set; }
 		public string RawData { get; set; }
+		public BaseData Data { get; set; }
         public string RawError { get; set; }
 
         public ModuleResponse(int moduleId, bool isSuccess, BaseData data, Exception exception = null)
@@ -20,6 +21,7 @@ namespace FourTwenty.IoT.Connect.Models
             DataType = data?.GetType().FullName;
             RawError = exception?.Message;
             ModuleId = moduleId;
+			Data = data;
 		}
 
         public ModuleResponse() { }
