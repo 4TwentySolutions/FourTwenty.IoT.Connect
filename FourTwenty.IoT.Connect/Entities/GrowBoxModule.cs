@@ -18,6 +18,7 @@ namespace FourTwenty.IoT.Connect.Entities
         
         [JsonIgnore]
         public virtual GrowBox GrowBox { get; set; }
+
         public virtual ICollection<ModuleRule> Rules { get; set; }
     }
 }

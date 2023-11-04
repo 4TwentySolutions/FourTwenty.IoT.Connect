@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Data;
+using System.Collections.Generic;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -50,9 +51,18 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
         }
 
-        public ValueTask<ModuleResponse> GetData()
+        public ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
         {
-           ModuleResponse response = null;            
+            ModuleResponse response = null;
+            var responseRuleId = 0;
+
+            if (additionalParams?.TryGetValue("RuleId", out var rawRuleId) ?? false)
+            {
+                if (rawRuleId is int ruleId and > 0)
+                {
+                    responseRuleId = ruleId;
+                }
+            }
 
             try
             {
@@ -64,12 +74,18 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 if (success && result.Temperature < -100)
                     success = false;
 
-                response = new ModuleResponse(Id, success, result);
+                response = new ModuleResponse(Id, success, result)
+                {
+                    RuleId = responseRuleId
+                };
 
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(Id, false, new DhtData(), ex);
+                response = new ModuleResponse(Id, false, new DhtData(), ex)
+                {
+                    RuleId = responseRuleId
+                };
             }
             finally
             {

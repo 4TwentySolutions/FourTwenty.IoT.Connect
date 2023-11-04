@@ -5,6 +5,7 @@ using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Device.Gpio;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             return ValueTask.CompletedTask;
         }
 
-        public async ValueTask<ModuleResponse> GetData()
+        public async ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
         {
             ModuleResponse response = null;
 

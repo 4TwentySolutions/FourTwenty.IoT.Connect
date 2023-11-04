@@ -17,7 +17,19 @@ namespace FourTwenty.IoT.Connect.Models
 
         public override string ToString()
         {
-            return $"{ActionType} ({ActionJobType}); Delay={Delay}; Pin={(Pin.HasValue ? Pin.GetValueOrDefault() : "")}; Compare={CompareValue}";
+            var result = $"{ActionJobType}";
+
+            if (Delay is > 0)
+            {
+                result = $"{result} with {Delay} seconds delay";
+            }
+
+            if (Pin is > 0)
+            {
+                result = $" {result} for pin #{Pin}";
+            }
+
+            return result;
         }
     }
 }

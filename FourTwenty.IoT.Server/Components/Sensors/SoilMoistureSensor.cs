@@ -37,7 +37,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             return ValueTask.CompletedTask;
         }
 
-        public async ValueTask<ModuleResponse> GetData()
+        public async ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
         {
             ModuleResponse response = null;
 

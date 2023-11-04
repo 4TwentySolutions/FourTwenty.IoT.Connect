@@ -1,13 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components;
 using FourTwenty.IoT.Server.Components.Modules;
-using FourTwenty.IoT.Server.Components.Sensors;
 using FourTwenty.IoT.Server.Extensions;
 using FourTwenty.IoT.Server.Interfaces;
 using Quartz;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FourTwenty.IoT.Server.Jobs
 {
@@ -16,15 +17,15 @@ namespace FourTwenty.IoT.Server.Jobs
         public async Task Execute(IJobExecutionContext context)
         {
             IoTComponent component = null;
-            IMessagesService messagesService = null;
+            BaseRule rule = null;
 
             if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
                 component = rawObj as IoTComponent;
 
-            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.MessagesKey, out var rawMessagesService))
-                messagesService = rawMessagesService as IMessagesService;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleKey, out var rawRule))
+                rule = rawRule as BaseRule;
 
-            if (component == null)
+            if (component == null || rule == null)
                 return;
 
             if (component.ComponentType == ComponentType.SoilMoisture)
@@ -34,31 +35,30 @@ namespace FourTwenty.IoT.Server.Jobs
 
             await component.Actions.ExecuteActions(ActionType.Pre);
 
+            ModuleResponse data = null;
+
             switch (component)
             {
                 case ISensor sensor:
-                {
-                    var data = await sensor.GetData();
+                    {
+                        data = await sensor.GetData(new Dictionary<string, object>
+                        {
+                            {"RuleId", rule.Id}
+                        });
 
-                    if (messagesService != null)
-                        await messagesService.SendMessage(component, data);
-
-                    await component.Actions.ExecuteActions(ActionType.Comparison, data);
-                    break;
-                }
+                        //await component.Actions.ExecuteActions(ActionType.Comparison, data);
+                        break;
+                    }
                 case Camera camera:
-                {
-                    var data = await camera.GetPhoto();
-
-                    if (messagesService != null)
-                        await messagesService.SendMessage(component, data);
-                    break;
-                }
+                    {
+                        data = await camera.GetPhoto();
+                        break;
+                    }
                 case Mcp3008IoT mcp3008:
-                {
+                    {
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             await component.Actions.ExecuteActions(ActionType.Post);

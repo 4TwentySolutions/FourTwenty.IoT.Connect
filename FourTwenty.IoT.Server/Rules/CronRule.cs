@@ -32,43 +32,52 @@ namespace GrowIoT.Rules
 
 		public async Task Execute()
 		{
-			if (_scheduler == null)
-				return;
-
-			if (_scheduler.InStandbyMode)
-				await _scheduler.Start();
-
-            var jobType = JobType switch
+            try
             {
-                JobType.Toggle => typeof(ToggleJob),
-                JobType.Read => typeof(ReadJob),
-                JobType.On => typeof(OnJob),
-                JobType.Off => typeof(OffJob),
-                JobType.Period => typeof(PeriodJob),
-                //JobType.Action => typeof(ActionJob),
-                _ => null
-            };
+                if (_scheduler == null)
+                    return;
 
-            if (jobType == null)
-				return;
+                if (_scheduler.InStandbyMode)
+                    await _scheduler.Start();
 
-            JobDataMap jobData = new JobDataMap(Properties);
+                var jobType = JobType switch
+                {
+                    JobType.Toggle => typeof(ToggleJob),
+                    JobType.Read => typeof(ReadJob),
+                    JobType.On => typeof(OnJob),
+                    JobType.Off => typeof(OffJob),
+                    JobType.Period => typeof(PeriodJob),
+                    //JobType.Action => typeof(ActionJob),
+                    _ => null
+                };
 
-			JobName = $"{Guid.NewGuid()}_{JobType}";
+                if (jobType == null)
+                    return;
 
-			var job = JobBuilder.Create(jobType)
-				.WithIdentity($"{JobName}_Job", ModuleId.ToString())
-				.UsingJobData(jobData)
-				.Build();
+                JobDataMap jobData = new JobDataMap(Properties);
 
-			var trigger = TriggerBuilder.Create()
-				.WithIdentity($"{JobName}_Trigger", ModuleId.ToString())
-				.WithCronSchedule(CronExpression)
-				.StartNow()
-				.WithPriority(1)
-				.Build();
+                JobName = $"{Guid.NewGuid()}_{JobType}";
 
-			await _scheduler.ScheduleJob(job, trigger);
+                var job = JobBuilder.Create(jobType)
+                    .WithIdentity($"{JobName}_Job", ModuleId.ToString())
+                    .UsingJobData(jobData)
+                    .Build();
+
+                var trigger = TriggerBuilder.Create()
+                    .WithIdentity($"{JobName}_Trigger", ModuleId.ToString())
+                    .WithCronSchedule(CronExpression)
+                    .StartNow()
+                    .WithPriority(1)
+                    .Build();
+
+                await _scheduler.ScheduleJob(job, trigger);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+			
 		}
 
 		public async Task Stop()

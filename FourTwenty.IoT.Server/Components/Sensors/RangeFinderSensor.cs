@@ -44,7 +44,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             return ValueTask.CompletedTask;
         }
 
-		public ValueTask<ModuleResponse> GetData()
+		public ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
         {
             RangeFinderData data = null;
 

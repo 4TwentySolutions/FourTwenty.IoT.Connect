@@ -17,6 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="CronExpressionDescriptor" Version="2.21.0" />
         <PackageReference Include="FourTwenty.Core.Data" Version="1.0.14" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />

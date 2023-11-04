@@ -1,13 +1,11 @@
-﻿using System.Collections.Generic;
-using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Interfaces;
+﻿using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Interfaces.Rules;
 
 namespace FourTwenty.IoT.Connect.Models
 {
     public class BaseRule : IRule
     {
         public int Id { get; set; }
-        public string RuleName { get; set; }
         public RuleType RuleType { get; protected set; }
         public bool IsEnabled { get; set; }
         public int? Pin { get; set; }

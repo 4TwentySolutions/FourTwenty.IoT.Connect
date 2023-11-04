@@ -23,7 +23,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         }
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
-        public async ValueTask<ModuleResponse> GetData()
+        public async ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
         {
            ModuleResponse response = null;
 
