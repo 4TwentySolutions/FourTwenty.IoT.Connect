@@ -51,11 +51,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                         {
                             RelayState? value = ReadValue(Pins.FirstOrDefault()).GetState();
 
-                            baseData = new SoilMoistureData
-                            {
-                                Value = value.ToString(),
-                                Moisture = value == RelayState.Opened ? 1 : 0
-                            };
+                            baseData = new SoilMoistureData(value == RelayState.Opened ? 1 : 0);
                             break;
                         }
                     case SensorReadType.Analog:
@@ -71,17 +67,13 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                                 var val = value.Average(x => x.Voltage);
                                 val = Math.Round(val, 2);
 
-                                if (val > Min && val < Max)
+                                if (val is > Min and < Max)
                                 {
                                     var percentage = 1 - ((val - Min) / (Max - Min));
 
                                     var res = Math.Round(percentage * 100, 2);
 
-                                    baseData = new SoilMoistureData
-                                    {
-                                        Value = res + "%",
-                                        Moisture = res
-                                    };
+                                    baseData = new SoilMoistureData(res);
                                 }
                             }
                         }

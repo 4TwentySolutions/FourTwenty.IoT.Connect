@@ -2,13 +2,14 @@
 {
     public class DhtData : TempData
     {
-        public DhtData() : base() {}
+        public override string Value => $"{Temperature}\u00b0C {Humidity}%H";
+
+        public DhtData() {}
 
         public DhtData(double temp, double humidity) : base(temp)
         {
             Temperature = temp;
             Humidity = humidity;
-            Value = ToString();
         }
 
         public double Humidity { get; set; }

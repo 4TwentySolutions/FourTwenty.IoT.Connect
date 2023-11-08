@@ -17,5 +17,13 @@ namespace FourTwenty.IoT.Connect.Models
     {
         public int Pin { get; set; }
         public string Name { get; set; }
+
+        public PinNameItem() { }
+
+        public PinNameItem(int pin, string name)
+        {
+            Pin = pin;
+            Name = name;
+        }
     }
 }

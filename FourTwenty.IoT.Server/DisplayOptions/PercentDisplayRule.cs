@@ -26,18 +26,18 @@ namespace FourTwenty.IoT.Server.DisplayOptions
 
 		public override BaseData Execute(ComponentType type, BaseData data)
 		{
-			if (Options is PercentParams opt && data != null)
-			{
-				switch (type)
-				{
-					case ComponentType.RangeFinder when data is RangeFinderData rfData:
-						data.Value = Execute(rfData.Distance.ToString());
-						break;
-					case ComponentType.HumidityAndTemperature when data is DhtData dhtData:
-						data.Value = $"{dhtData.Temperature}\u00B0C,{dhtData.Humidity}%";
-						break;
-				}
-			}
+			// if (Options is PercentParams opt && data != null)
+			// {
+			// 	switch (type)
+			// 	{
+			// 		case ComponentType.RangeFinder when data is RangeFinderData rfData:
+			// 			data.Value = Execute(rfData.Distance.ToString());
+			// 			break;
+			// 		case ComponentType.HumidityAndTemperature when data is DhtData dhtData:
+			// 			data.Value = $"{dhtData.Temperature}\u00B0C,{dhtData.Humidity}%";
+			// 			break;
+			// 	}
+			// }
 
 			return data;
 		}

@@ -20,35 +20,35 @@ namespace FourTwenty.IoT.Server.DisplayOptions
 
 		public override BaseData Execute(ComponentType type, BaseData data)
 		{
-			if (Options is TextParams opt && data != null)
-			{
-				switch (type)
-				{
-					case ComponentType.RangeFinder when data is RangeFinderData rfData:
-						data.Value = Execute(string.IsNullOrEmpty(data.Value) ?
-							rfData.Distance.ToString() :
-							data.Value);
-						break;
-					case ComponentType.HumidityAndTemperature when data is DhtData dhtData:
-						data.Value = !string.IsNullOrEmpty(data.Value) ?
-							Execute(data.Value) :
-							string.Format(opt.IconWrapper, dhtData.Temperature, dhtData.Humidity);
-						break;
-				}
-			}
-
-            if (Options is RelayTextParams relayOpt && data is RelayData relayData)
-            {
-                if (Pin.HasValue)
-                {
-                    if (Pin.GetValueOrDefault() == relayData.Pin)
-                    {
-                        data.Value = relayData.State == RelayState.Opened
-                            ? relayOpt.OpenedStateIconWrapper
-                            : relayOpt.ClosedStateIconWrapper;
-                    }
-                }
-            }
+			// if (Options is TextParams opt && data != null)
+			// {
+			// 	switch (type)
+			// 	{
+			// 		case ComponentType.RangeFinder when data is RangeFinderData rfData:
+			// 			data.Value = Execute(string.IsNullOrEmpty(data.Value) ?
+			// 				rfData.Distance.ToString() :
+			// 				data.Value);
+			// 			break;
+			// 		case ComponentType.HumidityAndTemperature when data is DhtData dhtData:
+			// 			data.Value = !string.IsNullOrEmpty(data.Value) ?
+			// 				Execute(data.Value) :
+			// 				string.Format(opt.IconWrapper, dhtData.Temperature, dhtData.Humidity);
+			// 			break;
+			// 	}
+			// }
+   //
+   //          if (Options is RelayTextParams relayOpt && data is RelayData relayData)
+   //          {
+   //              if (Pin.HasValue)
+   //              {
+   //                  if (Pin.GetValueOrDefault() == relayData.Pin)
+   //                  {
+   //                      data.Value = relayData.State == RelayState.Opened
+   //                          ? relayOpt.OpenedStateIconWrapper
+   //                          : relayOpt.ClosedStateIconWrapper;
+   //                  }
+   //              }
+   //          }
 
 			return data;
 		}

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FourTwenty.IoT.Connect.Data
+﻿namespace FourTwenty.IoT.Connect.Data
 {
     public class SoilMoistureData : BaseData
     {
+        public override string Value => $"{Moisture}%";
         public double Moisture { get; set; }
+
+        public SoilMoistureData(double moisture)
+        {
+            Moisture = moisture;
+        }
     }
 
 }
