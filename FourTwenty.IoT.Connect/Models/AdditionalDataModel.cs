@@ -1,7 +1,4 @@
 ﻿using FourTwenty.IoT.Connect.Constants;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FourTwenty.IoT.Connect.Models
 {

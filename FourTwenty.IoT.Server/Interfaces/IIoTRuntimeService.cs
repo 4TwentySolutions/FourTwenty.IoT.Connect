@@ -20,6 +20,7 @@ namespace FourTwenty.IoT.Server.Interfaces
         IComponent GetComponent(int id);
         GpioController Gpio { get; }
         Task<bool> ConfigureModule(GrowBoxModule module);
+        Task<bool> ConfigureModule(int componentId);
         IComponent GetModuleByType(ComponentType componentType);
     }
 }

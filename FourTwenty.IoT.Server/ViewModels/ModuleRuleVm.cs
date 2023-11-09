@@ -12,7 +12,7 @@ namespace FourTwenty.IoT.Server.ViewModels
 		public JobType Job { get; set; }
 		public RuleType RuleType { get; set; }
 		public string RuleContent { get; set; }
-		public int GrowBoxModuleId { get; set; }
+		public int ModuleId { get; set; }
 		public List<int> Pins { get; set; }
 		public int? Pin { get; set; }
 		public bool IsEnabled { get; set; }
