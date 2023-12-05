@@ -1,50 +1,51 @@
 ﻿using System;
-using System.Device.Gpio;
 using System.Threading.Tasks;
-using FourTwenty.IoT.Connect.Interfaces;
-using FourTwenty.IoT.Server.Components;
-using GrowIoT.Rules;
+using FourTwenty.IoT.Connect.Constants;
+using FourTwenty.IoT.Connect.Models;
+using FourTwenty.IoT.Server.Publishers;
+using GrowIoT.MessageQueue.Enums;
+using GrowIoT.MessageQueue.Interfaces;
 using Quartz;
 
 namespace FourTwenty.IoT.Server.Jobs
 {
     public class PeriodJob : IJob
     {
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
-            IoTComponent component = null;
-            CronRule rule = null;
+            int? componentId = null;
+            int? ruleId = null;
+            int? pin = null;
+            TimeSpan? period = null;
+            IBasicPublisher<ComponentJobMessage> publisher = null;
 
-            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
-                component = rawObj as IoTComponent;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentIdKey, out var rawObj))
+                componentId = (int)rawObj;
 
-            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleKey, out var rawRule))
-                rule = rawRule as CronRule;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleIdKey, out var rawRule))
+                ruleId = (int)rawRule;
 
-            if (component == null || rule == null)
-                return Task.CompletedTask;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.PinKey, out var rawPin))
+                pin = (int)rawPin;
 
-            if (rule.Pin != null)
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.PeriodKey, out var rawPeriod))
+                period = (TimeSpan)rawPeriod;
+
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.JobPublishKey, out var rawPublisher))
+                publisher = rawPublisher as JobsPublisher;
+
+
+            if (componentId == null || ruleId == null || publisher == null)
+                return;
+
+            publisher.Publish(new ComponentJobMessage
             {
-                TriggerPeriod(component, rule.Pin.GetValueOrDefault(), rule.Period);
-            }
-            else
-            {
-                foreach (var pin in component.Pins)
-                {
-                    TriggerPeriod(component, pin, rule.Period);
-                }
-            }
-
-
-            return Task.CompletedTask;
-        }
-
-        private async void TriggerPeriod(IoTComponent component, int pin, TimeSpan period)
-        {
-            component.SetValue(PinValue.Low, pin);
-            await Task.Delay(period);
-            component.SetValue(PinValue.High, pin);
+                ComponentId = componentId.GetValueOrDefault(),
+                RuleId = ruleId.GetValueOrDefault(),
+                Command = Commands.Period,
+                Pin = pin,
+                Period = period
+            }, $"component_{componentId}_jobs", MessagePriority.Default);
         }
     }
 }

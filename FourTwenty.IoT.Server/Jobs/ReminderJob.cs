@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Server.Interfaces;
-using FourTwenty.IoT.Server.ViewModels;
+using FourTwenty.IoT.Server.Publishers;
+using GrowIoT.MessageQueue.Interfaces;
 using Quartz;
 
 namespace FourTwenty.IoT.Server.Jobs
@@ -19,28 +19,17 @@ namespace FourTwenty.IoT.Server.Jobs
 
         public async Task Execute(IJobExecutionContext context)
         {
-            ReminderVm reminder = null;
+            int? reminderId = null;
+            IBasicPublisher<int> publisher = null;
 
-            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ReminderKey, out var rawReminderObj))
-                reminder = rawReminderObj as ReminderVm;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ReminderIdKey, out var rawReminderIdObj))
+                reminderId = (int)rawReminderIdObj;
 
-            if (reminder != null)
-            {
-                if (!reminder.IsExecuted)
-                {
-                    if (reminder.Source == CommunicationСhannel.Telegram)
-                    {
-                       var sendResult = await _telegramBotService.SendMessage(reminder.Description);
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ReminderPublishKey, out var rawPublisher))
+                publisher = rawPublisher as ReminderPublisher;
 
-                       if (sendResult)
-                       {
-                           reminder.IsExecuted = true;
-                           await _remindersManager.SaveReminder(reminder);
-                       }
-
-                    }
-                }
-            }
+            if(reminderId.HasValue && publisher != null)
+                publisher.Publish(reminderId.GetValueOrDefault());
         }
     }
 }

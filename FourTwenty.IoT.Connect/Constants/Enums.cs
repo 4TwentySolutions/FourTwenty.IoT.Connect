@@ -65,13 +65,13 @@
         Healthy,
     }
 
-    public enum WorkState
-    {
-        Running,
-        Paused,
-        Stopped,
-        Mixed
-    }
+    //public enum WorkState
+    //{
+    //    Running,
+    //    Paused,
+    //    Stopped,
+    //    Mixed
+    //}
 
     public enum DhtType
     {

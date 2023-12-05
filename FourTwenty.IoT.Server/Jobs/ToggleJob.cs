@@ -1,45 +1,47 @@
 ﻿using System.Device.Gpio;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components;
+using FourTwenty.IoT.Server.Publishers;
+using GrowIoT.MessageQueue.Enums;
+using GrowIoT.MessageQueue.Interfaces;
 using Quartz;
 
 namespace FourTwenty.IoT.Server.Jobs
 {
     public class ToggleJob : IJob
     {
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
-            IoTComponent component = null;
-            BaseRule rule = null;
+            int? componentId = null;
+            int? ruleId = null;
+            int? pin = null;
+            IBasicPublisher<ComponentJobMessage> publisher = null;
 
-            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentKey, out var rawObj))
-                component = rawObj as IoTComponent;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.ComponentIdKey, out var rawObj))
+                componentId = (int)rawObj;
 
-            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleKey, out var rawRule))
-                rule = rawRule as BaseRule;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.RuleIdKey, out var rawRule))
+                ruleId = (int)rawRule;
 
-            if (component == null)
-                return Task.CompletedTask;
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.PinKey, out var rawPin))
+                pin = (int)rawPin;
 
-            if (rule?.Pin != null)
+            if (context.JobDetail.JobDataMap.TryGetValue(JobsKeys.JobPublishKey, out var rawPublisher))
+                publisher = rawPublisher as JobsPublisher;
+
+
+            if (componentId == null || ruleId == null || publisher == null)
+                return;
+
+            publisher.Publish(new ComponentJobMessage
             {
-                var pinValue = component.ReadValue(rule.Pin.GetValueOrDefault());
-                pinValue = pinValue == PinValue.High ? PinValue.Low : PinValue.High;
-                component.SetValue(pinValue, rule.Pin.GetValueOrDefault());
-            }
-            else
-            {
-                foreach (var pin in component.Pins)
-                {
-                    var pinValue = component.ReadValue(pin);
-                    pinValue = pinValue == PinValue.High ? PinValue.Low : PinValue.High;
-                    component.SetValue(pinValue, pin);
-                }
-            }
-
-
-            return Task.CompletedTask;
+                ComponentId = componentId.GetValueOrDefault(),
+                RuleId = ruleId.GetValueOrDefault(),
+                Command = Commands.Toggle,
+                Pin = pin
+            }, $"component_{componentId}_jobs", MessagePriority.Default);
         }
     }
 }

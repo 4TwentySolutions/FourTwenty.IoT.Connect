@@ -11,7 +11,6 @@ using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;
 using FourTwenty.IoT.Server.Extensions;
-using GrowIoT.Rules;
 using Microsoft.Extensions.Logging;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
@@ -23,7 +22,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
         }
 
         public event EventHandler<ModuleResponseEventArgs> DataReceived;
-        public async ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
+        public async ValueTask<ModuleResponse> GetData()
         {
            ModuleResponse response = null;
 

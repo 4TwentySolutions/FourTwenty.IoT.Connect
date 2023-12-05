@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace FourTwenty.IoT.Connect.Interfaces
+namespace FourTwenty.IoT.Connect.Interfaces.Rules
 {
     public interface IPeriodRule
     {
-        TimeSpan Period { get; }
+        TimeSpan? Period { get; }
     }
 }

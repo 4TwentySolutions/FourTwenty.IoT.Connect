@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\FourTwenty.IoT.Grow\GrowIoT.MessageQueue\GrowIoT.MessageQueue.csproj" />
     <ProjectReference Include="..\FourTwenty.IoT.Connect\FourTwenty.IoT.Connect.csproj" />
   </ItemGroup>
 

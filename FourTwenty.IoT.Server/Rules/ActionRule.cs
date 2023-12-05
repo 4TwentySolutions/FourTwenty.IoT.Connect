@@ -1,12 +1,7 @@
-﻿using System;
-using System.Device.Gpio;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Interfaces.Rules;
 using FourTwenty.IoT.Connect.Models;
-using FourTwenty.IoT.Server.Components.Relays;
-using FourTwenty.IoT.Server.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FourTwenty.IoT.Server.Rules

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Data;
-using System.Collections.Generic;
+using GrowIoT.MessageQueue.Base;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -51,18 +51,24 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             }
         }
 
-        public ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
+        protected override async void OnMessageConsumerReceived(object sender, MessageEventArgs<ComponentJobMessage> e)
+        {
+            base.OnMessageConsumerReceived(sender, e);
+            
+            var response = await GetData();
+
+            if (response != null)
+            {
+                response.RuleId = e.Message.RuleId;
+            }
+
+            MessageConsumer.Ack(e.DeliveryTag);
+            DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
+        }
+
+        public ValueTask<ModuleResponse> GetData()
         {
             ModuleResponse response = null;
-            var responseRuleId = 0;
-
-            if (additionalParams?.TryGetValue("RuleId", out var rawRuleId) ?? false)
-            {
-                if (rawRuleId is int ruleId and > 0)
-                {
-                    responseRuleId = ruleId;
-                }
-            }
 
             try
             {
@@ -74,22 +80,12 @@ namespace FourTwenty.IoT.Server.Components.Sensors
                 if (success && result.Temperature < -100)
                     success = false;
 
-                response = new ModuleResponse(Id, success, result)
-                {
-                    RuleId = responseRuleId
-                };
+                response = new ModuleResponse(Id, success, result);
 
             }
             catch (Exception ex)
             {
-                response = new ModuleResponse(Id, false, new DhtData(), ex)
-                {
-                    RuleId = responseRuleId
-                };
-            }
-            finally
-            {
-                DataReceived?.Invoke(this, new ModuleResponseEventArgs(response));
+                response = new ModuleResponse(Id, false, new DhtData(), ex);
             }
 
             return new ValueTask<ModuleResponse>(response);

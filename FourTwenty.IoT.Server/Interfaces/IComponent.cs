@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Rules;
-using GrowIoT.Rules;
+using FourTwenty.IoT.Server.Rules;
 
 namespace FourTwenty.IoT.Connect.Interfaces
 {
@@ -11,7 +11,6 @@ namespace FourTwenty.IoT.Connect.Interfaces
 		IReadOnlyCollection<CronRule> Rules { get; set; }
 		IReadOnlyCollection<DisplayRule> DisplayOptions { get; set; }
 		string Name { get; set; }
-		WorkState RulesWorkState { get; set; }
         ComponentType ComponentType { get; }
 	}
 }

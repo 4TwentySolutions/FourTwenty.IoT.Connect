@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
-using FourTwenty.IoT.Connect.Interfaces;
+using FourTwenty.IoT.Connect.Interfaces.Rules;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Jobs;
 using Quartz;
 using Quartz.Impl.Matchers;
 
-namespace GrowIoT.Rules
+namespace FourTwenty.IoT.Server.Rules
 {
-	public class CronRule : BaseRule, IPeriodRule
+    public class CronRule : BaseRule, IPeriodRule
 	{
 		private readonly IScheduler _scheduler;
 
-        public TimeSpan Period { get; set; }
+        public TimeSpan? Period { get; set; }
 		public JobType JobType { get; set; }
 		public string CronExpression { get; set; }
 		public int ModuleId { get; set; }
@@ -47,7 +47,7 @@ namespace GrowIoT.Rules
                     JobType.On => typeof(OnJob),
                     JobType.Off => typeof(OffJob),
                     JobType.Period => typeof(PeriodJob),
-                    //JobType.Action => typeof(ActionJob),
+                    //Command.Action => typeof(ActionJob),
                     _ => null
                 };
 

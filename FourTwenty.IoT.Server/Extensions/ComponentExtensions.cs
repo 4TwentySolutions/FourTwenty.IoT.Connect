@@ -3,7 +3,6 @@ using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Components.Modules;
-using FourTwenty.IoT.Server.Components.Relays;
 using FourTwenty.IoT.Server.Components.Sensors;
 
 namespace FourTwenty.IoT.Server.Extensions
@@ -56,8 +55,8 @@ namespace FourTwenty.IoT.Server.Extensions
                     case Camera camera:
                         camera.DataReceived += receivedEvent;
                         break;
-                    default:
-                        throw new NotImplementedException($"Subscribe for {component.ComponentType.ToString()} not implemented");
+                    //default:
+                    //    throw new NotImplementedException($"Subscribe for {component.ComponentType.ToString()} not implemented");
 
                     //TODO Implement for Mcp3008IoT (if needed)
                 }
@@ -86,8 +85,8 @@ namespace FourTwenty.IoT.Server.Extensions
                     case Camera camera:
                         camera.DataReceived -= receivedEvent;
                         break;
-                    default:
-                        throw new NotImplementedException($"Subscribe for {component.ComponentType.ToString()} not implemented");
+                    //default:
+                    //    throw new NotImplementedException($"Subscribe for {component.ComponentType.ToString()} not implemented");
 
                     //TODO Implement for Mcp3008IoT (if needed)
                 }

@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Server.Extensions;
-using GrowIoT.Rules;
 using FourTwenty.IoT.Connect.Data;
+using FourTwenty.IoT.Server.Rules;
 
 namespace FourTwenty.IoT.Server.Components.Sensors
 {
@@ -44,7 +44,7 @@ namespace FourTwenty.IoT.Server.Components.Sensors
             return ValueTask.CompletedTask;
         }
 
-		public ValueTask<ModuleResponse> GetData(Dictionary<string, object> additionalParams)
+		public ValueTask<ModuleResponse> GetData()
         {
             RangeFinderData data = null;
 

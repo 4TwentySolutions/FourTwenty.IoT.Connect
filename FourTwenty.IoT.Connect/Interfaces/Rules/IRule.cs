@@ -7,8 +7,5 @@ namespace FourTwenty.IoT.Connect.Interfaces.Rules
         int Id { get; set; }
         public RuleType RuleType { get; }
         bool IsEnabled { get; set; }
-	   // int? Pin { get; set; }
-        //public int SortOrder { get; set; }
-        //public long? Delay { get; set; }
     }
 }

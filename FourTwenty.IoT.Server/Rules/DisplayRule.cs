@@ -1,6 +1,5 @@
 ﻿using FourTwenty.IoT.Connect.Constants;
 using FourTwenty.IoT.Connect.Data;
-using FourTwenty.IoT.Connect.Interfaces;
 using FourTwenty.IoT.Connect.Interfaces.Rules;
 using FourTwenty.IoT.Connect.Models;
 

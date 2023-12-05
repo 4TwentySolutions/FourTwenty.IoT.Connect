@@ -8,10 +8,15 @@ using FourTwenty.IoT.Connect.Interfaces.Rules;
 using FourTwenty.IoT.Connect.Models;
 using FourTwenty.IoT.Connect.Rules;
 using FourTwenty.IoT.Server.Interfaces;
-using GrowIoT.Rules;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using FourTwenty.IoT.Server.Consumers;
+using FourTwenty.IoT.Server.Rules;
+using GrowIoT.MessageQueue.Base;
+using GrowIoT.MessageQueue.Consumer;
+using GrowIoT.MessageQueue.Options;
+using GrowIoT.MessageQueue.Pool;
 
 namespace FourTwenty.IoT.Server.Components
 {
@@ -21,18 +26,20 @@ namespace FourTwenty.IoT.Server.Components
 
         private IServiceScopeFactory _serviceScopeFactory;
         protected IIoTRuntimeService IoTRuntimeService { get; private set; }
-
         protected ILogger _logger;
+
+        protected BasicConsumer<ComponentJobMessage> MessageConsumer;
+        private RabbitMqQueueOptions _rabbitMqQueueOptions;
 
         #region properties
         public int Id { get; set; }
+        public string Name { get; set; }
+        public ComponentType ComponentType { get; set; }
+
         public IReadOnlyCollection<CronRule> Rules { get; set; }
         public IReadOnlyCollection<DisplayRule> DisplayOptions { get; set; }
         public IReadOnlyCollection<IAction> Actions { get; set; }
 
-        public string Name { get; set; }
-        public WorkState RulesWorkState { get; set; } // => Rules.All(x => x.IsEnabled) ? WorkState.Running : Rules.All(x => !x.IsEnabled) ? WorkState.Stopped : WorkState.Mixed;
-        public ComponentType ComponentType { get; set; }
 
         #endregion
 
@@ -57,8 +64,9 @@ namespace FourTwenty.IoT.Server.Components
 
         public virtual async ValueTask Initialize()
         {
-            if (Pins == null || !Pins.Any() || Gpio == null)
+            if (Pins == null || !Pins.Any() || Gpio == null || _rabbitMqQueueOptions == null)
                 return;
+
 
             foreach (var pin in Pins)
             {
@@ -69,11 +77,20 @@ namespace FourTwenty.IoT.Server.Components
             IsInitialized = true;
         }
 
-        public virtual void SetValue(PinValue value, int pin)
+        public virtual bool SetValue(PinValue value, int pin)
         {
-            if (!Gpio.IsPinOpen(pin))
-                Gpio.OpenPin(pin, PinMode.Output);
-            Gpio.Write(pin, value);
+            try
+            {
+                if (!Gpio.IsPinOpen(pin))
+                    Gpio.OpenPin(pin, PinMode.Output);
+                Gpio.Write(pin, value);
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
         public virtual PinValue ReadValue(int pin)
         {
@@ -97,6 +114,19 @@ namespace FourTwenty.IoT.Server.Components
             _serviceScopeFactory = serviceScopeFactory;
             using var scope = _serviceScopeFactory.CreateScope();
             IoTRuntimeService = scope.ServiceProvider.GetRequiredService<IIoTRuntimeService>();
+        }
+
+        public void SetChannelPool(ChannelPool channelPool)
+        {
+            _rabbitMqQueueOptions = new RabbitMqQueueOptions(channelPool, "amq.direct", "direct", $"component_{Id}_jobs", $"component_{ComponentType.ToString().ToLower()}_{Id}_jobs_queue", arguments: new Dictionary<string, object> { { "x-max-priority", 10 } });
+            MessageConsumer = new GeneralConsumer(_rabbitMqQueueOptions);
+            MessageConsumer.Subscribe();
+            MessageConsumer.OnMessageReceived += OnMessageConsumerReceived;
+        }
+
+        protected virtual void OnMessageConsumerReceived(object sender, MessageEventArgs<ComponentJobMessage> e)
+        {
+            //throw new NotImplementedException();
         }
     }
 }
