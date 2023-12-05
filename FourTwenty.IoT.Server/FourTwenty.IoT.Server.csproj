@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Components\Relays\**" />
+    <Compile Remove="ViewModels\Services\**" />
+    <EmbeddedResource Remove="Components\Relays\**" />
+    <EmbeddedResource Remove="ViewModels\Services\**" />
+    <None Remove="Components\Relays\**" />
+    <None Remove="ViewModels\Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Iot.Device.Bindings" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Quartz" Version="3.7.0" />
+    <PackageReference Include="System.Device.Gpio" Version="3.0.0" />
+    <PackageReference Include="UnitsNet" Version="5.35.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FourTwenty.IoT.Grow\GrowIoT.MessageQueue\GrowIoT.MessageQueue.csproj" />
+    <ProjectReference Include="..\FourTwenty.IoT.Connect\FourTwenty.IoT.Connect.csproj" />
+  </ItemGroup>
+
+</Project>
